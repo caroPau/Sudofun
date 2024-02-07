@@ -33,25 +33,22 @@ public class LoginActivity extends AppCompatActivity {
     private void loginButtonClickEvent(View view){
         String username = input_username.getText().toString();
         User player = null;
-        //boolean isKnown = false;
+        boolean isKnown = false;
         if (!username.isEmpty()) {
             for (User user : users) {
                 if (Objects.equals(user.name, username)) {
-                    //isKnown = true;
+                    isKnown = true;
                     player = user;
-                } else {
-                    player = new User(username);
-                    users.add(player);
                 }
             }
-            /*if (!isKnown) {
+            if (!isKnown) {
                 player = new User(username);
                 users.add(player);
-            }*/
+            }
         } else {
             // TODO: Benachrichtigung, dass Username nicht leer sein darf
         }
-        Intent intent = new Intent(LoginActivity.this, LevelActivity.class);
+        Intent intent = new Intent(LoginActivity.this, PlayActivity.class);
         intent.putExtra(USER, (Parcelable) player);
     }
 }
