@@ -22,7 +22,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
 
         //input_username = this.findViewById(R.id.inputUsername);
         //btn_login = this.findViewById(R.id.btnLogin);
@@ -33,16 +33,23 @@ public class LoginActivity extends AppCompatActivity {
     private void loginButtonClickEvent(View view){
         String username = input_username.getText().toString();
         User player = null;
-        boolean isKnown = false;
-        for(User user : users){
-            if(Objects.equals(user.name, username)){
-                isKnown = true;
-                player = user;
+        //boolean isKnown = false;
+        if (!username.isEmpty()) {
+            for (User user : users) {
+                if (Objects.equals(user.name, username)) {
+                    //isKnown = true;
+                    player = user;
+                } else {
+                    player = new User(username);
+                    users.add(player);
+                }
             }
-        }
-        if(!isKnown){
-            player = new User(username);
-            users.add(player);
+            /*if (!isKnown) {
+                player = new User(username);
+                users.add(player);
+            }*/
+        } else {
+            // TODO: Benachrichtigung, dass Username nicht leer sein darf
         }
         Intent intent = new Intent(LoginActivity.this, LevelActivity.class);
         intent.putExtra(USER, (Parcelable) player);

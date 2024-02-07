@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">Sudofun</string>
+    <string name="app_name">SudoFun</string>
+    <string name="sudofun">SudoFun</string>
+    <string name="name">Name</string>
+    <string name="login">Login</string>
+
 </resources>
