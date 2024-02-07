@@ -23,12 +23,18 @@
                 android:text="@string/sudofun"
                 android:textSize="24sp" />
         <EditText
-            android:id="@+id/editTextName"
+            android:id="@+id/inputUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Name"
+            android:hint="@string/name"
             android:inputType="textPersonName"
             />
+        <Button
+            android:id="@+id/btnLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/login" />
+
 
     </LinearLayout>
 

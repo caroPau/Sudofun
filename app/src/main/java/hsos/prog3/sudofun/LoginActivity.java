@@ -15,7 +15,6 @@ import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
     private static final String USER = "hsos.prog3.sudofun.LoginActivity.USER";
-    private Button btn_login;
     private EditText input_username;
     private ArrayList<User> users;
 
@@ -24,8 +23,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        //input_username = this.findViewById(R.id.inputUsername);
-        //btn_login = this.findViewById(R.id.btnLogin);
+        input_username = this.findViewById(R.id.inputUsername);
+        Button btn_login = this.findViewById(R.id.btnLogin);
 
         btn_login.setOnClickListener(this::loginButtonClickEvent);
     }
