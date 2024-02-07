@@ -1,6 +1,7 @@
 package hsos.prog3.sudofun;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.view.View;
@@ -22,8 +23,8 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
         input_username = this.findViewById(R.id.inputUsername);
+
         Button btn_login = this.findViewById(R.id.btnLogin);
 
         btn_login.setOnClickListener(this::loginButtonClickEvent);

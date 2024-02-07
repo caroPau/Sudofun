@@ -1,3 +1,9 @@
+/**
+ *
+ * @author M.Paul
+ *
+ */
+
 package hsos.prog3.sudofun;
 
 import android.app.Activity;
@@ -7,10 +13,12 @@ import android.os.Handler;
 import android.os.Looper;
 
 import androidx.annotation.Nullable;
+import androidx.core.provider.FontRequest;
 
 public class SplashActivity extends Activity {
 
-    private static final int SPLASH_SCREEN_DELAY = 2000;
+    private static final int SPLASH_SCREEN_DELAY = 1000;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
