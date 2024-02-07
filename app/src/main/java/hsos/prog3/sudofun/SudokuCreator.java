@@ -17,86 +17,17 @@ public class SudokuCreator {
     private static int[][] solvedField;
     private Level level;
 
+    /**
+     * Konstruktor
+     *
+     * @param level Schwierigkeitsgrad des Sudokus
+     */
     public SudokuCreator(Level level){
         solvedField = new int[9][9];
         this.level = level;
     }
 
-    /**
-     * Überprüft, ob die angegebene Ziffer in der angegebenen Zeile des Sudoku-Felds vorhanden ist.
-     *
-     * @param row   Die Zeilennummer, in der die Ziffer überprüft werden soll.
-     * @param digit Die zu überprüfende Ziffer.
-     * @param field Das Sudoku-Feld als 2D-Array.
-     * @return true, wenn die Ziffer in der Zeile vorhanden ist, andernfalls false.
-     */
-    private static boolean isDigitInRow(int row, int digit, int[][] field) {
-        for (int i = 0; i <= 8; i++) {
-            if (field[row][i] == digit) {
-                return true;
-            }
-        }
 
-        return false;
-    }
-
-    /**
-     * Überprüft, ob die angegebene Ziffer in der angegebenen Spalte des Sudoku-Felds vorhanden ist.
-     *
-     * @param column Die Spaltennummer     , in der die Ziffer überprüft werden soll.
-     * @param digit  Die zu überprüfende Ziffer.
-     * @param field  Das Sudoku-Feld als 2D-Array.
-     * @return true, wenn die Ziffer in der Spalte vorhanden ist, andernfalls false.
-     */
-    private static boolean isDigitInColumn(int column, int digit, int[][] field) {
-        for (int i = 0; i <= 8; i++) {
-            if (field[i][column] == digit) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Überprüft, ob die angegebene Ziffer in dem 3x3-Block vorhanden ist, zu dem die angegebene
-     * Zeile und Spalte im Sudoku-Feld gehören.
-     *
-     * @param row    Zeilennummer der Zelle
-     * @param column Spaltennummer der Zelle
-     * @param digit  Die zu überprüfende Ziffer
-     * @param field  Das Sudokufeld als 2D-Array
-     * @return true, falls die Ziffer im Block vorhanden ist, andernfalls false
-     */
-    private static boolean isDigitInBlock(int row, int column, int digit, int[][] field) {
-        int blockRow = row - row % 3;
-        int blockColumn = column - column % 3;
-
-        for (int i = blockRow; i < blockRow + 3; i++) {
-            for (int j = blockColumn; j < blockColumn + 3; j++) {
-                if (field[i][j] == digit) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Überprüft, ob die angegebene Ziffer an der angegebenen Position im Sudoku-Feld gültig ist.
-     * Eine Ziffer ist gültig, wenn sie weder in der Zeile, noch in der Spalte, noch im Block bereits vorkommt.
-     *
-     * @param row    Die Zeilennummer, in der die Ziffer überprüft werden soll.
-     * @param column Die Spaltennummer, in der die Ziffer überprüft werden soll.
-     * @param digit  Die zu überprüfende Ziffer.
-     * @param field  Das Sudoku-Feld als 2D-Array.
-     * @return true, wenn die Ziffer gültig ist, andernfalls false.
-     */
-    private static boolean isValid(int row, int column, int digit, int[][] field) {
-        if (!isDigitInRow(row, digit, field) && !isDigitInColumn(column, digit, field) && !isDigitInBlock(row, column, digit, field)) {
-            return true;
-        }
-        return false;
-    }
 
     /**
      * Füllt die Zellen eines 3x3-Blocks im Sudoku-Feld mit Ziffern, indem Ziffern von 1 bis 9 zufällig platziert werden.
@@ -118,7 +49,7 @@ public class SudokuCreator {
                 int index = rand.nextInt(list.size());
                 int digit = list.get(index);
                 list.remove(index);
-                if (isValid(i, j, digit, field)) {
+                if (SudokuHelper.isValid(i, j, digit, field)) {
                     field[i][j] = digit;
                 }
             }
@@ -148,7 +79,7 @@ public class SudokuCreator {
             for (int column = 0; column < 9; column++) {
                 if (field[row][column] == 0) {
                     for (int digit = 1; digit <= 9; digit++) {
-                        if (isValid(row, column, digit, field)) {
+                        if (SudokuHelper.isValid(row, column, digit, field)) {
                             field[row][column] = digit;
                             if (solveSudoku(field)) {
                                 return true;
@@ -163,11 +94,19 @@ public class SudokuCreator {
         }
         return true;
     }
+
+    /**
+     * Füllt eine bestimmte Zelle eines übergebenen Sudoku-Feldes mit der passenden Ziffer, wenn dies eindeutig ist
+     *
+     * @param field Sudoku-Feld als 2D-Array
+     * @param row Reihennummer der Zelle
+     * @param column Zeilennummer der Zelle
+     */
     private static void fillEasyCells(int[][] field, int row, int column){
         int counter = 0;
         int numberInQuestion = 0;
         for(int i = 1; i <= 9; i++){
-            if(isValid(row, column, i, field)){
+            if(SudokuHelper.isValid(row, column, i, field)){
                 counter++;
                 numberInQuestion = i;
             }
