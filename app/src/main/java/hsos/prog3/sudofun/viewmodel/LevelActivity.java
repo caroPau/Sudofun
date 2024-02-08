@@ -16,7 +16,7 @@ import hsos.prog3.sudofun.R;
 
 
 public class LevelActivity extends AppCompatActivity {
-    private String selectedLevel;
+    private int selectedLevel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +30,7 @@ public class LevelActivity extends AppCompatActivity {
         btn_easy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectedLevel = "EASY";
+                selectedLevel = 0;
                 startNextActivity();
             }
         });
@@ -39,7 +39,7 @@ public class LevelActivity extends AppCompatActivity {
         btn_medium.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectedLevel = "MEDIUM";
+                selectedLevel = 1;
                 startNextActivity();
             }
         });
@@ -48,7 +48,7 @@ public class LevelActivity extends AppCompatActivity {
         btn_hard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectedLevel = "HARD";
+                selectedLevel = 2;
                 startNextActivity();
             }
         });

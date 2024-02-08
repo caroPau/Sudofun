@@ -19,7 +19,7 @@ public class PlayActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_level);
+        setContentView(R.layout.activity_play);
 
         field = SudokuCreator.createSudoku(getSelectedLevel());
         handler = new Handler(Looper.myLooper());
