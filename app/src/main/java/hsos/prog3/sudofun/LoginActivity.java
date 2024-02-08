@@ -35,6 +35,7 @@ public class LoginActivity extends AppCompatActivity {
         User player = null;
         boolean isKnown = false;
         if (!username.isEmpty()) {
+            // TODO Über die Liste zu iterieren führt zu NullPointerException
             for (User user : users) {
                 if (Objects.equals(user.name, username)) {
                     isKnown = true;

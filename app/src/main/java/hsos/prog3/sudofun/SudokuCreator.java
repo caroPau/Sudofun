@@ -6,7 +6,7 @@ import java.util.Random;
 
 /**
  * Implementiert die Spiellogik
- * Autorin: Carolin Paul
+ * @author Carolin Paul
  */
 
 public class SudokuCreator {
