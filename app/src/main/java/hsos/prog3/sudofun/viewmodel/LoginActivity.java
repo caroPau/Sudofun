@@ -56,7 +56,7 @@ public class LoginActivity extends AppCompatActivity {
                 player = new User(username);
                 login.getUsers().add(player);
             }
-            Intent intent = new Intent(LoginActivity.this, PlayActivity.class);
+            Intent intent = new Intent(LoginActivity.this, LevelActivity.class);
             intent.putExtra("player", player);
             startActivity(intent);
         }
