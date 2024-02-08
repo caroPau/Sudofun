@@ -1,4 +1,4 @@
-package hsos.prog3.sudofun;
+package hsos.prog3.sudofun.viewmodel;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -7,11 +7,14 @@ import android.widget.Toolbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import hsos.prog3.sudofun.R;
+import hsos.prog3.sudofun.model.Level;
+
 
 public class PlayActivity extends AppCompatActivity {
     private Level level;
     private static int[][] field;
-    private Timer timer;
+    private TimerViewModel timer;
     Handler handler;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,7 +24,7 @@ public class PlayActivity extends AppCompatActivity {
         setSupportActionBar(myToolbar);
         field = SudokuCreator.createSudoku(level);
         handler = new Handler(Looper.myLooper());
-        timer = new Timer(handler);
+        timer = new TimerViewModel();
         timer.start();
     }
 

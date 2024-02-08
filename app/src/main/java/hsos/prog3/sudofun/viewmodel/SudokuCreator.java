@@ -1,8 +1,10 @@
-package hsos.prog3.sudofun;
+package hsos.prog3.sudofun.viewmodel;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import hsos.prog3.sudofun.model.Level;
 
 /**
  * Implementiert die Spiellogik
@@ -169,7 +171,7 @@ public class SudokuCreator {
     private static int[][] generatePlayableField(Level lvl) {
         int[][] field = generateSolvableField();
         Random rand = new Random();
-        int freeCells = 81 - lvl.openCells;
+        int freeCells = 81 - lvl.getOpenCells();
         for (int i = 0; i <= freeCells; i++) {
             int randomRow = rand.nextInt(9);
             int randomColumn = rand.nextInt(9);

@@ -4,7 +4,7 @@
  *
  */
 
-package hsos.prog3.sudofun;
+package hsos.prog3.sudofun.viewmodel;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -13,7 +13,8 @@ import android.os.Handler;
 import android.os.Looper;
 
 import androidx.annotation.Nullable;
-import androidx.core.provider.FontRequest;
+
+import hsos.prog3.sudofun.R;
 
 public class SplashActivity extends Activity {
 

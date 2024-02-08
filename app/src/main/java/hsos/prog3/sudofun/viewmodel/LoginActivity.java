@@ -1,7 +1,6 @@
-package hsos.prog3.sudofun;
+package hsos.prog3.sudofun.viewmodel;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.view.View;
@@ -13,9 +12,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import hsos.prog3.sudofun.R;
+import hsos.prog3.sudofun.model.User;
+
 
 public class LoginActivity extends AppCompatActivity {
-    private static final String USER = "hsos.prog3.sudofun.LoginActivity.USER";
+    private static final String USER = "hsos.prog3.sudofun.viewmodel.LoginActivity.USER";
     private EditText input_username;
     private ArrayList<User> users;
 
@@ -37,7 +39,7 @@ public class LoginActivity extends AppCompatActivity {
         if (!username.isEmpty()) {
             // TODO Über die Liste zu iterieren führt zu NullPointerException
             for (User user : users) {
-                if (Objects.equals(user.name, username)) {
+                if (Objects.equals(user.getName(), username)) {
                     isKnown = true;
                     player = user;
                 }

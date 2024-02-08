@@ -1,7 +1,7 @@
-package hsos.prog3.sudofun;
+package hsos.prog3.sudofun.model;
 
 public class User {
-    String name;
+    private String name;
     int totalGames;
     int easyGames;
     int mediumGames;
@@ -18,5 +18,9 @@ public class User {
         bestTimeEasy = 0.0F;
         bestTimeMedium = 0.0F;
         bestTimeHard = 0.0F;
+    }
+
+    public String getName() {
+        return name;
     }
 }

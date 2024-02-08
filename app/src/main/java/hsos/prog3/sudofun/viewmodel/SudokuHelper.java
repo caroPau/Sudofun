@@ -1,4 +1,4 @@
-package hsos.prog3.sudofun;
+package hsos.prog3.sudofun.viewmodel;
 
 /**
  * Hilfsklasse zum Erstellen und Lösen von Sudokus

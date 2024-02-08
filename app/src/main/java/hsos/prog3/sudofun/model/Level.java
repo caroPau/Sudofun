@@ -1,13 +1,17 @@
-package hsos.prog3.sudofun;
+package hsos.prog3.sudofun.model;
 
 public enum Level {
     EASY(35),
     MEDIUM(30),
     HARD(25);
 
-    final int openCells;
+    private final int openCells;
 
     Level(int openCells) {
         this.openCells = openCells;
+    }
+
+    public int getOpenCells() {
+        return openCells;
     }
 }
