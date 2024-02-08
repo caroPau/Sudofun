@@ -20,17 +20,30 @@ public class PlayActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_level);
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        setSupportActionBar(myToolbar);
-        field = SudokuCreator.createSudoku(level);
+
+        field = SudokuCreator.createSudoku(getSelectedLevel());
         handler = new Handler(Looper.myLooper());
         timer = new TimerViewModel();
         timer.start();
     }
 
-    private void setSupportActionBar(Toolbar myToolbar) {
-        // TODO implementieren (WIE??)
-        // https://developer.android.com/develop/ui/views/components/appbar/setting-up
+    private Level getSelectedLevel() {
+        int lvl = getIntent().getIntExtra("selectedLevel", 0);
+        switch (lvl) {
+            case 0:
+                level = Level.EASY;
+                break;
+            case 1:
+                level = Level.MEDIUM;
+                break;
+            case 2:
+                level = Level.HARD;
+                break;
+            default:
+                // TODO Fehlerbehandlung
+                break;
+        }
+        return level;
     }
 
     private static void setDigit(int digit, int row, int column){

@@ -32,6 +32,9 @@
         <activity android:name=".viewmodel.LoginActivity">
             <!-- Intent-Filter, falls erforderlich -->
         </activity>
+        <activity android:name=".viewmodel.PlayActivity">
+            <!-- Intent-Filter, falls erforderlich -->
+        </activity>
 
         <meta-data
             android:name="preloaded_fonts"
