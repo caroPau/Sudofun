@@ -17,11 +17,12 @@ import hsos.prog3.sudofun.model.User;
 
 
 public class LoginActivity extends AppCompatActivity {
-    Login login = new Login();
+    Login login;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        login = new Login();
         if (login.getUsers() == null) {
             login.setUsers(new ArrayList<>());
         }

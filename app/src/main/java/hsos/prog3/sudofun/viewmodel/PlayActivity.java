@@ -9,48 +9,45 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import hsos.prog3.sudofun.R;
 import hsos.prog3.sudofun.model.Level;
+import hsos.prog3.sudofun.model.Play;
 
 
 public class PlayActivity extends AppCompatActivity {
-    private Level level;
-    private static int[][] field;
-    private TimerViewModel timer;
-    Handler handler;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play);
-
-        field = SudokuCreator.createSudoku(getSelectedLevel());
-        handler = new Handler(Looper.myLooper());
-        timer = new TimerViewModel();
-        timer.start();
+        Play game = new Play();
+        game.setField(SudokuCreator.createSudoku(getSelectedLevel(game)));
+        game.setTimer(new TimerViewModel());
+        game.getTimer().start();
     }
 
-    private Level getSelectedLevel() {
+    private Level getSelectedLevel(Play game) {
         int lvl = getIntent().getIntExtra("selectedLevel", 0);
         switch (lvl) {
             case 0:
-                level = Level.EASY;
+                game.setLevel(Level.EASY);
                 break;
             case 1:
-                level = Level.MEDIUM;
+                game.setLevel(Level.MEDIUM);
                 break;
             case 2:
-                level = Level.HARD;
+                game.setLevel(Level.HARD);
                 break;
             default:
-                // TODO Fehlerbehandlung
+                //TODO: Was als Default-Wert?
                 break;
         }
-        return level;
+        return game.getLevel();
     }
 
-    private static void setDigit(int digit, int row, int column){
+    private static void setDigit(int digit, int row, int column, int[][] field){
         if(SudokuHelper.isValid(row, column, digit, field)){
             field[row][column] = digit;
         }else{
-            //TODO: Visueller Effekt
+            // TODO: Visueller Effekt
         }
     }
 
