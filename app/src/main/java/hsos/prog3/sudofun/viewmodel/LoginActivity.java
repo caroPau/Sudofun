@@ -58,6 +58,6 @@ public class LoginActivity extends AppCompatActivity {
             // TODO: Benachrichtigung, dass Username nicht leer sein darf
         }
         Intent intent = new Intent(LoginActivity.this, PlayActivity.class);
-        intent.putExtra(USER, (Parcelable) player);
+        intent.putExtra("player", (Parcelable) player);
     }
 }

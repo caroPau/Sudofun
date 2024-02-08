@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Timer über dem Spielfeld -->
+    <TextView
+        android:id="@+id/textViewTimer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:text="00:00"
+        android:textSize="20sp" />
+
+    <!-- Spielfeld -->
+    <GridLayout
+        android:id="@+id/gridLayoutSudoku"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textViewTimer"
+        android:layout_marginTop="16dp"
+        android:columnCount="9"
+        android:rowCount="9">
+
+        <!-- Hier werden die Zellen des Sudoku-Spielfelds dynamisch hinzugefügt -->
+
+    </GridLayout>
+
+    <!-- Button für den Hinweis -->
+    <Button
+        android:id="@+id/buttonHint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/gridLayoutSudoku"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="16dp"
+        android:text="Hinweis" />
+
+    <!-- Button für den Modus -->
+    <Button
+        android:id="@+id/buttonMode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/gridLayoutSudoku"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="16dp"
+        android:text="Modus" />
+
+</RelativeLayout>
