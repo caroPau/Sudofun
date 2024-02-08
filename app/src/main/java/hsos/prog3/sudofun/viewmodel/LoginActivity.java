@@ -37,7 +37,9 @@ public class LoginActivity extends AppCompatActivity {
         String username = login.getInput_username().getText().toString();
         User player = null;
         boolean isKnown = false;
-        if (!username.isEmpty()) {
+        if (username.isEmpty()) {
+            Toast.makeText(this, "Bitte gib einen Namen ein um fortzufahren!", Toast.LENGTH_SHORT).show();
+        } else {
             if (login.getUsers() != null) {
                 for (User user : login.getUsers()) {
                     if (Objects.equals(user.getName(), username)) {
@@ -54,11 +56,10 @@ public class LoginActivity extends AppCompatActivity {
                 player = new User(username);
                 login.getUsers().add(player);
             }
-        } else {
-            Toast.makeText(this, "Bitte gib einen Namen ein um fortzufahren!", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(LoginActivity.this, PlayActivity.class);
+            intent.putExtra("player", player);
+            startActivity(intent);
         }
-        Intent intent = new Intent(LoginActivity.this, PlayActivity.class);
-        intent.putExtra("player", player);
-        startActivity(intent);
+
     }
 }
