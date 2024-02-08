@@ -42,6 +42,7 @@
             android:layout_marginHorizontal="50dp"
             android:background="@drawable/edit_text_border_black_bg_white"
             android:inputType="textPersonName"
+            android:fontFamily="@font/alfa_slab_one_regular"
             android:padding="15dp"
             android:singleLine="true"
             android:textAlignment="center"
