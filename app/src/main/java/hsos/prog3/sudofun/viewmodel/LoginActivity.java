@@ -25,9 +25,6 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        if (users == null) {
-            users = new ArrayList<>();
-        }
         input_username = this.findViewById(R.id.inputUsername);
 
         Button btn_login = this.findViewById(R.id.btnLogin);
@@ -40,24 +37,21 @@ public class LoginActivity extends AppCompatActivity {
         User player = null;
         boolean isKnown = false;
         if (!username.isEmpty()) {
-           if (users != null) {
-               for (User user : users) {
-                   if (Objects.equals(user.getName(), username)) {
-                       isKnown = true;
-                       player = user;
-                   }
-               }
-               if (!isKnown) {
-                   player = new User(username);
-                   users.add(player);
-               }
-           } else {
-               // TODO: Was wenn users == null?
-           }
+            // TODO Über die Liste zu iterieren führt zu NullPointerException
+            for (User user : users) {
+                if (Objects.equals(user.getName(), username)) {
+                    isKnown = true;
+                    player = user;
+                }
+            }
+            if (!isKnown) {
+                player = new User(username);
+                users.add(player);
+            }
         } else {
             // TODO: Benachrichtigung, dass Username nicht leer sein darf
         }
         Intent intent = new Intent(LoginActivity.this, PlayActivity.class);
-        intent.putExtra("player", (Parcelable) player);
+        intent.putExtra(USER, (Parcelable) player);
     }
 }
