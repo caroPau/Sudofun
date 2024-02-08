@@ -51,18 +51,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:backgroundTint="@color/rose"
                 android:fontFamily="@font/alfa_slab_one_regular"
-                android:insetTop="2dp"
-                android:insetBottom="2dp"
+                android:background="@drawable/btn_primary"
                 android:paddingHorizontal="30dp"
                 android:paddingVertical="10dp"
-                android:text="Easy"
+                android:text="@string/easy"
                 android:textColor="@color/black"
                 android:textSize="25sp"
-                app:cornerRadius="15dp"
-                app:strokeColor="#000000"
-                app:strokeWidth="2dp" />
+              />
 
             <Button
                 android:id="@+id/btnMedium"
@@ -70,18 +66,13 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="50dp"
-                android:backgroundTint="@color/rose"
+                android:background="@drawable/btn_primary"
                 android:fontFamily="@font/alfa_slab_one_regular"
-                android:insetTop="2dp"
-                android:insetBottom="2dp"
                 android:paddingHorizontal="30dp"
                 android:paddingVertical="10dp"
-                android:text="Normal"
+                android:text="@string/medium"
                 android:textColor="@color/black"
-                android:textSize="25sp"
-                app:cornerRadius="15dp"
-                app:strokeColor="#000000"
-                app:strokeWidth="2dp" />
+                android:textSize="25sp" />
 
             <Button
                 android:id="@+id/btnHard"
@@ -89,18 +80,14 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="50dp"
-                android:backgroundTint="@color/rose"
                 android:fontFamily="@font/alfa_slab_one_regular"
-                android:insetTop="2dp"
-                android:insetBottom="2dp"
+                android:background="@drawable/btn_primary"
                 android:paddingHorizontal="30dp"
                 android:paddingVertical="10dp"
-                android:text="Expert"
+                android:text="@string/hard"
                 android:textColor="@color/black"
                 android:textSize="25sp"
-                app:cornerRadius="15dp"
-                app:strokeColor="#000000"
-                app:strokeWidth="2dp" />
+                 />
 
         </LinearLayout>
     </LinearLayout>
