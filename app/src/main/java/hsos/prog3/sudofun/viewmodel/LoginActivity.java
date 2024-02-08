@@ -2,10 +2,9 @@ package hsos.prog3.sudofun.viewmodel;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,23 +12,21 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 import hsos.prog3.sudofun.R;
+import hsos.prog3.sudofun.model.Login;
 import hsos.prog3.sudofun.model.User;
 
 
 public class LoginActivity extends AppCompatActivity {
-    private static final String USER = "hsos.prog3.sudofun.viewmodel.LoginActivity.USER";
-    private EditText input_username;
-    private ArrayList<User> users;
-
+    Login login = new Login();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        if (users == null) {
-            users = new ArrayList<>();
+        if (login.getUsers() == null) {
+            login.setUsers(new ArrayList<>());
         }
 
-        input_username = this.findViewById(R.id.inputUsername);
+        login.setInput_username(this.findViewById(R.id.inputUsername));
 
         Button btn_login = this.findViewById(R.id.btnLogin);
 
@@ -37,12 +34,12 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void loginButtonClickEvent(View view){
-        String username = input_username.getText().toString();
+        String username = login.getInput_username().getText().toString();
         User player = null;
         boolean isKnown = false;
         if (!username.isEmpty()) {
-            if (users != null) {
-                for (User user : users) {
+            if (login.getUsers() != null) {
+                for (User user : login.getUsers()) {
                     if (Objects.equals(user.getName(), username)) {
                         isKnown = true;
                         player = user;
@@ -50,16 +47,18 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 if (!isKnown) {
                     player = new User(username);
-                    users.add(player);
+                    login.getUsers().add(player);
                 }
             } else {
-                // Was wenn users== null??
+                login.setUsers(new ArrayList<>());
+                player = new User(username);
+                login.getUsers().add(player);
             }
         } else {
-            // TODO: Benachrichtigung, dass Username nicht leer sein darf
+            Toast.makeText(this, "Bitte gib einen Namen ein um fortzufahren!", Toast.LENGTH_SHORT).show();
         }
         Intent intent = new Intent(LoginActivity.this, PlayActivity.class);
-        intent.putExtra(USER, (Parcelable) player);
+        intent.putExtra("player", player);
         startActivity(intent);
     }
 }
