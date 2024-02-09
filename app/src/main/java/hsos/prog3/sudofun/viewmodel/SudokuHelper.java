@@ -1,7 +1,10 @@
 package hsos.prog3.sudofun.viewmodel;
 
+import java.util.Random;
+
 /**
  * Hilfsklasse zum Erstellen und Lösen von Sudokus
+ * Author: C. Paul
  */
 public class SudokuHelper {
 
@@ -15,7 +18,7 @@ public class SudokuHelper {
      * @param field Das Sudoku-Feld als 2D-Array.
      * @return true, wenn die Ziffer in der Zeile vorhanden ist, andernfalls false.
      */
-    private static boolean isDigitInRow(int row, int digit, int[][] field) {
+    private boolean isDigitInRow(int row, int digit, int[][] field) {
         for (int i = 0; i <= 8; i++) {
             if (field[row][i] == digit) {
                 return true;
@@ -33,7 +36,7 @@ public class SudokuHelper {
      * @param field  Das Sudoku-Feld als 2D-Array.
      * @return true, wenn die Ziffer in der Spalte vorhanden ist, andernfalls false.
      */
-    private static boolean isDigitInColumn(int column, int digit, int[][] field) {
+    private boolean isDigitInColumn(int column, int digit, int[][] field) {
         for (int i = 0; i <= 8; i++) {
             if (field[i][column] == digit) {
                 return true;
@@ -52,7 +55,7 @@ public class SudokuHelper {
      * @param field  Das Sudokufeld als 2D-Array
      * @return true, falls die Ziffer im Block vorhanden ist, andernfalls false
      */
-    private static boolean isDigitInBlock(int row, int column, int digit, int[][] field) {
+    private boolean isDigitInBlock(int row, int column, int digit, int[][] field) {
         int blockRow = row - row % 3;
         int blockColumn = column - column % 3;
 
@@ -76,10 +79,30 @@ public class SudokuHelper {
      * @param field  Das Sudoku-Feld als 2D-Array.
      * @return true, wenn die Ziffer gültig ist, andernfalls false.
      */
-    static boolean isValid(int row, int column, int digit, int[][] field) {
+    public boolean isValid(int row, int column, int digit, int[][] field) {
         if (!isDigitInRow(row, digit, field) && !isDigitInColumn(column, digit, field) && !isDigitInBlock(row, column, digit, field)) {
             return true;
         }
         return false;
+    }
+
+    /**
+     * Füllt ein zufällig ausgewähltes leeres Feld in einem übergebenen Sudoku-Feld
+     * @param field Das Sudoku-Feld als 2D-Array
+     * @param solvedField Die Lösung des Sudoku-Feldes
+     */
+    public void getRandomFreeCell(int[][] field, int[][] solvedField){
+        Random rand = new Random();
+        int row;
+        int column;
+
+        while(true){
+            row = rand.nextInt(9);
+            column = rand.nextInt(9);
+            if(field[row][column] == 0){
+                field[row][column] = solvedField[row][column];
+                return;
+            }
+        }
     }
 }

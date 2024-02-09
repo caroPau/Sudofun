@@ -16,8 +16,9 @@ public class SudokuCreator {
      * Verschiedene Schwierigkeitsstufen und die jeweils offengelegten Zellen
      */
 
-    private static int[][] solvedField;
+    private int[][] solvedField;
     private Level level;
+    private static SudokuHelper helper;
 
     /**
      * Konstruktor
@@ -27,6 +28,7 @@ public class SudokuCreator {
     public SudokuCreator(Level level){
         solvedField = new int[9][9];
         this.level = level;
+        helper = new SudokuHelper();
     }
 
 
@@ -51,7 +53,7 @@ public class SudokuCreator {
                 int index = rand.nextInt(list.size());
                 int digit = list.get(index);
                 list.remove(index);
-                if (SudokuHelper.isValid(i, j, digit, field)) {
+                if (helper.isValid(i, j, digit, field)) {
                     field[i][j] = digit;
                 }
             }
@@ -81,7 +83,7 @@ public class SudokuCreator {
             for (int column = 0; column < 9; column++) {
                 if (field[row][column] == 0) {
                     for (int digit = 1; digit <= 9; digit++) {
-                        if (SudokuHelper.isValid(row, column, digit, field)) {
+                        if (helper.isValid(row, column, digit, field)) {
                             field[row][column] = digit;
                             if (solveSudoku(field)) {
                                 return true;
@@ -108,7 +110,7 @@ public class SudokuCreator {
         int counter = 0;
         int numberInQuestion = 0;
         for(int i = 1; i <= 9; i++){
-            if(SudokuHelper.isValid(row, column, i, field)){
+            if(helper.isValid(row, column, i, field)){
                 counter++;
                 numberInQuestion = i;
             }
@@ -151,14 +153,14 @@ public class SudokuCreator {
      *
      * @return Ein lösbares Sudoku-Feld als 2D-Array.
      */
-    private static int[][] generateSolvableField() {
+    private int[][] generateSolvableField() {
         int[][] field = new int[9][9];
 
         fillDiagonalBoxes(field);
         if (!solveSudoku(field)) {
           generateSolvableField();
         }
-        solvedField = copySudoku(field);
+        this.solvedField = copySudoku(field);
         return field;
     }
 
@@ -168,7 +170,7 @@ public class SudokuCreator {
      * @param lvl Der Schwierigkeitsgrad des zu generierenden Sudoku-Felds.
      * @return Ein spielbares Sudoku-Feld als 2D-Array.
      */
-    private static int[][] generatePlayableField(Level lvl) {
+    private int[][] generatePlayableField(Level lvl) {
         int[][] field = generateSolvableField();
         Random rand = new Random();
         int freeCells = 81 - lvl.getOpenCells();
@@ -222,14 +224,23 @@ public class SudokuCreator {
      * @param lvl Der Schwierigkeitsgrad des Sudokus
      * @return Ein spielbares Sudoku-Feld als 2D-Array
      */
-    public static int[][] createSudoku(Level lvl){
+    public int[][] createSudoku(Level lvl){
         int[][] sudoku = generatePlayableField(lvl);
+        this.solvedField = copySudoku(sudoku);
         if(lvl == Level.EASY){
             while(!solveEasySudoku(sudoku)){
                 sudoku = generatePlayableField(lvl);
             }
         }
         return sudoku;
+    }
+
+    public int[][] getSolvedField(){
+        return solvedField;
+    }
+
+    public void setSolvedField(int[][] solvedField) {
+        this.solvedField = solvedField;
     }
 }
 

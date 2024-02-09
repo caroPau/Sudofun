@@ -17,7 +17,7 @@ import hsos.prog3.sudofun.model.User;
 
 
 public class LoginActivity extends AppCompatActivity {
-    Login login;
+    private Login login;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
