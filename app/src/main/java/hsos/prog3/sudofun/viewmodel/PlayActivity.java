@@ -22,7 +22,10 @@ public class PlayActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play);
-        initGame();
+        Bundle bundle = getIntent().getExtras();
+        user = bundle.getSerializable("user", User.class);
+        int level = bundle.getInt("selectedLevel", 0);
+        initGame(level);
         Button buttonHint = findViewById(R.id.buttonHint);
         Button buttonMode = findViewById(R.id.buttonMode);
         buttonHint.setOnClickListener(this::buttonHintClickEvent);
@@ -31,8 +34,7 @@ public class PlayActivity extends AppCompatActivity {
     }
 
 
-    private Level getSelectedLevel(Play game) {
-        int lvl = getIntent().getIntExtra("selectedLevel", 0);
+    private Level getSelectedLevel(Play game, int lvl) {
         switch (lvl) {
             case 0:
                 game.setLevel(Level.EASY);
@@ -58,10 +60,10 @@ public class PlayActivity extends AppCompatActivity {
         }
     }
 
-    private void initGame(){
+    private void initGame(int level){
         game = new Play();
-        SudokuCreator creator = new SudokuCreator(getSelectedLevel(game));
-        game.setField(creator.createSudoku(getSelectedLevel(game)));
+        SudokuCreator creator = new SudokuCreator(getSelectedLevel(game, level));
+        game.setField(creator.createSudoku(getSelectedLevel(game, level)));
         game.setSolvedField(creator.getSolvedField());
         game.setTimer(new TimerViewModel());
         game.getTimer().start();
@@ -93,7 +95,7 @@ public class PlayActivity extends AppCompatActivity {
     private void endGame(){
         updateBestTime();
         Bundle bundle = new Bundle();
-        bundle.putParcelable("user", user);
+        bundle.putSerializable("user", user);
         bundle.putString("level", game.getLevel().name());
         Intent intent = new Intent(PlayActivity.this, StatisticActivity.class);
         intent.putExtras(bundle);

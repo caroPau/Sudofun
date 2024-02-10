@@ -5,18 +5,10 @@ import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
 
-public class User implements Parcelable {
+import java.io.Serializable;
 
-    public static final Parcelable.Creator CREATOR = new Parcelable.Creator(){
-        public User createFromParcel(Parcel in){
-            return new User(in);
-        }
+public class User implements Serializable {
 
-        @Override
-        public Object[] newArray(int i) {
-            return new User[i];
-        }
-    };
     private final String name;
     int easyGames;
     int mediumGames;
@@ -35,33 +27,12 @@ public class User implements Parcelable {
         this.bestTimeHard = 0;
     }
 
-    public User(Parcel in){
-        this.name = in.readString();
-        this.easyGames = 0;
-        this.mediumGames = 0;
-        this.hardGames = 0;
-        this.bestTimeEasy = 0;
-        this.bestTimeMedium = 0;
-        this.bestTimeHard = 0;
-    }
-
     public String getName() {
         return name;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(@NonNull Parcel parcel, int i) {
-        parcel.writeString(this.name);
-    }
-
     public int getTotalGames() {
-        return easyGames + mediumGames + hardGames
-                ;
+        return easyGames + mediumGames + hardGames;
     }
 
     public int getEasyGames() {

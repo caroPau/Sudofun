@@ -13,10 +13,12 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 import hsos.prog3.sudofun.R;
+import hsos.prog3.sudofun.model.User;
 
 
 public class LevelActivity extends AppCompatActivity {
     private int selectedLevel;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +27,7 @@ public class LevelActivity extends AppCompatActivity {
         Button btn_easy = findViewById(R.id.btnEasy);
         Button btn_medium = findViewById(R.id.btnMedium);
         Button btn_hard = findViewById(R.id.btnHard);
+        user = getIntent().getSerializableExtra("user", User.class);
 
 
         btn_easy.setOnClickListener(new View.OnClickListener() {
@@ -57,7 +60,10 @@ public class LevelActivity extends AppCompatActivity {
     private void startNextActivity() {
 
         Intent intent = new Intent(LevelActivity.this, PlayActivity.class);
-        intent.putExtra("selectedLevel", selectedLevel);
+        Bundle bundle = new Bundle();
+        bundle.putInt("selectedLevel", selectedLevel);
+        bundle.putSerializable("user", user);
+        intent.putExtras(bundle);
         startActivity(intent);
     }
 

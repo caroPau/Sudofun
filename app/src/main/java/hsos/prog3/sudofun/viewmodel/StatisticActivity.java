@@ -13,13 +13,13 @@ import hsos.prog3.sudofun.model.User;
 
 public class StatisticActivity extends AppCompatActivity {
     User user;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistic);
-        //TODO: User aus Intent holen
-        //TODO: Level aus dem Intent holen
+        Bundle bundle = getIntent().getExtras();
+        Level level = Level.valueOf(bundle.getString("level"));
+        user = bundle.getSerializable("user", User.class);
         Statistic statistic = new Statistic(user);
 
     }
