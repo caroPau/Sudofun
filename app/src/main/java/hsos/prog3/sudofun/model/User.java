@@ -17,35 +17,32 @@ public class User implements Parcelable {
             return new User[i];
         }
     };
-    private String name;
-    int totalGames;
+    private final String name;
     int easyGames;
     int mediumGames;
     int hardGames;
-    float bestTimeEasy;
-    float bestTimeMedium;
-    float bestTimeHard;
+    long bestTimeEasy;
+    long bestTimeMedium;
+    long bestTimeHard;
 
     public User(String name){
         this.name = name;
-        this.totalGames = 0;
         this.easyGames = 0;
         this.mediumGames = 0;
         this.hardGames = 0;
-        this.bestTimeEasy = 0.0F;
-        this.bestTimeMedium = 0.0F;
-        this.bestTimeHard = 0.0F;
+        this.bestTimeEasy = 0;
+        this.bestTimeMedium = 0;
+        this.bestTimeHard = 0;
     }
 
     public User(Parcel in){
         this.name = in.readString();
-        this.totalGames = in.readInt();
-        this.easyGames = in.readInt();
-        this.mediumGames = in.readInt();
-        this.hardGames = in.readInt();
-        this.bestTimeEasy = in.readFloat();
-        this.bestTimeMedium = in.readFloat();
-        this.bestTimeHard = in.readFloat();
+        this.easyGames = 0;
+        this.mediumGames = 0;
+        this.hardGames = 0;
+        this.bestTimeEasy = 0;
+        this.bestTimeMedium = 0;
+        this.bestTimeHard = 0;
     }
 
     public String getName() {
@@ -60,5 +57,58 @@ public class User implements Parcelable {
     @Override
     public void writeToParcel(@NonNull Parcel parcel, int i) {
         parcel.writeString(this.name);
+    }
+
+    public int getTotalGames() {
+        return easyGames + mediumGames + hardGames
+                ;
+    }
+
+    public int getEasyGames() {
+        return easyGames;
+    }
+
+    public void setEasyGames(int easyGames) {
+        this.easyGames = easyGames;
+    }
+
+    public int getMediumGames() {
+        return mediumGames;
+    }
+
+    public void setMediumGames(int mediumGames) {
+        this.mediumGames = mediumGames;
+    }
+
+    public int getHardGames() {
+        return hardGames;
+    }
+
+    public void setHardGames(int hardGames) {
+        this.hardGames = hardGames;
+    }
+
+    public long getBestTimeEasy() {
+        return bestTimeEasy;
+    }
+
+    public void setBestTimeEasy(long bestTimeEasy) {
+        this.bestTimeEasy = bestTimeEasy;
+    }
+
+    public long getBestTimeMedium() {
+        return bestTimeMedium;
+    }
+
+    public void setBestTimeMedium(long bestTimeMedium) {
+        this.bestTimeMedium = bestTimeMedium;
+    }
+
+    public long getBestTimeHard() {
+        return bestTimeHard;
+    }
+
+    public void setBestTimeHard(long bestTimeHard) {
+        this.bestTimeHard = bestTimeHard;
     }
 }

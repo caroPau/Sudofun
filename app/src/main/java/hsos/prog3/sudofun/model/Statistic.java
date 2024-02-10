@@ -5,14 +5,12 @@ import java.util.HashSet;
 public class Statistic {
     User user;
     int totalGames;
-    int bestTime;
-    HashSet<User> highScores;
+    long bestTime;
 
     public Statistic(User user){
         this.user = user;
         totalGames = 0;
         bestTime = 0;
-        highScores = null;
     }
 
     public int getTotalGames() {
@@ -23,21 +21,14 @@ public class Statistic {
         this.totalGames = totalGames;
     }
 
-    public int getBestTime() {
+    public long getBestTime() {
         return bestTime;
     }
 
-    public void setBestTime(int bestTime) {
+    public void setBestTime(long bestTime) {
         this.bestTime = bestTime;
     }
 
-    public HashSet<User> getHighScores() {
-        return highScores;
-    }
-
-    public void setHighScores(HashSet<User> highScores) {
-        this.highScores = highScores;
-    }
 
     public User getUser() {
         return user;
@@ -47,6 +38,7 @@ public class Statistic {
         this.user = user;
     }
 
+    //TODO: Datenbank für Highscores
 }
 
 

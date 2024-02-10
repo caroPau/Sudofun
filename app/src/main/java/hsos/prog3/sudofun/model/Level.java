@@ -14,4 +14,6 @@ public enum Level {
     public int getOpenCells() {
         return openCells;
     }
+
+
 }

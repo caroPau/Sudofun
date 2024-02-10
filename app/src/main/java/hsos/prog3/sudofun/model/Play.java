@@ -6,13 +6,14 @@ import hsos.prog3.sudofun.viewmodel.TimerViewModel;
 public class Play {
     private Level level;
     private int[][] field;
-
     private int[][] solvedField;
     private TimerViewModel timer;
     private SudokuHelper helper;
+    private boolean isFinished;
 
     public Play(){
         helper = new SudokuHelper();
+        isFinished = false;
     }
 
     public Level getLevel() {
@@ -53,4 +54,13 @@ public class Play {
     public void setHelper(SudokuHelper helper) {
         this.helper = helper;
     }
+
+    public boolean isFinished() {
+        return isFinished;
+    }
+
+    public void setFinished(boolean finished) {
+        isFinished = finished;
+    }
+
 }

@@ -12,25 +12,22 @@ import androidx.appcompat.app.AppCompatActivity;
 import hsos.prog3.sudofun.R;
 import hsos.prog3.sudofun.model.Level;
 import hsos.prog3.sudofun.model.Play;
-
+import hsos.prog3.sudofun.model.User;
 
 public class PlayActivity extends AppCompatActivity {
     Play game;
+    User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play);
-        game = new Play();
-        SudokuCreator creator = new SudokuCreator(getSelectedLevel(game));
-        game.setField(creator.createSudoku(getSelectedLevel(game)));
-        game.setSolvedField(creator.getSolvedField());
-        game.setTimer(new TimerViewModel());
-        game.getTimer().start();
+        initGame();
         Button buttonHint = findViewById(R.id.buttonHint);
         Button buttonMode = findViewById(R.id.buttonMode);
         buttonHint.setOnClickListener(this::buttonHintClickEvent);
         buttonMode.setOnClickListener(this::buttonModeClickEvent);
+        //TODO: Buttons für Timer
     }
 
 
@@ -60,6 +57,49 @@ public class PlayActivity extends AppCompatActivity {
             editText.setTextColor(Color.RED);
         }
     }
+
+    private void initGame(){
+        game = new Play();
+        SudokuCreator creator = new SudokuCreator(getSelectedLevel(game));
+        game.setField(creator.createSudoku(getSelectedLevel(game)));
+        game.setSolvedField(creator.getSolvedField());
+        game.setTimer(new TimerViewModel());
+        game.getTimer().start();
+    }
+
+    private void updateBestTime(){
+        switch (game.getLevel()){
+            case EASY:
+                if(user.getBestTimeEasy() > game.getTimer().getTimer().getMillisSinceStart()){
+                    user.setBestTimeEasy(game.getTimer().getTimer().getMillisSinceStart());
+                }
+                user.setEasyGames(user.getEasyGames() + 1);
+                break;
+            case MEDIUM:
+                if(user.getBestTimeMedium() > game.getTimer().getTimer().getMillisSinceStart()){
+                    user.setBestTimeMedium(game.getTimer().getTimer().getMillisSinceStart());
+                }
+                user.setMediumGames(user.getEasyGames() + 1);
+                break;
+            case HARD:
+                if(user.getBestTimeHard() > game.getTimer().getTimer().getMillisSinceStart()){
+                    user.setBestTimeHard(game.getTimer().getTimer().getMillisSinceStart());
+                }
+                user.setHardGames(user.getHardGames() + 1);
+                break;
+        }
+    }
+
+    private void endGame(){
+        updateBestTime();
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("user", user);
+        bundle.putString("level", game.getLevel().name());
+        Intent intent = new Intent(PlayActivity.this, StatisticActivity.class);
+        intent.putExtras(bundle);
+        startActivity(intent);
+    }
+
 
     private void buttonHintClickEvent(View view){
         SudokuHelper helper = new SudokuHelper();

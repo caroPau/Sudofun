@@ -9,6 +9,7 @@ public class Timer {
     private final Runnable runnable;  // zur periodischen Aktualisierung des Timers
     private long start;         // Zeitstempel zum Startzeitpunkt
     private boolean isRunning;  // Zeigt an ob der Timer läuft
+    private long millisSinceStart; //Verstrichene Millisekunden seit Start
     private int seconds;        // Verstrichene Sekunden seit Start
     private int minutes;        // Verstrichene Minuten seit Start
 
@@ -23,7 +24,7 @@ public class Timer {
 
             @Override
             public void run() {
-                long millisSinceStart = System.currentTimeMillis() - start;
+                millisSinceStart = System.currentTimeMillis() - start;
                 seconds = (int)millisSinceStart / 1000;
                 minutes = seconds / 60;
 
@@ -72,5 +73,13 @@ public class Timer {
 
     public Handler getHandler() {
         return handler;
+    }
+
+    public long getMillisSinceStart() {
+        return millisSinceStart;
+    }
+
+    public void setMillisSinceStart(long millisSinceStart) {
+        this.millisSinceStart = millisSinceStart;
     }
 }

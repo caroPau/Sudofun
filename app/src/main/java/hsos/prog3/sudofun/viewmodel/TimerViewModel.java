@@ -55,5 +55,11 @@ public class TimerViewModel{
         return timer.getMinutes() + ":" + timer.getSeconds();
     }
 
+    public Timer getTimer() {
+        return timer;
+    }
 
+    public void setTimer(Timer timer) {
+        this.timer = timer;
+    }
 }
