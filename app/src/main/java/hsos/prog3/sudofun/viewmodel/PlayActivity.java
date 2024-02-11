@@ -60,15 +60,28 @@ public class PlayActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Erstellt ein neues Spiel und initialisiert dessen Variablen, erstellt neues Spielfeld und startet den Timer
+     * @param level Der gewünschte Schwierigkeitsgrad
+     *
+     * @author C. Paul
+     */
     private void initGame(int level){
         game = new Play();
         SudokuCreator creator = new SudokuCreator(getSelectedLevel(game, level));
         game.setField(creator.createSudoku(getSelectedLevel(game, level)));
         game.setSolvedField(creator.getSolvedField());
         game.setTimer(new TimerViewModel());
+        Thread thread = new Thread(game.getTimer().getTimer());
+        thread.start();
         game.getTimer().start();
     }
 
+    /**
+     * Aktualisiert bei Bedarf den Highscore des Spielers und inkrementiert die gespielten Spiele
+     *
+     * @author C. Paul
+     */
     private void updateBestTime(){
         switch (game.getLevel()){
             case EASY:
@@ -89,9 +102,16 @@ public class PlayActivity extends AppCompatActivity {
                 }
                 user.setHardGames(user.getHardGames() + 1);
                 break;
+            default:
+                break;
         }
     }
 
+    /**
+     * Ruft die Methode @updateBestTime auf, erstellt das Bundle und den Intent für die nächste Activity und startet diese
+     *
+     * @author C. Paul
+     */
     private void endGame(){
         updateBestTime();
         Bundle bundle = new Bundle();

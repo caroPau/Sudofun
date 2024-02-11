@@ -15,7 +15,9 @@ import hsos.prog3.sudofun.R;
 import hsos.prog3.sudofun.model.Login;
 import hsos.prog3.sudofun.model.User;
 
-
+/**
+ *  Logik für die LoginView
+ */
 public class LoginActivity extends AppCompatActivity {
     private Login login;
     @Override
@@ -34,6 +36,15 @@ public class LoginActivity extends AppCompatActivity {
         btn_login.setOnClickListener(this::loginButtonClickEvent);
     }
 
+    /**
+     * Logik für das ClickEvent auf den Login-Button
+     * Prüft ob ein Spieler schon bekannt ist, wenn nicht legt er einen neuen User an
+     * Erstellt den Intent für die nächste Activity und startet diese
+     *
+     * @param view Die aktuelle View auf der auch der Button ist
+     *
+     * @author C. Paul
+     */
     private void loginButtonClickEvent(View view){
         String username = login.getInput_username().getText().toString();
         User player = null;

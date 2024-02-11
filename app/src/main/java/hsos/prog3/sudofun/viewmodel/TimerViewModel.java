@@ -12,9 +12,11 @@ import hsos.prog3.sudofun.model.Timer;
  */
 public class TimerViewModel{
     private Handler handler;
-
     private Timer timer;
 
+    /**
+     * Konstruktor
+     */
     public TimerViewModel(){
         handler = new Handler(Looper.myLooper());
         timer = new Timer(handler);
@@ -26,7 +28,7 @@ public class TimerViewModel{
     public void start(){
         timer.setStart(System.currentTimeMillis());
         timer.setRunning(true);
-        timer.getHandler().post(timer.getRunnable());
+        timer.getHandler().post(timer);
     }
 
     /**
@@ -34,7 +36,7 @@ public class TimerViewModel{
      */
     public void pause(){
         timer.setRunning(false);
-        timer.getHandler().removeCallbacks(timer.getRunnable());
+        timer.getHandler().removeCallbacks(timer);
     }
 
     /**
@@ -42,7 +44,16 @@ public class TimerViewModel{
      */
     public void startAfterPause(){
         timer.setRunning(true);
-        timer.getHandler().post(timer.getRunnable());
+        timer.getHandler().post(timer);
+    }
+
+    /**
+     * Rechnet die verstrichene Zeit (in Millisekunden) in Minuten und Sekunden um und speichert diese in den entsprechenden Variablen des Timers
+     */
+    public void millisToSecondsAndMinutes(){
+        int secondsTemp = ((int) (timer.getMillisSinceStart() / 1000));
+        timer.setMinutes(secondsTemp / 60);
+        timer.setSeconds(secondsTemp - timer.getMinutes() * 60);
     }
 
     /**
@@ -55,11 +66,11 @@ public class TimerViewModel{
         return timer.getMinutes() + ":" + timer.getSeconds();
     }
 
+    /**
+     *  Getter
+     */
     public Timer getTimer() {
         return timer;
     }
 
-    public void setTimer(Timer timer) {
-        this.timer = timer;
-    }
 }

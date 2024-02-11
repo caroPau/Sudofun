@@ -24,6 +24,14 @@ public class StatisticActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Initialisiert die Variablen von Statistic mit den zum Level passenden Werten des Users
+     *
+     * @param statistic Die Statistik die hier initialisiert wird
+     * @param level Der Schwierigkeitsgrad für den wir die Statistiken wollen
+     *
+     * @author C. Paul
+     */
     private void getValuesStatistic(Statistic statistic, Level level) {
         switch (level) {
             case EASY:
