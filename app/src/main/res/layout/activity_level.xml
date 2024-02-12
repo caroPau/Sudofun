@@ -32,8 +32,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="100dp"
+            android:color="@color/black"
             android:fontFamily="@font/alfa_slab_one_regular"
             android:text="@string/sudofun"
+            android:textColor="@color/black"
             android:textSize="50sp" />
 
 <!--TODO Button Group zentrieren -->
