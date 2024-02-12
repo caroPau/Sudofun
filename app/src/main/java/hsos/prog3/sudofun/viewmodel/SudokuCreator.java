@@ -2,6 +2,7 @@ package hsos.prog3.sudofun.viewmodel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import hsos.prog3.sudofun.model.Level;

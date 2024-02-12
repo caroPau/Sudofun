@@ -1,13 +1,16 @@
 package hsos.prog3.sudofun.viewmodel;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.GridLayout;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.content.res.AppCompatResources;
+
+import java.util.ArrayList;
 
 import hsos.prog3.sudofun.R;
 import hsos.prog3.sudofun.model.Level;
@@ -18,11 +21,13 @@ public class PlayActivity extends AppCompatActivity {
     Play game;
     User user;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play);
         Bundle bundle = getIntent().getExtras();
+        PlayGraphic graphic = new PlayGraphic();
         user = bundle.getSerializable("user", User.class);
         int level = bundle.getInt("selectedLevel", 0);
         initGame(level);
@@ -53,11 +58,12 @@ public class PlayActivity extends AppCompatActivity {
         return game.getLevel();
     }
 
-    private static void setDigit(Play game,int digit, int row, int column, int[][] field, EditText editText){
-        field[row][column] = digit;
-        if(!game.getHelper().isValid(row, column, digit, field)){
-            editText.setTextColor(Color.RED);
-        }
+    private void setDigit(int[][] field, int digit, int row, int column){
+       if(game.getHelper().isCoordinateEditable(game.getOccupiedCells(), row, column)){
+           field[row][column] = digit;
+       }else{
+           Toast.makeText(this,"Dieses Feld kann nicht geändert werden!", Toast.LENGTH_SHORT).show();
+       }
     }
 
     /**
@@ -72,6 +78,8 @@ public class PlayActivity extends AppCompatActivity {
         game.setField(creator.createSudoku(getSelectedLevel(game, level)));
         game.setSolvedField(creator.getSolvedField());
         game.setTimer(new TimerViewModel());
+        game.setOccupiedCells(game.getHelper().getOccupiedCells(game.getField()));
+        game.setOpenCells(81 - game.getOccupiedCells().size());
         Thread thread = new Thread(game.getTimer().getTimer());
         thread.start();
         game.getTimer().start();
@@ -107,6 +115,8 @@ public class PlayActivity extends AppCompatActivity {
         }
     }
 
+
+
     /**
      * Ruft die Methode @updateBestTime auf, erstellt das Bundle und den Intent für die nächste Activity und startet diese
      *
@@ -132,5 +142,6 @@ public class PlayActivity extends AppCompatActivity {
     private void buttonModeClickEvent(View view){
 
     }
+
 
 }

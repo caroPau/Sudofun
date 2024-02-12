@@ -1,5 +1,7 @@
 package hsos.prog3.sudofun.model;
 
+import java.util.ArrayList;
+
 import hsos.prog3.sudofun.viewmodel.SudokuHelper;
 import hsos.prog3.sudofun.viewmodel.TimerViewModel;
 
@@ -10,6 +12,8 @@ public class Play {
     private TimerViewModel timer;
     private SudokuHelper helper;
     private boolean isFinished;
+    private ArrayList<Integer> occupiedCells;
+    private int openCells;
 
     public Play(){
         helper = new SudokuHelper();
@@ -63,4 +67,19 @@ public class Play {
         isFinished = finished;
     }
 
+    public ArrayList<Integer> getOccupiedCells() {
+        return occupiedCells;
+    }
+
+    public void setOccupiedCells(ArrayList<Integer> occupiedCells) {
+        this.occupiedCells = occupiedCells;
+    }
+
+    public int getOpenCells() {
+        return openCells;
+    }
+
+    public void setOpenCells(int openCells) {
+        this.openCells = openCells;
+    }
 }

@@ -1,6 +1,11 @@
 package hsos.prog3.sudofun.viewmodel;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Map;
 import java.util.Random;
+
+import hsos.prog3.sudofun.model.Play;
 
 /**
  * Hilfsklasse zum Erstellen und Lösen von Sudokus
@@ -105,4 +110,35 @@ public class SudokuHelper {
             }
         }
     }
+    private int coordinateAsOneNumber(int row, int column){
+        return row * 10 + column;
+    }
+
+    public boolean isCoordinateEditable(ArrayList<Integer> occupiedCells, int row, int column){
+        return !occupiedCells.contains(coordinateAsOneNumber(row, column));
+    }
+
+    public ArrayList<Integer> getOccupiedCells(int[][] field){
+        ArrayList<Integer> occupiedCells = null;
+        for(int i = 0; i <= 8; i++){
+            for(int j = 0; j <= 8; j++){
+                if(field[i][j] != 0){
+                    occupiedCells.add(coordinateAsOneNumber(i, j));
+                }
+            }
+        }
+        return occupiedCells;
+    }
+
+    /*public Map<Integer, Integer> getOccupiedCells(int[][] field){
+        Map<Integer, Integer> occupiedCells = null;
+        for(int i = 0; i <= 8; i++){
+            for(int j = 0; j <= 8; j++){
+                if(field[i][j] != 0){
+                    occupiedCells.put(i, j);
+                }
+            }
+        }
+        return occupiedCells;
+    }*/
 }
