@@ -13,6 +13,9 @@ import hsos.prog3.sudofun.model.Play;
  */
 public class SudokuHelper {
 
+    ArrayList<Integer> occupiedCells = new ArrayList<>();
+
+
     public SudokuHelper() {
     }
     /**
@@ -119,7 +122,6 @@ public class SudokuHelper {
     }
 
     public ArrayList<Integer> getOccupiedCells(int[][] field){
-        ArrayList<Integer> occupiedCells = null;
         for(int i = 0; i <= 8; i++){
             for(int j = 0; j <= 8; j++){
                 if(field[i][j] != 0){

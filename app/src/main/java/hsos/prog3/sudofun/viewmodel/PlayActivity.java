@@ -4,13 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.GridLayout;
+import android.widget.CompoundButton;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.content.res.AppCompatResources;
-
-import java.util.ArrayList;
 
 import hsos.prog3.sudofun.R;
 import hsos.prog3.sudofun.model.Level;
@@ -20,7 +18,6 @@ import hsos.prog3.sudofun.model.User;
 public class PlayActivity extends AppCompatActivity {
     Play game;
     User user;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +32,17 @@ public class PlayActivity extends AppCompatActivity {
         Button buttonMode = findViewById(R.id.buttonMode);
         buttonHint.setOnClickListener(this::buttonHintClickEvent);
         buttonMode.setOnClickListener(this::buttonModeClickEvent);
-        //TODO: Buttons für Timer
+        ToggleButton buttonPause = findViewById(R.id.btnPause);
+        buttonPause.setChecked(false);
+
+        buttonPause.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                togglePauseButton(isChecked, buttonView);
+            }
+        });
     }
+
 
 
     private Level getSelectedLevel(Play game, int lvl) {
@@ -141,6 +147,22 @@ public class PlayActivity extends AppCompatActivity {
 
     private void buttonModeClickEvent(View view){
 
+    }
+
+    /**
+     * Ermöglicht das Pausieren und Restarten des Timers
+     *
+     * @author M. Paul
+     */
+    private void togglePauseButton(boolean isChecked, CompoundButton buttonView) {
+        if (!isChecked) {
+            buttonView.setBackgroundResource(R.drawable.icon_play);
+            game.getTimer().pause();
+            //TODO: Alle EditText Zellen deaktivieren
+        } else {
+            buttonView.setBackgroundResource(R.drawable.icon_pause);
+            game.getTimer().startAfterPause();
+        }
     }
 
 

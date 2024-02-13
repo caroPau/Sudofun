@@ -1,31 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
         android:alpha="0.5"
-        android:src="@drawable/splash_numbers" />
+        android:src="@drawable/splash_numbers"
+        android:contentDescription="@string/colorful_numbers_background" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/my_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/rose"
-            android:elevation="4dp"
-            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
-
 
         <TextView
             android:layout_width="wrap_content"
@@ -38,14 +28,15 @@
             android:textColor="@color/black"
             android:textSize="50sp" />
 
-<!--TODO Button Group zentrieren -->
+
         <!--TODO Buttons anwählbar machen, ohne dass man direkt auf nächste View kommt -->
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="447dp"
+            android:gravity="center"
             android:orientation="vertical"
-            android:layout_marginTop="100dp"
+
             >
 
             <Button
@@ -53,14 +44,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:background="@drawable/btn_secondary"
+                android:elevation="15dp"
                 android:fontFamily="@font/alfa_slab_one_regular"
-                android:background="@drawable/btn_primary"
                 android:paddingHorizontal="30dp"
                 android:paddingVertical="10dp"
+                android:shadowDx="5"
+                android:shadowDy="5"
                 android:text="@string/easy"
                 android:textColor="@color/black"
                 android:textSize="25sp"
-              />
+                android:onClick="selectLevel"
+                />
 
             <Button
                 android:id="@+id/btnMedium"
@@ -68,13 +63,15 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="50dp"
-                android:background="@drawable/btn_primary"
+                android:background="@drawable/btn_secondary"
                 android:fontFamily="@font/alfa_slab_one_regular"
                 android:paddingHorizontal="30dp"
                 android:paddingVertical="10dp"
                 android:text="@string/medium"
                 android:textColor="@color/black"
-                android:textSize="25sp" />
+                android:textSize="25sp"
+                android:onClick="selectLevel"
+                />
 
             <Button
                 android:id="@+id/btnHard"
@@ -82,16 +79,34 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="50dp"
+                android:background="@drawable/btn_secondary"
                 android:fontFamily="@font/alfa_slab_one_regular"
-                android:background="@drawable/btn_primary"
                 android:paddingHorizontal="30dp"
                 android:paddingVertical="10dp"
                 android:text="@string/hard"
                 android:textColor="@color/black"
                 android:textSize="25sp"
-                 />
+                android:onClick="selectLevel"
+                />
 
         </LinearLayout>
+
+        <Button
+            android:id="@+id/startGame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:paddingHorizontal="30dp"
+            android:paddingVertical="10dp"
+            android:background="@drawable/btn_primary"
+            android:text="@string/play"
+            android:textColor="@color/black"
+            android:textSize="25sp"
+            android:fontFamily="@font/alfa_slab_one_regular"
+            android:onClick="startNextActivity"
+            />
     </LinearLayout>
+
+
 
 </FrameLayout>
