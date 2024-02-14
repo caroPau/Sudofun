@@ -168,5 +168,12 @@ public class PlayActivity extends AppCompatActivity {
         }
     }
 
-
+    /**
+     * Ermöglicht das navigieren zum Menü.
+     *
+     * @author M. Paul
+     */
+    public void navigateBack(View view) {
+        this.finish();
+    }
 }
