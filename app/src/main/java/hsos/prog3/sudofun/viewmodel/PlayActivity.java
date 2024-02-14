@@ -7,6 +7,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -85,9 +86,10 @@ public class PlayActivity extends AppCompatActivity {
             game.setOccupiedCells(game.getHelper().getOccupiedCells(game.getField()));
             game.setOpenCells(81 - game.getOccupiedCells().size());
         }
-        Thread thread = new Thread(game.getTimer().getTimer());
-        thread.start();
         game.getTimer().start();
+        Thread thread = new Thread(game.getTimer().getTimerRunnable());
+        //thread.setPriority(-20);
+        thread.start();
     }
 
     /**
@@ -98,20 +100,20 @@ public class PlayActivity extends AppCompatActivity {
     private static void updateBestTime(){
         switch (game.getLevel()){
             case EASY:
-                if(user.getBestTimeEasy() > game.getTimer().getTimer().getMillisSinceStart()){
-                    user.setBestTimeEasy(game.getTimer().getTimer().getMillisSinceStart());
+                if(user.getBestTimeEasy() > game.getTimer().getMillisSinceStart()){
+                    user.setBestTimeEasy(game.getTimer().getMillisSinceStart());
                 }
                 user.setEasyGames(user.getEasyGames() + 1);
                 break;
             case MEDIUM:
-                if(user.getBestTimeMedium() > game.getTimer().getTimer().getMillisSinceStart()){
-                    user.setBestTimeMedium(game.getTimer().getTimer().getMillisSinceStart());
+                if(user.getBestTimeMedium() > game.getTimer().getMillisSinceStart()){
+                    user.setBestTimeMedium(game.getTimer().getMillisSinceStart());
                 }
                 user.setMediumGames(user.getEasyGames() + 1);
                 break;
             case HARD:
-                if(user.getBestTimeHard() > game.getTimer().getTimer().getMillisSinceStart()){
-                    user.setBestTimeHard(game.getTimer().getTimer().getMillisSinceStart());
+                if(user.getBestTimeHard() > game.getTimer().getMillisSinceStart()){
+                    user.setBestTimeHard(game.getTimer().getMillisSinceStart());
                 }
                 user.setHardGames(user.getHardGames() + 1);
                 break;
@@ -159,7 +161,7 @@ public class PlayActivity extends AppCompatActivity {
      * @author M. Paul
      */
     private void togglePauseButton(boolean isChecked, CompoundButton buttonView) {
-        if (!isChecked) {
+        if (isChecked) {
             buttonView.setBackgroundResource(R.drawable.icon_play);
             game.getTimer().pause();
             //TODO: Alle EditText Zellen deaktivieren

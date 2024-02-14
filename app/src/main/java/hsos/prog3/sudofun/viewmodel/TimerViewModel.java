@@ -1,12 +1,8 @@
 package hsos.prog3.sudofun.viewmodel;
 
 import android.os.Handler;
-import android.os.Looper;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-
-import hsos.prog3.sudofun.model.Timer;
 
 /**
  *  Implementiert einen Timer und zeigt die verstrichene Zeit in einer TextView
@@ -15,7 +11,17 @@ public class TimerViewModel{
 
     private Runnable timerRunnable;
     private Handler handler;
-    private Timer timer;
+    private long start;         // Zeitstempel zum Startzeitpunkt
+
+    private long millisSinceStart; //Verstrichene Millisekunden seit Start
+
+    private long pause;        //Zeitstempel zum Pausezeitpunkt
+
+    private int seconds;        // Verstrichene Sekunden seit Start
+
+    private int minutes;        // Verstrichene Minuten seit Start
+
+    private boolean isRunning;  // Zeigt an ob der Timer läuft
 
     private TextView actualTimerView;
 
@@ -26,68 +32,82 @@ public class TimerViewModel{
      */
     public TimerViewModel(){
         handler = new Handler();
-        timer = new Timer(handler);
+        isRunning = false;
     }
 
     /**
      * Startet den Timer
      */
     public void start(){
-        timer.setStart(System.currentTimeMillis());
-        timer.setRunning(true);
+
+        isRunning = true;
+        start = System.currentTimeMillis();
         timerRunnable = new Runnable() {
             @Override
             public void run() {
+                millisSinceStart = System.currentTimeMillis() - start;
                 actualTimerView.setText(stringify());
                 millisToSecondsAndMinutes();
-                timer.getHandler().postDelayed(this, 1000);
+                if(isRunning) {
+                    handler.postDelayed(this, 1000);
+                }
             }
 
         };
-        timer.getHandler().postDelayed(timerRunnable,1000);
     }
 
     /**
      * Pausiert den Timer
      */
     public void pause(){
-        timer.setRunning(false);
-        timer.getHandler().removeCallbacks(timer);
+        isRunning = false;
+        pause = System.currentTimeMillis();
     }
 
     /**
      * Startet den Timer nach dem Pausieren
      */
     public void startAfterPause(){
-        timer.setRunning(true);
-        timer.getHandler().postDelayed(timerRunnable,1000);
+        isRunning = true;
+        start -= (pause-System.currentTimeMillis());
+        handler.postDelayed(timerRunnable,1000);
     }
 
     /**
      * Rechnet die verstrichene Zeit (in Millisekunden) in Minuten und Sekunden um und speichert diese in den entsprechenden Variablen des Timers
      */
     public void millisToSecondsAndMinutes(){
-        int secondsTemp = ((int) (timer.getMillisSinceStart() / 1000));
-        timer.setMinutes(secondsTemp / 60);
-        timer.setSeconds(secondsTemp - timer.getMinutes() * 60);
+        int secondsTemp = ((int) (millisSinceStart / 1000));
+        minutes = secondsTemp / 60;
+        seconds = secondsTemp - minutes * 60;
     }
 
     /**
      *  Formatiert Timer zu einem String
      *
      */
+
     //@NonNull
     //@Override
     public String stringify(){
-        return timer.getMinutes() + ":" + timer.getSeconds();
+        return String.format("%02d", minutes) + ":" + String.format("%02d", seconds);
     }
 
     /**
      *  Getter
      */
-    public Timer getTimer() {
-        return timer;
+
+    public long getMillisSinceStart() {
+        return millisSinceStart;
     }
+
+    public Runnable getTimerRunnable() {
+        return timerRunnable;
+    }
+
+    /**
+     *  Setter
+     */
 
     public void setActualTimerView(TextView txtview){
         actualTimerView = txtview;

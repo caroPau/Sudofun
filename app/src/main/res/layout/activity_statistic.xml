@@ -59,8 +59,9 @@
         android:shadowDx="3"
         android:shadowDy="3"
         android:shadowRadius="1.6"
-        android:background=""
         />
+<!--        android:background=""-->
+
 
         <RelativeLayout
             android:layout_width="match_parent"
