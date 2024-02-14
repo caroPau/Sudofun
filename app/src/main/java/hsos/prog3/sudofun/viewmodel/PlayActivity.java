@@ -142,11 +142,12 @@ public class PlayActivity extends AppCompatActivity {
 
 
     private void buttonHintClickEvent(View view){
-        int id ,row = 0, column = 0;
+        int id = 0;
         id = game.getHelper().getRandomFreeCell(game.getField(), game.getSolvedField());
         EditText editText = findViewById(id);
-        game.getHelper().numberToCoordinate(id, row, column);
-        editText.setText(String.valueOf(game.getField()[row][column]));
+        game.getHelper().numberToCoordinate(id, game);
+        int value = game.getSolvedField()[game.getRowHint()][game.getColumnHint()];
+        editText.setText(String.valueOf(value));
 
         //TODO: Ansicht aktualisieren
     }

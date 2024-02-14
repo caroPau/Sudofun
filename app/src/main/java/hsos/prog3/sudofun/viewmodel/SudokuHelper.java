@@ -1,11 +1,10 @@
 package hsos.prog3.sudofun.viewmodel;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.Random;
 
 import hsos.prog3.sudofun.model.Play;
+
 
 /**
  * Hilfsklasse zum Erstellen und Lösen von Sudokus
@@ -114,13 +113,13 @@ public class SudokuHelper {
         return row * 10 + column;
     }
 
-    public void numberToCoordinate(int number, int row, int column){
+    public void numberToCoordinate(int number, Play game){
         if(number < 10){
-            row = 0;
-            column = number;
+            game.setRowHint(0);
+            game.setColumnHint(number);
         }else{
-            row = number / 10;
-            column = number % 10;
+            game.setRowHint(number / 10);
+            game.setColumnHint(number % 10);
         }
     }
 
