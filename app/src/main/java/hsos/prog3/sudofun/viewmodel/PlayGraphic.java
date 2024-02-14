@@ -1,9 +1,9 @@
 package hsos.prog3.sudofun.viewmodel;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
@@ -12,13 +12,16 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.GridLayout;
 
+import hsos.prog3.sudofun.viewmodel.PlayActivity;
+
 import androidx.appcompat.content.res.AppCompatResources;
 
 import hsos.prog3.sudofun.R;
-
+import hsos.prog3.sudofun.model.Play;
 
 
 public class PlayGraphic {
+    PlayActivity activity = new PlayActivity();
 
     public static int getBildschirmBreite() {
         return Resources.getSystem().getDisplayMetrics().widthPixels;
@@ -29,11 +32,11 @@ public class PlayGraphic {
 
 
     //TODO: Feld dynamisch erzeugen, OnClickListener
-    public void generateGrid(Context context, int[][] field, GridLayout grid, SudokuHelper helper){
+    public void generateGrid(Context context, Play game, GridLayout grid){
         for(int row = 0; row <= 8; row++){
             for(int column = 0; column <= 8; column++){
                 EditText editText = new EditText(context);
-                editText.setId(helper.coordinateAsOneNumber(row, column));
+                editText.setId(game.getHelper().coordinateAsOneNumber(row, column));
                 editText.setGravity(Gravity.CENTER);
                 editText.setInputType(InputType.TYPE_CLASS_NUMBER);
                 editText.setTextColor(Color.BLACK);
@@ -41,32 +44,11 @@ public class PlayGraphic {
                 ViewGroup.LayoutParams lparams = new ViewGroup.LayoutParams(getBildschirmBreite()/10,getBildschirmBreite()/10);
                 editText.setLayoutParams(lparams);
 
-                if(field[row][column] != 0){
-                    editText.setText(String.valueOf(field[row][column]));
+                if(game.getField()[row][column] != 0){
+                    editText.setText(String.valueOf(game.getField()[row][column]));
                     editText.setEnabled(false);
                 }
-
-
-                int finalRow = row;
-                int finalColumn = column;
-                TextWatcher textWatcher = new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                    }
-
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {
-                        if(s != null) {
-                            field[finalRow][finalColumn] = Integer.parseInt(s.toString());
-                        }
-                    }
-
-                    @Override
-                    public void afterTextChanged(Editable s) {
-
-                    }
-                };
+                TextWatcher textWatcher = activity.setTextWatcher(row, column);
                 editText.addTextChangedListener(textWatcher);
                 grid.addView(editText);
             }

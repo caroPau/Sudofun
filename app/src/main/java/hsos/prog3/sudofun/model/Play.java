@@ -14,8 +14,9 @@ public class Play {
     private boolean isFinished;
     private ArrayList<Integer> occupiedCells;
     private int openCells;
-    int rowHint;
-    int columnHint;
+    private int rowHint;
+    private int columnHint;
+    private int freeCells;
 
     public Play(){
         helper = new SudokuHelper();
@@ -100,5 +101,13 @@ public class Play {
 
     public void setColumnHint(int columnHint) {
         this.columnHint = columnHint;
+    }
+
+    public int getFreeCells() {
+        return freeCells;
+    }
+
+    public void setFreeCells(int freeCells) {
+        this.freeCells = freeCells;
     }
 }

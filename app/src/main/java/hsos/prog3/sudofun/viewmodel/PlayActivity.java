@@ -2,6 +2,8 @@ package hsos.prog3.sudofun.viewmodel;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -17,8 +19,8 @@ import hsos.prog3.sudofun.model.Play;
 import hsos.prog3.sudofun.model.User;
 
 public class PlayActivity extends AppCompatActivity {
-    Play game;
-    User user;
+    static Play game;
+    static User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +31,7 @@ public class PlayActivity extends AppCompatActivity {
         user = bundle.getSerializable("user", User.class);
         int level = bundle.getInt("selectedLevel", 0);
         initGame(level);
-        graphic.generateGrid(this,game.getField(),findViewById(R.id.gridLayoutSudoku), game.getHelper());
+        graphic.generateGrid(this, game, findViewById(R.id.gridLayoutSudoku));
         Button buttonHint = findViewById(R.id.buttonHint);
         Button buttonMode = findViewById(R.id.buttonMode);
         buttonHint.setOnClickListener(this::buttonHintClickEvent);
@@ -64,14 +66,6 @@ public class PlayActivity extends AppCompatActivity {
         return game.getLevel();
     }
 
-    private void setDigit(int[][] field, int digit, int row, int column){
-       if(game.getHelper().isCoordinateEditable(game.getOccupiedCells(), row, column)){
-           field[row][column] = digit;
-       }else{
-           Toast.makeText(this,"Dieses Feld kann nicht geändert werden!", Toast.LENGTH_SHORT).show();
-       }
-    }
-
     /**
      * Erstellt ein neues Spiel und initialisiert dessen Variablen, erstellt neues Spielfeld und startet den Timer
      * @param level Der gewünschte Schwierigkeitsgrad
@@ -82,6 +76,7 @@ public class PlayActivity extends AppCompatActivity {
         game = new Play();
         SudokuCreator creator = new SudokuCreator(getSelectedLevel(game, level));
         game.setField(creator.createSudoku(getSelectedLevel(game, level)));
+        game.setFreeCells(81 - game.getLevel().getOpenCells());
         game.setSolvedField(creator.getSolvedField());
         game.setTimer(new TimerViewModel());
         if(game.getHelper().getOccupiedCells(game.getField()) != null) {
@@ -98,7 +93,7 @@ public class PlayActivity extends AppCompatActivity {
      *
      * @author C. Paul
      */
-    private void updateBestTime(){
+    private static void updateBestTime(){
         switch (game.getLevel()){
             case EASY:
                 if(user.getBestTimeEasy() > game.getTimer().getTimer().getMillisSinceStart()){
@@ -130,7 +125,7 @@ public class PlayActivity extends AppCompatActivity {
      *
      * @author C. Paul
      */
-    private void endGame(){
+    public void endGame(){
         updateBestTime();
         Bundle bundle = new Bundle();
         bundle.putSerializable("user", user);
@@ -140,16 +135,16 @@ public class PlayActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-
     private void buttonHintClickEvent(View view){
-        int id = 0;
-        id = game.getHelper().getRandomFreeCell(game.getField(), game.getSolvedField());
+        int id = game.getHelper().getRandomFreeCell(game.getField(), game.getSolvedField());
         EditText editText = findViewById(id);
         game.getHelper().numberToCoordinate(id, game);
         int value = game.getSolvedField()[game.getRowHint()][game.getColumnHint()];
         editText.setText(String.valueOf(value));
-
-        //TODO: Ansicht aktualisieren
+        game.setFreeCells(game.getFreeCells() - 1);
+        if(game.getFreeCells() == 0){
+            endGame();
+        }
     }
 
     private void buttonModeClickEvent(View view){
@@ -179,6 +174,33 @@ public class PlayActivity extends AppCompatActivity {
      */
     public void navigateBack(View view) {
         this.finish();
+    }
+
+    public TextWatcher setTextWatcher(int row, int column){
+        return new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(s != null) {
+                    if(game.getField()[row][column] == 0){
+                        game.setFreeCells(game.getFreeCells() - 1);
+                    }
+                    game.getField()[row][column] = Integer.parseInt(s.toString());
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(game.getFreeCells() == 0){
+                    endGame();
+
+                }
+            }
+        };
     }
 
 
