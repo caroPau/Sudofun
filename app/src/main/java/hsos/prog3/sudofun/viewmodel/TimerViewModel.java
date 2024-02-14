@@ -2,6 +2,7 @@ package hsos.prog3.sudofun.viewmodel;
 
 import android.os.Handler;
 import android.os.Looper;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
@@ -11,14 +12,20 @@ import hsos.prog3.sudofun.model.Timer;
  *  Implementiert einen Timer und zeigt die verstrichene Zeit in einer TextView
  */
 public class TimerViewModel{
+
+    private Runnable timerRunnable;
     private Handler handler;
     private Timer timer;
+
+    private TextView actualTimerView;
+
+    private TextView oldTimerView;
 
     /**
      * Konstruktor
      */
     public TimerViewModel(){
-        handler = new Handler(Looper.myLooper());
+        handler = new Handler();
         timer = new Timer(handler);
     }
 
@@ -28,7 +35,16 @@ public class TimerViewModel{
     public void start(){
         timer.setStart(System.currentTimeMillis());
         timer.setRunning(true);
-        timer.getHandler().post(timer);
+        timerRunnable = new Runnable() {
+            @Override
+            public void run() {
+                actualTimerView.setText(stringify());
+                millisToSecondsAndMinutes();
+                timer.getHandler().postDelayed(this, 1000);
+            }
+
+        };
+        timer.getHandler().postDelayed(timerRunnable,1000);
     }
 
     /**
@@ -44,7 +60,7 @@ public class TimerViewModel{
      */
     public void startAfterPause(){
         timer.setRunning(true);
-        timer.getHandler().post(timer);
+        timer.getHandler().postDelayed(timerRunnable,1000);
     }
 
     /**
@@ -60,9 +76,9 @@ public class TimerViewModel{
      *  Formatiert Timer zu einem String
      *
      */
-    @NonNull
-    @Override
-    public String toString(){
+    //@NonNull
+    //@Override
+    public String stringify(){
         return timer.getMinutes() + ":" + timer.getSeconds();
     }
 
@@ -71,6 +87,14 @@ public class TimerViewModel{
      */
     public Timer getTimer() {
         return timer;
+    }
+
+    public void setActualTimerView(TextView txtview){
+        actualTimerView = txtview;
+    }
+
+    public void setOldTimerView(TextView txtview){
+        oldTimerView = txtview;
     }
 
 }

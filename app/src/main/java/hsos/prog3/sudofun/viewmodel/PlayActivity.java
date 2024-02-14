@@ -7,7 +7,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
-import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
@@ -79,6 +79,8 @@ public class PlayActivity extends AppCompatActivity {
         game.setFreeCells(81 - game.getLevel().getOpenCells());
         game.setSolvedField(creator.getSolvedField());
         game.setTimer(new TimerViewModel());
+        game.getTimer().setActualTimerView((TextView) findViewById(R.id.textViewTimer));
+        game.getTimer().setOldTimerView((TextView) findViewById(R.id.textViewTimer_old));
         if(game.getHelper().getOccupiedCells(game.getField()) != null) {
             game.setOccupiedCells(game.getHelper().getOccupiedCells(game.getField()));
             game.setOpenCells(81 - game.getOccupiedCells().size());

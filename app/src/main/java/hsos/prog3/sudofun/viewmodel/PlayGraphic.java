@@ -43,7 +43,7 @@ public class PlayGraphic {
                 editText.setBackground(AppCompatResources.getDrawable(context, R.drawable.edit_text_field_border_black));
                 ViewGroup.LayoutParams lparams = new ViewGroup.LayoutParams(getBildschirmBreite()/10,getBildschirmBreite()/10);
                 editText.setLayoutParams(lparams);
-
+                editText.setCursorVisible(false);
                 if(game.getField()[row][column] != 0){
                     editText.setText(String.valueOf(game.getField()[row][column]));
                     editText.setEnabled(false);
