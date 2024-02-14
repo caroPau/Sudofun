@@ -96,7 +96,7 @@ public class SudokuHelper {
      * @param field Das Sudoku-Feld als 2D-Array
      * @param solvedField Die Lösung des Sudoku-Feldes
      */
-    public void getRandomFreeCell(int[][] field, int[][] solvedField){
+    public int getRandomFreeCell(int[][] field, int[][] solvedField){
         Random rand = new Random();
         int row;
         int column;
@@ -106,12 +106,22 @@ public class SudokuHelper {
             column = rand.nextInt(9);
             if(field[row][column] == 0){
                 field[row][column] = solvedField[row][column];
-                return;
+                return coordinateAsOneNumber(row, column);
             }
         }
     }
-    private int coordinateAsOneNumber(int row, int column){
+    public int coordinateAsOneNumber(int row, int column){
         return row * 10 + column;
+    }
+
+    public void numberToCoordinate(int number, int row, int column){
+        if(number < 10){
+            row = 0;
+            column = number;
+        }else{
+            row = number / 10;
+            column = number % 10;
+        }
     }
 
     public boolean isCoordinateEditable(ArrayList<Integer> occupiedCells, int row, int column){

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
@@ -28,7 +29,7 @@ public class PlayActivity extends AppCompatActivity {
         user = bundle.getSerializable("user", User.class);
         int level = bundle.getInt("selectedLevel", 0);
         initGame(level);
-        graphic.generateGrid(this,game.getField(),findViewById(R.id.gridLayoutSudoku));
+        graphic.generateGrid(this,game.getField(),findViewById(R.id.gridLayoutSudoku), game.getHelper());
         Button buttonHint = findViewById(R.id.buttonHint);
         Button buttonMode = findViewById(R.id.buttonMode);
         buttonHint.setOnClickListener(this::buttonHintClickEvent);
@@ -141,8 +142,12 @@ public class PlayActivity extends AppCompatActivity {
 
 
     private void buttonHintClickEvent(View view){
-        SudokuHelper helper = new SudokuHelper();
-        helper.getRandomFreeCell(game.getField(), game.getSolvedField());
+        int id ,row = 0, column = 0;
+        id = game.getHelper().getRandomFreeCell(game.getField(), game.getSolvedField());
+        EditText editText = findViewById(id);
+        game.getHelper().numberToCoordinate(id, row, column);
+        editText.setText(String.valueOf(game.getField()[row][column]));
+
         //TODO: Ansicht aktualisieren
     }
 
