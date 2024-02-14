@@ -84,7 +84,7 @@
         android:columnCount="9"
         android:rowCount="9">
 
-        <EditText
+        <!--<EditText
             android:id="@+id/TxtR1C1"
             android:layout_width="42sp"
             android:layout_height="42sp"
@@ -1054,8 +1054,7 @@
             android:ems="10"
             android:gravity="center"
             android:inputType="number"
-            android:maxLength="1" />
-
+            android:maxLength="1" />-->
     </GridLayout>
 
     <Button

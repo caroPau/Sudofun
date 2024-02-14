@@ -28,6 +28,7 @@ public class PlayActivity extends AppCompatActivity {
         user = bundle.getSerializable("user", User.class);
         int level = bundle.getInt("selectedLevel", 0);
         initGame(level);
+        graphic.generateGrid(this,game.getField(),findViewById(R.id.gridLayoutSudoku));
         Button buttonHint = findViewById(R.id.buttonHint);
         Button buttonMode = findViewById(R.id.buttonMode);
         buttonHint.setOnClickListener(this::buttonHintClickEvent);
@@ -84,8 +85,10 @@ public class PlayActivity extends AppCompatActivity {
         game.setField(creator.createSudoku(getSelectedLevel(game, level)));
         game.setSolvedField(creator.getSolvedField());
         game.setTimer(new TimerViewModel());
-        game.setOccupiedCells(game.getHelper().getOccupiedCells(game.getField()));
-        game.setOpenCells(81 - game.getOccupiedCells().size());
+        if(game.getHelper().getOccupiedCells(game.getField()) != null) {
+            game.setOccupiedCells(game.getHelper().getOccupiedCells(game.getField()));
+            game.setOpenCells(81 - game.getOccupiedCells().size());
+        }
         Thread thread = new Thread(game.getTimer().getTimer());
         thread.start();
         game.getTimer().start();

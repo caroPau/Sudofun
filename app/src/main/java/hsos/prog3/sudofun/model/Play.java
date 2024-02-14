@@ -17,6 +17,7 @@ public class Play {
 
     public Play(){
         helper = new SudokuHelper();
+        occupiedCells = new ArrayList<>();
         isFinished = false;
     }
 
