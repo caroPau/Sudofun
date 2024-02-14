@@ -127,14 +127,15 @@ public class SudokuCreator {
      * @return true, wenn das Sudoku ohne Raten lösbar ist, andernfalls false
      */
     private static boolean solveEasySudoku(int[][] field){
+        int[][] tempSudoku = copySudoku(field);
         int counter = 0;
         int lastCounter = 0;
         while(true) {
             for (int row = 0; row < 9; row++) {
                 for (int column = 0; column < 9; column++) {
-                    if (field[row][column] == 0) {
+                    if (tempSudoku[row][column] == 0) {
                         counter++;
-                        fillEasyCells(field, row, column);
+                        fillEasyCells(tempSudoku, row, column);
                     }
                 }
             }
@@ -173,13 +174,14 @@ public class SudokuCreator {
      */
     private int[][] generatePlayableField(Level lvl) {
         int[][] field = generateSolvableField();
+        this.solvedField = copySudoku(field);
         Random rand = new Random();
         int freeCells = 81 - lvl.getOpenCells();
-        for (int i = 0; i <= freeCells; i++) {
+        for (int i = freeCells; i != 0; i--){
             int randomRow = rand.nextInt(9);
             int randomColumn = rand.nextInt(9);
             if (field[randomRow][randomColumn] == 0) {
-                i--;
+                i++;
             } else {
                 field[randomRow][randomColumn] = 0;
             }
@@ -227,13 +229,11 @@ public class SudokuCreator {
      */
     public int[][] createSudoku(Level lvl){
         int[][] sudoku = generatePlayableField(lvl);
-
         if(lvl == Level.EASY){
             while(!solveEasySudoku(sudoku)){
                 sudoku = generatePlayableField(lvl);
             }
         }
-        this.solvedField = copySudoku(sudoku);
         return sudoku;
     }
 

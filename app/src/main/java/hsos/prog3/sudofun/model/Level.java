@@ -1,9 +1,9 @@
 package hsos.prog3.sudofun.model;
 
 public enum Level {
-    EASY(35),
-    MEDIUM(30),
-    HARD(25);
+    EASY(40),
+    MEDIUM(35),
+    HARD(28);
 
     private final int openCells;
 
