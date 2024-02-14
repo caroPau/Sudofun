@@ -12,14 +12,27 @@
         android:src="@drawable/splash_numbers" />
 
     <LinearLayout
+        android:id="@+id/statisticTable"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_marginVertical="10dp"
+        >
+
+    <LinearLayout
         android:id="@+id/timer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:layout_centerHorizontal="true"
         android:gravity="center"
-        android:orientation="vertical"
-        >
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_timer"
+            />
 
         <TextView
             android:id="@+id/textViewTimer"
@@ -29,33 +42,63 @@
             android:fontFamily="@font/alfa_slab_one_regular"
             android:text="@string/time"
             android:textColor="@color/black"
-            android:textSize="20sp" />
+            android:textSize="25sp" />
+
 
     </LinearLayout>
 
 
-    <Button
-        android:id="@+id/buttonHint"
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="16dp"
-        android:background="@drawable/btn_primary"
+        android:text="@string/gewonnen"
         android:fontFamily="@font/alfa_slab_one_regular"
-        android:text="@string/hinweis" />
+        android:textColor="@color/rose"
+        android:textSize="25sp"
+        android:shadowColor="#000000"
+        android:shadowDx="3"
+        android:shadowDy="3"
+        android:shadowRadius="1.6"
+        android:background=""
+        />
 
-    <!-- Button für den Modus -->
-    <Button
-        android:id="@+id/buttonMode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="377dp"
 
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/btn_primary"
-        android:fontFamily="@font/alfa_slab_one_regular"
-        android:text="@string/modus"
-        android:textSize="14sp" />
+            >
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                />
+
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/buttonHint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_below="@id/statisticTable"
+            android:background="@drawable/btn_primary"
+            android:fontFamily="@font/alfa_slab_one_regular"
+            android:text="Statistik" />
+
+        <!-- Button für den Modus -->
+        <Button
+            android:id="@+id/buttonMode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/buttonHint"
+            android:layout_margin="10dp"
+            android:background="@drawable/btn_primary"
+            android:fontFamily="@font/alfa_slab_one_regular"
+            android:text="Neues Spiel"
+            android:textSize="14sp" />
+
+    </LinearLayout>
 
 </RelativeLayout>

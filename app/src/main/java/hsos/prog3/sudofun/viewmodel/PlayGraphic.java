@@ -3,14 +3,12 @@ package hsos.prog3.sudofun.viewmodel;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.text.InputType;
 import android.view.Gravity;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.GridLayout;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
 
 import hsos.prog3.sudofun.R;
@@ -22,10 +20,10 @@ public class PlayGraphic {
     public static int getBildschirmBreite() {
         return Resources.getSystem().getDisplayMetrics().widthPixels;
     }
+
     public static int getBildschirmHoehe() {
         return Resources.getSystem().getDisplayMetrics().heightPixels;
     }
-
 
     //TODO: Feld dynamisch erzeugen, OnClickListener
     public void generateGrid(Context context, int[][] field, GridLayout grid){
@@ -36,7 +34,7 @@ public class PlayGraphic {
                 editText.setGravity(Gravity.CENTER);
                 editText.setInputType(InputType.TYPE_CLASS_NUMBER);
                 editText.setTextColor(Color.BLACK);
-                editText.setBackground(AppCompatResources.getDrawable(context, R.drawable.blackbordershape));
+                editText.setBackground(AppCompatResources.getDrawable(context, R.drawable.edit_text_field_border_black));
                 ViewGroup.LayoutParams lparams = new ViewGroup.LayoutParams(getBildschirmBreite()/10,getBildschirmBreite()/10);
                 editText.setLayoutParams(lparams);
 

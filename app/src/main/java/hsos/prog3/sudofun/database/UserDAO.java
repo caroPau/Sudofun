@@ -1,21 +1,26 @@
 package hsos.prog3.sudofun.database;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
+import androidx.room.Insert;
 import androidx.room.Query;
-import androidx.room.Upsert;
+import androidx.room.OnConflictStrategy;
+
 
 import java.util.List;
 
 @Dao
 public interface UserDAO {
+
     @Query("SELECT * FROM userentity")
-    List<UserEntity> getAll();
+    LiveData<List<UserEntity>> getAll();
 
     @Query("SELECT * FROM userentity WHERE username LIKE :username LIMIT 1")
-    UserEntity findByName(String username);
+    LiveData<UserEntity> findByName(String username);
 
-    @Upsert
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(UserEntity... users);
 
     @Delete

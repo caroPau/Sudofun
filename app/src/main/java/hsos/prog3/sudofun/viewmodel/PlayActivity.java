@@ -44,8 +44,6 @@ public class PlayActivity extends AppCompatActivity {
         });
     }
 
-
-
     private Level getSelectedLevel(Play game, int lvl) {
         switch (lvl) {
             case 0:
@@ -176,4 +174,6 @@ public class PlayActivity extends AppCompatActivity {
     public void navigateBack(View view) {
         this.finish();
     }
+
+
 }

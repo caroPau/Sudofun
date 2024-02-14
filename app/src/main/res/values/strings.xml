@@ -14,5 +14,6 @@
     <string name="hard">Hard</string>
     <string name="play">Play</string>
     <string name="colorful_numbers_background">colorful numbers background</string>
+    <string name="gewonnen">Gewonnen!</string>
 
 </resources>
