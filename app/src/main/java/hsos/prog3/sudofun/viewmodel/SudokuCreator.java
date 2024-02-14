@@ -227,12 +227,13 @@ public class SudokuCreator {
      */
     public int[][] createSudoku(Level lvl){
         int[][] sudoku = generatePlayableField(lvl);
-        this.solvedField = copySudoku(sudoku);
+
         if(lvl == Level.EASY){
             while(!solveEasySudoku(sudoku)){
                 sudoku = generatePlayableField(lvl);
             }
         }
+        this.solvedField = copySudoku(sudoku);
         return sudoku;
     }
 

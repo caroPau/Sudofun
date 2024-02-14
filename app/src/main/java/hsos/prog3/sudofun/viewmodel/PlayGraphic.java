@@ -1,6 +1,7 @@
 package hsos.prog3.sudofun.viewmodel;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.text.InputType;
@@ -15,7 +16,16 @@ import androidx.appcompat.content.res.AppCompatResources;
 import hsos.prog3.sudofun.R;
 
 
+
 public class PlayGraphic {
+
+    public static int getBildschirmBreite() {
+        return Resources.getSystem().getDisplayMetrics().widthPixels;
+    }
+    public static int getBildschirmHoehe() {
+        return Resources.getSystem().getDisplayMetrics().heightPixels;
+    }
+
 
     //TODO: Feld dynamisch erzeugen, OnClickListener
     public void generateGrid(Context context, int[][] field, GridLayout grid){
@@ -27,17 +37,14 @@ public class PlayGraphic {
                 editText.setInputType(InputType.TYPE_CLASS_NUMBER);
                 editText.setTextColor(Color.BLACK);
                 editText.setBackground(AppCompatResources.getDrawable(context, R.drawable.blackbordershape));
-                ViewGroup.LayoutParams lparams = new ViewGroup.LayoutParams(42,42);
+                ViewGroup.LayoutParams lparams = new ViewGroup.LayoutParams(getBildschirmBreite()/10,getBildschirmBreite()/10);
                 editText.setLayoutParams(lparams);
-                /*android:id="@+id/TxtR1C1"
-                android:layout_width="42sp"
-                android:layout_height="42sp"
-                android:background="@drawable/blackbordershape"
-                android:digits="123456789"
-                android:ems="10"
-                android:gravity="center"
-                android:inputType="number"
-                android:maxLength="1" />*/
+
+                //android:digits="123456789"
+                //android:ems="10"
+                //android:gravity="center"
+                //android:inputType="number"
+                //android:maxLength="1"
 
                 if(field[i][j] != 0){
                     editText.setText(String.valueOf(field[i][j]));
