@@ -28,7 +28,7 @@ public class PlayActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play);
         Bundle bundle = getIntent().getExtras();
-        PlayGraphic graphic = new PlayGraphic();
+        PlayGraphic graphic = new PlayGraphic(this);
         user = bundle.getSerializable("user", User.class);
         int level = bundle.getInt("selectedLevel", 0);
         initGame(level);
@@ -164,6 +164,10 @@ public class PlayActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    private void buttonModusClickEvent(View view){
+
+    }
+
     private void buttonHintClickEvent(View view){
         int id = game.getHelper().getRandomFreeCell(game.getField(), game.getSolvedField());
         EditText editText = findViewById(id);
@@ -204,33 +208,5 @@ public class PlayActivity extends AppCompatActivity {
     public void navigateBack(View view) {
         this.finish();
     }
-
-    public TextWatcher setTextWatcher(int row, int column){
-        return new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(s != null) {
-                    if(game.getField()[row][column] == 0){
-                        game.setFreeCells(game.getFreeCells() - 1);
-                    }
-                    game.getField()[row][column] = Integer.parseInt(s.toString());
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if(game.getFreeCells() == 0){
-                    endGame();
-
-                }
-            }
-        };
-    }
-
 
 }

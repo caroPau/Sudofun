@@ -124,7 +124,7 @@
 
     <Button
         android:id="@+id/buttonHint"
-        android:layout_width="match_parent"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/gridLayoutSudoku"
         android:layout_alignParentStart="true"
@@ -136,7 +136,7 @@
     <!-- Button für den Modus -->
     <Button
         android:id="@+id/buttonMode"
-        android:layout_width="match_parent"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/gridLayoutSudoku"
         android:layout_alignParentEnd="true"
