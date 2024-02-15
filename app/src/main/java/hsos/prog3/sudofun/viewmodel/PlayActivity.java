@@ -27,15 +27,16 @@ public class PlayActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play);
+        binding = ActivityPlayBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        setContentView(view);
         Bundle bundle = getIntent().getExtras();
         PlayGraphic graphic = new PlayGraphic(this);
         user = bundle.getSerializable("user", User.class);
         int level = bundle.getInt("selectedLevel", 0);
         initGame(level);
         graphic.generateGrid(this, game, binding.gridLayoutSudoku);
-        binding = ActivityPlayBinding.inflate(getLayoutInflater());
-        View view = binding.getRoot();
-        setContentView(view);
+
         binding.buttonHint.setOnClickListener(this::buttonHintClickEvent);
         binding.buttonMode.setOnClickListener(this::buttonModeClickEvent);
         binding.btnPause.setChecked(false);
