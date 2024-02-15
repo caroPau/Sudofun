@@ -19,7 +19,7 @@ import hsos.prog3.sudofun.model.User;
 
 public class LevelActivity extends AppCompatActivity {
     private int selectedLevel = -1;
-    private User user;
+    //private User user;
 
     private ActivityLevelBinding binding;
 
@@ -27,7 +27,7 @@ public class LevelActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_level);
-        user = getIntent().getSerializableExtra("user", User.class);
+        //user = getIntent().getSerializableExtra("user", User.class);
 
         binding = ActivityLevelBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
@@ -54,10 +54,12 @@ public class LevelActivity extends AppCompatActivity {
     public void startNextActivity(View view) {
         if(selectedLevel != -1) {
             Intent intent = new Intent(LevelActivity.this, PlayActivity.class);
-            Bundle bundle = new Bundle();
-            bundle.putInt("selectedLevel", selectedLevel);
-            bundle.putSerializable("user", user);
-            intent.putExtras(bundle);
+            /*Bundle bundle = new Bundle();
+            bundle.putInt("selectedLevel", selectedLevel);*/
+            intent.putExtra("selectedLevel", selectedLevel);
+            /*bundle.putSerializable("user", user);
+            intent.putExtras(bundle);*/
+            intent.putExtra("username", getIntent().getStringExtra("name"));
             startActivity(intent);
         } else {
             Toast.makeText(this, "Bitte wähle eine Schwierigkeit um fortzufahren!", Toast.LENGTH_SHORT).show();

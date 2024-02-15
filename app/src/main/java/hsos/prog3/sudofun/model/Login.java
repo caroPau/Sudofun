@@ -2,12 +2,16 @@ package hsos.prog3.sudofun.model;
 
 import android.widget.EditText;
 
-import java.util.ArrayList;
+import java.util.List;
+
+import hsos.prog3.sudofun.database.AppDatabase;
+import hsos.prog3.sudofun.database.UserEntity;
 
 public class Login {
 
     private EditText input_username; //Textfeld für die Eingabe des Namens
-    private ArrayList<User> users;
+    private List<UserEntity> users;
+    public static AppDatabase db;
 
     /**
      *  Getter
@@ -15,7 +19,7 @@ public class Login {
     public EditText getInput_username() {
         return input_username;
     }
-    public ArrayList<User> getUsers() {
+    public List<UserEntity> getUsers() {
         return users;
     }
 
@@ -25,7 +29,8 @@ public class Login {
     public void setInput_username(EditText input_username) {
         this.input_username = input_username;
     }
-    public void setUsers(ArrayList<User> users) {
+    public void setUsers(List<UserEntity> users) {
         this.users = users;
     }
+
 }

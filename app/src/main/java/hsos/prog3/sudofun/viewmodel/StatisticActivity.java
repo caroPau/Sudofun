@@ -12,14 +12,13 @@ import hsos.prog3.sudofun.model.Statistic;
 import hsos.prog3.sudofun.model.User;
 
 public class StatisticActivity extends AppCompatActivity {
-    User user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistic);
         Bundle bundle = getIntent().getExtras();
         Level level = Level.valueOf(bundle.getString("level"));
-        user = bundle.getSerializable("user", User.class);
+        User user = bundle.getSerializable("user", User.class);
         Statistic statistic = new Statistic(user);
 
     }
@@ -32,7 +31,7 @@ public class StatisticActivity extends AppCompatActivity {
      *
      * @author C. Paul
      */
-    private void getValuesStatistic(Statistic statistic, Level level) {
+    private void getValuesStatistic(Statistic statistic, Level level, User user) {
         switch (level) {
             case EASY:
                 statistic.setBestTime(user.getBestTimeEasy());

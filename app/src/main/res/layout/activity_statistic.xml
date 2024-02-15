@@ -59,10 +59,9 @@
         android:shadowDx="3"
         android:shadowDy="3"
         android:shadowRadius="1.6"
+        android:background="@color/design_default_color_primary"
         />
 <!--        android:background=""-->
-
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="377dp"
@@ -73,7 +72,6 @@
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-
 
                 />
 

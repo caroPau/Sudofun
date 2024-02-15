@@ -1,25 +1,30 @@
 package hsos.prog3.sudofun.viewmodel;
 
+import static hsos.prog3.sudofun.model.Login.db;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import hsos.prog3.sudofun.R;
 import hsos.prog3.sudofun.databinding.ActivityPlayBinding;
+import hsos.prog3.sudofun.database.UserEntity;
 import hsos.prog3.sudofun.model.Level;
 import hsos.prog3.sudofun.model.Play;
 import hsos.prog3.sudofun.model.User;
 
 public class PlayActivity extends AppCompatActivity {
     static Play game;
-    static User user;
+    static UserEntity user;
 
     private ActivityPlayBinding binding;
 
@@ -27,15 +32,25 @@ public class PlayActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play);
+        //Bundle bundle = getIntent().getExtras();
+        //user = bundle.getSerializable("user", User.class);
+        //int level = bundle.getInt("selectedLevel", 0);
+        String username = getIntent().getStringExtra("username");
+        user = db.userDAO().findByName(username);
+        int level = getIntent().getIntExtra("level", 0);
         binding = ActivityPlayBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
         Bundle bundle = getIntent().getExtras();
         PlayGraphic graphic = new PlayGraphic(this);
-        user = bundle.getSerializable("user", User.class);
-        int level = bundle.getInt("selectedLevel", 0);
         initGame(level);
         graphic.generateGrid(this, game, binding.gridLayoutSudoku);
+        Button buttonHint = findViewById(R.id.buttonHint);
+        Button buttonMode = findViewById(R.id.buttonMode);
+        buttonHint.setOnClickListener(this::buttonHintClickEvent);
+        buttonMode.setOnClickListener(this::buttonModeClickEvent);
+        ToggleButton buttonPause = findViewById(R.id.btnPause);
+        buttonPause.setChecked(false);
 
         binding.buttonHint.setOnClickListener(this::buttonHintClickEvent);
         binding.buttonMode.setOnClickListener(this::buttonModeClickEvent);
@@ -87,6 +102,8 @@ public class PlayActivity extends AppCompatActivity {
             game.setOccupiedCells(game.getHelper().getOccupiedCells(game.getField()));
             game.setOpenCells(81 - game.getOccupiedCells().size());
         }
+        PlayGraphic graphic = new PlayGraphic(this);
+        graphic.generateGrid(this, game, findViewById(R.id.gridLayoutSudoku));
         game.getTimer().start();
         Thread thread = new Thread(game.getTimer().getTimerRunnable());
         thread.start();
@@ -100,22 +117,22 @@ public class PlayActivity extends AppCompatActivity {
     private static void updateBestTime(){
         switch (game.getLevel()){
             case EASY:
-                if(user.getBestTimeEasy() > game.getTimer().getMillisSinceStart()){
-                    user.setBestTimeEasy(game.getTimer().getMillisSinceStart());
+                if (user.highscoreEasy > game.getTimer().getMillisSinceStart()) {
+                    user.highscoreEasy = game.getTimer().getMillisSinceStart();
                 }
-                user.setEasyGames(user.getEasyGames() + 1);
+                user.gamesEasy++;
                 break;
             case MEDIUM:
-                if(user.getBestTimeMedium() > game.getTimer().getMillisSinceStart()){
-                    user.setBestTimeMedium(game.getTimer().getMillisSinceStart());
+                if (user.highscoreMedium > game.getTimer().getMillisSinceStart()) {
+                    user.highscoreMedium = game.getTimer().getMillisSinceStart();
                 }
-                user.setMediumGames(user.getEasyGames() + 1);
+                user.gamesMedium++;
                 break;
             case HARD:
-                if(user.getBestTimeHard() > game.getTimer().getMillisSinceStart()){
-                    user.setBestTimeHard(game.getTimer().getMillisSinceStart());
+                if (user.highscoreHard > game.getTimer().getMillisSinceStart()) {
+                    user.highscoreHard = game.getTimer().getMillisSinceStart();
                 }
-                user.setHardGames(user.getHardGames() + 1);
+                user.highscoreHard++;
                 break;
             default:
                 break;
@@ -126,18 +143,18 @@ public class PlayActivity extends AppCompatActivity {
      *
      * @author C. Paul
      */
-    private void showBestTime(){
-       TextView oldTimerView = (TextView) findViewById(R.id.textViewTimer_old);
+    private void showBestTime() {
+        TextView oldTimerView = findViewById(R.id.textViewTimer_old);
         long bestTime = 0;
-        switch(game.getLevel()){
+        switch (game.getLevel()) {
             case EASY:
-                bestTime = user.getBestTimeEasy();
+                bestTime = user.highscoreEasy;
                 break;
             case MEDIUM:
-                bestTime = user.getBestTimeMedium();
+                bestTime = user.highscoreMedium;
                 break;
             case HARD:
-                bestTime = user.getBestTimeHard();
+                bestTime = user.highscoreHard;
                 break;
             default:
                 break;
@@ -158,15 +175,11 @@ public class PlayActivity extends AppCompatActivity {
     public void endGame(){
         updateBestTime();
         Bundle bundle = new Bundle();
-        bundle.putSerializable("user", user);
+        bundle.putString("username", user.username);
         bundle.putString("level", game.getLevel().name());
         Intent intent = new Intent(PlayActivity.this, StatisticActivity.class);
         intent.putExtras(bundle);
         startActivity(intent);
-    }
-
-    private void buttonModusClickEvent(View view){
-
     }
 
     private void buttonHintClickEvent(View view){

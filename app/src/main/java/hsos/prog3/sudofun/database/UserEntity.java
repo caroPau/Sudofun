@@ -30,13 +30,13 @@ public class UserEntity {
     @ColumnInfo(name = "highscore_hard")
     public long highscoreHard;
 
-    public UserEntity(@NonNull String username){
+    public UserEntity(@NonNull String username, int gamesEasy, int gamesMedium, int gamesHard, long highscoreEasy, long highscoreMedium, long highscoreHard){
         this.username = username;
-        this.gamesEasy = 0;
-        this.gamesMedium = 0;
-        this.gamesHard = 0;
-        this.highscoreEasy = 0;
-        this.highscoreMedium = 0;
-        this.highscoreHard = 0;
+        this.gamesEasy = gamesEasy;
+        this.gamesMedium = gamesMedium;
+        this.gamesHard = gamesHard;
+        this.highscoreEasy = highscoreEasy;
+        this.highscoreMedium = highscoreMedium;
+        this.highscoreHard = highscoreHard;
     }
 }

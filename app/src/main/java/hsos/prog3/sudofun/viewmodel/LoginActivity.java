@@ -1,5 +1,7 @@
 package hsos.prog3.sudofun.viewmodel;
 
+import static hsos.prog3.sudofun.model.Login.db;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -7,6 +9,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -14,6 +17,8 @@ import java.util.Objects;
 import hsos.prog3.sudofun.R;
 import hsos.prog3.sudofun.databinding.ActivityLevelBinding;
 import hsos.prog3.sudofun.databinding.ActivityLoginBinding;
+import hsos.prog3.sudofun.database.AppDatabase;
+import hsos.prog3.sudofun.database.UserEntity;
 import hsos.prog3.sudofun.model.Login;
 import hsos.prog3.sudofun.model.User;
 
@@ -28,13 +33,13 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         login = new Login();
-        if (login.getUsers() == null) {
-            login.setUsers(new ArrayList<>());
-        }
+        db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "app_database").build();
+        login.setUsers(db.userDAO().getAll());
+
+        login.setInput_username(this.findViewById(R.id.inputUsername));
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-
         login.setInput_username(binding.inputUsername);
         binding.btnLogin.setOnClickListener(this::loginButtonClickEvent);
     }
@@ -50,29 +55,34 @@ public class LoginActivity extends AppCompatActivity {
      */
     private void loginButtonClickEvent(View view){
         String username = login.getInput_username().getText().toString();
-        User player = null;
+        UserEntity player = null;
         boolean isKnown = false;
         if (username.isEmpty()) {
             Toast.makeText(this, "Bitte gib einen Namen ein um fortzufahren!", Toast.LENGTH_SHORT).show();
         } else {
             if (login.getUsers() != null) {
-                for (User user : login.getUsers()) {
-                    if (Objects.equals(user.getName(), username)) {
+                for (UserEntity user : login.getUsers()) {
+                    if (Objects.equals(user.username, username)) {
                         isKnown = true;
-                        player = user;
+                        break;
                     }
                 }
                 if (!isKnown) {
-                    player = new User(username);
+                    player = new UserEntity(username, 0, 0,0, 0, 0, 0);
                     login.getUsers().add(player);
                 }
             } else {
                 login.setUsers(new ArrayList<>());
-                player = new User(username);
+                player = new UserEntity(username, 0, 0, 0, 0, 0, 0);
                 login.getUsers().add(player);
             }
+            if(player != null) {
+                db.userDAO().insertAll(player);
+            }else{
+                db.userDAO().insertAll(new UserEntity(username, 0, 0, 0, 0, 0, 0));
+            }
             Intent intent = new Intent(LoginActivity.this, LevelActivity.class);
-            intent.putExtra("user", player);
+            intent.putExtra("username", username);
             startActivity(intent);
         }
 

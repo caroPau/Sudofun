@@ -122,25 +122,27 @@
 
     </GridLayout>
 
+    <!-- Button für den Modus -->
     <Button
         android:id="@+id/buttonHint"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/gridLayoutSudoku"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="39dp"
         android:background="@drawable/btn_primary"
         android:fontFamily="@font/alfa_slab_one_regular"
         android:text="@string/hinweis" />
 
-    <!-- Button für den Modus -->
     <Button
         android:id="@+id/buttonMode"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/gridLayoutSudoku"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="16dp"
+        android:layout_marginTop="108dp"
+        android:layout_marginEnd="3dp"
         android:background="@drawable/btn_primary"
         android:fontFamily="@font/alfa_slab_one_regular"
         android:text="@string/modus"

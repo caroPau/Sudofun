@@ -6,6 +6,7 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.OnConflictStrategy;
+import androidx.room.Update;
 
 
 import java.util.List;
@@ -14,11 +15,13 @@ import java.util.List;
 public interface UserDAO {
 
     @Query("SELECT * FROM userentity")
-    LiveData<List<UserEntity>> getAll();
+    List<UserEntity> getAll();
 
     @Query("SELECT * FROM userentity WHERE username LIKE :username LIMIT 1")
-    LiveData<UserEntity> findByName(String username);
+    UserEntity findByName(String username);
 
+    @Update
+    void updateUser(UserEntity user);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(UserEntity... users);
