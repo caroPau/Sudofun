@@ -4,23 +4,17 @@ import static hsos.prog3.sudofun.model.Login.db;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
-import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.ToggleButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import hsos.prog3.sudofun.R;
-import hsos.prog3.sudofun.databinding.ActivityPlayBinding;
 import hsos.prog3.sudofun.database.UserEntity;
+import hsos.prog3.sudofun.databinding.ActivityPlayBinding;
 import hsos.prog3.sudofun.model.Level;
 import hsos.prog3.sudofun.model.Play;
-import hsos.prog3.sudofun.model.User;
 
 public class PlayActivity extends AppCompatActivity {
     static Play game;
@@ -32,29 +26,21 @@ public class PlayActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play);
-        //Bundle bundle = getIntent().getExtras();
-        //user = bundle.getSerializable("user", User.class);
-        //int level = bundle.getInt("selectedLevel", 0);
         String username = getIntent().getStringExtra("username");
         user = db.userDAO().findByName(username);
         int level = getIntent().getIntExtra("level", 0);
         binding = ActivityPlayBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
-        setContentView(view);
-        Bundle bundle = getIntent().getExtras();
-        PlayGraphic graphic = new PlayGraphic(this);
-        initGame(level);
-        graphic.generateGrid(this, game, binding.gridLayoutSudoku);
-        Button buttonHint = findViewById(R.id.buttonHint);
-        Button buttonMode = findViewById(R.id.buttonMode);
-        buttonHint.setOnClickListener(this::buttonHintClickEvent);
-        buttonMode.setOnClickListener(this::buttonModeClickEvent);
-        ToggleButton buttonPause = findViewById(R.id.btnPause);
-        buttonPause.setChecked(false);
-
         binding.buttonHint.setOnClickListener(this::buttonHintClickEvent);
         binding.buttonMode.setOnClickListener(this::buttonModeClickEvent);
         binding.btnPause.setChecked(false);
+        setContentView(view);
+        PlayGraphic graphic = new PlayGraphic(this);
+        initGame(level);
+        graphic.generateGrid(this, game, binding.gridLayoutSudoku);
+        binding.btnPause.setChecked(false);
+
+
 
         binding.btnPause.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -103,7 +89,7 @@ public class PlayActivity extends AppCompatActivity {
             game.setOpenCells(81 - game.getOccupiedCells().size());
         }
         PlayGraphic graphic = new PlayGraphic(this);
-        graphic.generateGrid(this, game, findViewById(R.id.gridLayoutSudoku));
+        graphic.generateGrid(this, game, binding.gridLayoutSudoku);
         game.getTimer().start();
         Thread thread = new Thread(game.getTimer().getTimerRunnable());
         thread.start();
@@ -144,7 +130,7 @@ public class PlayActivity extends AppCompatActivity {
      * @author C. Paul
      */
     private void showBestTime() {
-        TextView oldTimerView = findViewById(R.id.textViewTimer_old);
+
         long bestTime = 0;
         switch (game.getLevel()) {
             case EASY:
@@ -162,7 +148,7 @@ public class PlayActivity extends AppCompatActivity {
         int secondsTemp = ((int) (bestTime / 1000));
         int minutes = secondsTemp / 60;
         int seconds = secondsTemp - minutes * 60;
-        oldTimerView.setText(String.format("%02d", minutes) + ":" + String.format("%02d", seconds));
+        binding.textViewTimerOld.setText(String.format("%02d", minutes) + ":" + String.format("%02d", seconds));
     }
 
 

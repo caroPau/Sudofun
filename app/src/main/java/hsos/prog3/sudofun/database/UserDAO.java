@@ -15,7 +15,7 @@ import java.util.List;
 public interface UserDAO {
 
     @Query("SELECT * FROM userentity")
-    List<UserEntity> getAll();
+    LiveData<List<UserEntity>> getAll();
 
     @Query("SELECT * FROM userentity WHERE username LIKE :username LIMIT 1")
     UserEntity findByName(String username);

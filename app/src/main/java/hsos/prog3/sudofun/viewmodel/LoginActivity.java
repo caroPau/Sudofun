@@ -5,22 +5,21 @@ import static hsos.prog3.sudofun.model.Login.db;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.room.Room;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import hsos.prog3.sudofun.R;
-import hsos.prog3.sudofun.databinding.ActivityLevelBinding;
-import hsos.prog3.sudofun.databinding.ActivityLoginBinding;
 import hsos.prog3.sudofun.database.AppDatabase;
 import hsos.prog3.sudofun.database.UserEntity;
+import hsos.prog3.sudofun.databinding.ActivityLoginBinding;
 import hsos.prog3.sudofun.model.Login;
-import hsos.prog3.sudofun.model.User;
 
 /**
  *  Logik für die LoginView
@@ -34,7 +33,14 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         login = new Login();
         db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "app_database").build();
-        login.setUsers(db.userDAO().getAll());
+
+        db.userDAO().getAll().observe(this, new Observer<List<UserEntity>>() {
+            @Override
+            public void onChanged(List<UserEntity> userEntities) {
+                login.setUsers(userEntities);
+            }
+        });
+
 
         login.setInput_username(this.findViewById(R.id.inputUsername));
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
@@ -77,6 +83,7 @@ public class LoginActivity extends AppCompatActivity {
                 login.getUsers().add(player);
             }
             if(player != null) {
+
                 db.userDAO().insertAll(player);
             }else{
                 db.userDAO().insertAll(new UserEntity(username, 0, 0, 0, 0, 0, 0));
