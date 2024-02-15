@@ -62,6 +62,7 @@ public class TimerViewModel{
     public void pause(){
         isRunning = false;
         pause = System.currentTimeMillis();
+
     }
 
     /**
