@@ -81,14 +81,13 @@ public class PlayActivity extends AppCompatActivity {
         game.setSolvedField(creator.getSolvedField());
         game.setTimer(new TimerViewModel());
         game.getTimer().setActualTimerView((TextView) findViewById(R.id.textViewTimer));
-        game.getTimer().setOldTimerView((TextView) findViewById(R.id.textViewTimer_old));
+        showBestTime();
         if(game.getHelper().getOccupiedCells(game.getField()) != null) {
             game.setOccupiedCells(game.getHelper().getOccupiedCells(game.getField()));
             game.setOpenCells(81 - game.getOccupiedCells().size());
         }
         game.getTimer().start();
         Thread thread = new Thread(game.getTimer().getTimerRunnable());
-        //thread.setPriority(-20);
         thread.start();
     }
 
@@ -120,6 +119,32 @@ public class PlayActivity extends AppCompatActivity {
             default:
                 break;
         }
+    }
+    /**
+     * Stellt abhängig vom aktuellen Schwierigkeitsgrad die bisherige Bestzeit dar
+     *
+     * @author C. Paul
+     */
+    private void showBestTime(){
+       TextView oldTimerView = (TextView) findViewById(R.id.textViewTimer_old);
+        long bestTime = 0;
+        switch(game.getLevel()){
+            case EASY:
+                bestTime = user.getBestTimeEasy();
+                break;
+            case MEDIUM:
+                bestTime = user.getBestTimeMedium();
+                break;
+            case HARD:
+                bestTime = user.getBestTimeHard();
+                break;
+            default:
+                break;
+        }
+        int secondsTemp = ((int) (bestTime / 1000));
+        int minutes = secondsTemp / 60;
+        int seconds = secondsTemp - minutes * 60;
+        oldTimerView.setText(String.format("%02d", minutes) + ":" + String.format("%02d", seconds));
     }
 
 

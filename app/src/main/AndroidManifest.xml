@@ -38,7 +38,9 @@
         <activity android:name=".viewmodel.LevelActivity">
             <!-- Intent-Filter, falls erforderlich -->
         </activity>
-
+        <activity android:name=".viewmodel.StatisticActivity">
+            <!-- Intent-Filter, falls erforderlich -->
+        </activity>
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

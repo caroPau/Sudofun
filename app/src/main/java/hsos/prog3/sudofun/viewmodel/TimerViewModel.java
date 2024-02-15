@@ -25,8 +25,6 @@ public class TimerViewModel{
 
     private TextView actualTimerView;
 
-    private TextView oldTimerView;
-
     /**
      * Konstruktor
      */
@@ -39,7 +37,6 @@ public class TimerViewModel{
      * Startet den Timer
      */
     public void start(){
-
         isRunning = true;
         start = System.currentTimeMillis();
         timerRunnable = new Runnable() {
@@ -87,9 +84,6 @@ public class TimerViewModel{
      *  Formatiert Timer zu einem String
      *
      */
-
-    //@NonNull
-    //@Override
     public String stringify(){
         return String.format("%02d", minutes) + ":" + String.format("%02d", seconds);
     }
@@ -112,10 +106,6 @@ public class TimerViewModel{
 
     public void setActualTimerView(TextView txtview){
         actualTimerView = txtview;
-    }
-
-    public void setOldTimerView(TextView txtview){
-        oldTimerView = txtview;
     }
 
 }
