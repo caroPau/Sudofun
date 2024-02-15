@@ -15,5 +15,6 @@
     <string name="play">Play</string>
     <string name="colorful_numbers_background">colorful numbers background</string>
     <string name="gewonnen">Gewonnen!</string>
+    <string name="best_name">best_name</string>
 
 </resources>
