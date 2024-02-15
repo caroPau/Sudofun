@@ -38,13 +38,6 @@ public class PlayGraphic {
     //TODO: Feld dynamisch erzeugen, OnClickListener
     public void generateGrid(Context context, Play game, GridLayout grid){
 
-        View horLine1 = new View(context);
-        View horLine2 = new View(context);
-        View horLine3 = new View(context);
-        View vertLine1 = new View(context);
-        View vertLine2 = new View(context);
-        View vertLine3 = new View(context);
-
         for(int row = 0; row <= 8; row++){
             for(int column = 0; column <= 8; column++){
                 EditText editText = new EditText(context);
@@ -65,6 +58,16 @@ public class PlayGraphic {
                 grid.addView(editText);
             }
         }
+
+        View horLine1 = new View(context);
+        ViewGroup.LayoutParams horLine1params = new ViewGroup.LayoutParams((int)(getBildschirmBreite()*0.8),(int)(getBildschirmBreite()*0.02));
+        horLine1.setBackground(AppCompatResources.getDrawable(context, R.drawable.edit_text_field_border_black));
+        horLine1.setLayoutParams(horLine1params);
+        horLine1.setX(grid.getX());
+        horLine1.setY(grid.getY());
+        View horLine2 = new View(context);
+        View vertLine1 = new View(context);
+        View vertLine2 = new View(context);
     }
 
     public TextWatcher setTextWatcher(int row, int column, Play game, EditText editText){
@@ -79,18 +82,18 @@ public class PlayGraphic {
                 if(s != null) {
                     if(game.getField()[row][column] == 0 && game.getHelper().isValid(row,column,Integer.parseInt(s.toString()),game.getField())){
                         game.setFreeCells(game.getFreeCells() - 1);
+                        if(!s.toString().equals("")) {
+                            game.getField()[row][column] = Integer.parseInt(s.toString());
+                        }
                     } else {
-                       System.out.println(editText.getText());
-                    }
-                    if(!s.toString().equals("")) {
-                        game.getField()[row][column] = Integer.parseInt(s.toString());
+                        System.out.println(editText.getText());
                     }
                 }
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(game.getFreeCells() == 0 ){
+                if(game.getFreeCells() == 0){
                     playActivity.endGame();
                 }
             }
