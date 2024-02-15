@@ -14,27 +14,31 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import hsos.prog3.sudofun.R;
+import hsos.prog3.sudofun.databinding.ActivityLevelBinding;
 import hsos.prog3.sudofun.model.User;
 
 public class LevelActivity extends AppCompatActivity {
     private int selectedLevel = -1;
     private User user;
 
+    private ActivityLevelBinding binding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_level);
         user = getIntent().getSerializableExtra("user", User.class);
+
+        binding = ActivityLevelBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        setContentView(view);
     }
 
     public void selectLevel(View view) {
         int buttonId = view.getId();
-        Button btn_easy = findViewById(R.id.btnEasy);
-        btn_easy.setBackgroundResource(R.drawable.btn_secondary);
-        Button btn_medium = findViewById(R.id.btnMedium);
-        btn_medium.setBackgroundResource(R.drawable.btn_secondary);
-        Button btn_hard = findViewById(R.id.btnHard);
-        btn_hard.setBackgroundResource(R.drawable.btn_secondary);
+        binding.btnEasy.setBackgroundResource(R.drawable.btn_secondary);
+        binding.btnMedium.setBackgroundResource(R.drawable.btn_secondary);
+        binding.btnHard.setBackgroundResource(R.drawable.btn_secondary);
         view.setBackgroundResource(R.drawable.btn_primary);
 
         if (buttonId == R.id.btnEasy) {

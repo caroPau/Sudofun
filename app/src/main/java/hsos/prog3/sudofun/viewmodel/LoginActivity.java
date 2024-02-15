@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 import hsos.prog3.sudofun.R;
+import hsos.prog3.sudofun.databinding.ActivityLevelBinding;
+import hsos.prog3.sudofun.databinding.ActivityLoginBinding;
 import hsos.prog3.sudofun.model.Login;
 import hsos.prog3.sudofun.model.User;
 
@@ -20,6 +22,7 @@ import hsos.prog3.sudofun.model.User;
  */
 public class LoginActivity extends AppCompatActivity {
     private Login login;
+    private ActivityLoginBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,12 +31,12 @@ public class LoginActivity extends AppCompatActivity {
         if (login.getUsers() == null) {
             login.setUsers(new ArrayList<>());
         }
+        binding = ActivityLoginBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        setContentView(view);
 
-        login.setInput_username(this.findViewById(R.id.inputUsername));
-
-        Button btn_login = this.findViewById(R.id.btnLogin);
-
-        btn_login.setOnClickListener(this::loginButtonClickEvent);
+        login.setInput_username(binding.inputUsername);
+        binding.btnLogin.setOnClickListener(this::loginButtonClickEvent);
     }
 
     /**

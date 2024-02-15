@@ -5,16 +5,14 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.ToggleButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import hsos.prog3.sudofun.R;
+import hsos.prog3.sudofun.databinding.ActivityPlayBinding;
 import hsos.prog3.sudofun.model.Level;
 import hsos.prog3.sudofun.model.Play;
 import hsos.prog3.sudofun.model.User;
@@ -22,6 +20,8 @@ import hsos.prog3.sudofun.model.User;
 public class PlayActivity extends AppCompatActivity {
     static Play game;
     static User user;
+
+    private ActivityPlayBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,15 +32,15 @@ public class PlayActivity extends AppCompatActivity {
         user = bundle.getSerializable("user", User.class);
         int level = bundle.getInt("selectedLevel", 0);
         initGame(level);
-        graphic.generateGrid(this, game, findViewById(R.id.gridLayoutSudoku));
-        Button buttonHint = findViewById(R.id.buttonHint);
-        Button buttonMode = findViewById(R.id.buttonMode);
-        buttonHint.setOnClickListener(this::buttonHintClickEvent);
-        buttonMode.setOnClickListener(this::buttonModeClickEvent);
-        ToggleButton buttonPause = findViewById(R.id.btnPause);
-        buttonPause.setChecked(false);
+        graphic.generateGrid(this, game, binding.gridLayoutSudoku);
+        binding = ActivityPlayBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        setContentView(view);
+        binding.buttonHint.setOnClickListener(this::buttonHintClickEvent);
+        binding.buttonMode.setOnClickListener(this::buttonModeClickEvent);
+        binding.btnPause.setChecked(false);
 
-        buttonPause.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        binding.btnPause.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 togglePauseButton(isChecked, buttonView);
@@ -80,7 +80,7 @@ public class PlayActivity extends AppCompatActivity {
         game.setFreeCells(81 - game.getLevel().getOpenCells());
         game.setSolvedField(creator.getSolvedField());
         game.setTimer(new TimerViewModel());
-        game.getTimer().setActualTimerView((TextView) findViewById(R.id.textViewTimer));
+        game.getTimer().setActualTimerView(binding.textViewTimer);
         showBestTime();
         if(game.getHelper().getOccupiedCells(game.getField()) != null) {
             game.setOccupiedCells(game.getHelper().getOccupiedCells(game.getField()));
