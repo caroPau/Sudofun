@@ -7,8 +7,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.GridLayout;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.List;
 
 import hsos.prog3.sudofun.R;
 import hsos.prog3.sudofun.database.UserEntity;
@@ -20,7 +24,10 @@ public class PlayActivity extends AppCompatActivity {
     static Play game;
     static UserEntity user;
 
+    static PlayGraphic graphic;
+
     private ActivityPlayBinding binding;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,9 +42,14 @@ public class PlayActivity extends AppCompatActivity {
         binding.buttonMode.setOnClickListener(this::buttonModeClickEvent);
         binding.btnPause.setChecked(false);
         setContentView(view);
-        PlayGraphic graphic = new PlayGraphic(this);
+        Bundle bundle = getIntent().getExtras();
+        graphic = new PlayGraphic(this,this);
+        user = bundle.getSerializable("user", User.class);
+        int level = bundle.getInt("selectedLevel", 0);
         initGame(level);
-        graphic.generateGrid(this, game, binding.gridLayoutSudoku);
+        graphic.generateGrid(game, binding.gridLayoutSudoku, binding.playScreen);
+
+        binding.buttonHint.setOnClickListener(this::buttonHintClickEvent);
         binding.btnPause.setChecked(false);
 
 
@@ -46,6 +58,13 @@ public class PlayActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 togglePauseButton(isChecked, buttonView);
+            }
+        });
+
+        binding.buttonMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                toggleModeButton(isChecked);
             }
         });
     }
@@ -180,8 +199,24 @@ public class PlayActivity extends AppCompatActivity {
         }
     }
 
-    private void buttonModeClickEvent(View view){
-
+    /**
+     * Ermöglicht das Aktivieren/Deaktivieren des Notizmodus
+     *
+     * @author M. Paul
+     */
+    private void toggleModeButton(boolean isChecked) {
+            List<GridLayout>  noteGrids = graphic.getNoteGrids();
+            if (isChecked) {
+                for (GridLayout grid : noteGrids) {
+                    grid.setVisibility(View.VISIBLE);
+                }
+                game.setNoteMode(true);
+            } else {
+                for (GridLayout grid : noteGrids) {
+                    grid.setVisibility(View.INVISIBLE);
+                }
+                game.setNoteMode(false);
+            }
     }
 
     /**

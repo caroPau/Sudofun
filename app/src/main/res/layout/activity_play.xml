@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/playScreen"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -117,15 +118,18 @@
             android:fontFamily="@font/alfa_slab_one_regular"
             android:text="@string/hinweis" />
 
-        <Button
-            android:id="@+id/buttonMode"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/btn_primary"
-            android:fontFamily="@font/alfa_slab_one_regular"
-            android:text="@string/modus"
-            android:textSize="14sp" />
-    </LinearLayout>
+    <!-- Button für den Modus -->
+    <ToggleButton
+        android:id="@+id/buttonMode"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/gridLayoutSudoku"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/btn_primary"
+        android:fontFamily="@font/alfa_slab_one_regular"
+        android:textOn="Modus"
+        android:textOff="Modus"
+        android:textSize="14sp" />
 
 </RelativeLayout>

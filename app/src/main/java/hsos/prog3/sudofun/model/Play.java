@@ -8,6 +8,16 @@ import hsos.prog3.sudofun.viewmodel.TimerViewModel;
 public class Play {
     private Level level;
     private int[][] field;
+
+    public boolean isNoteMode() {
+        return noteMode;
+    }
+
+    private boolean noteMode;
+
+    public void setNoteMode(boolean noteMode) {
+        this.noteMode = noteMode;
+    }
     private int[][] solvedField;
     private TimerViewModel timer;
     private SudokuHelper helper;
