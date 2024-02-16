@@ -6,12 +6,14 @@ import java.util.List;
 
 import hsos.prog3.sudofun.database.AppDatabase;
 import hsos.prog3.sudofun.database.UserEntity;
+import hsos.prog3.sudofun.viewmodel.DataViewModel;
 
 public class Login {
 
     private EditText input_username; //Textfeld für die Eingabe des Namens
     private List<UserEntity> users;
     public static AppDatabase db;
+    public DataViewModel dataViewModel;
 
     /**
      *  Getter

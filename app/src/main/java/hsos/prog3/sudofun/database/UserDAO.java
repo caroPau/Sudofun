@@ -18,7 +18,7 @@ public interface UserDAO {
     LiveData<List<UserEntity>> getAll();
 
     @Query("SELECT * FROM userentity WHERE username LIKE :username LIMIT 1")
-    UserEntity findByName(String username);
+    LiveData<UserEntity> findByName(String username);
 
     @Update
     void updateUser(UserEntity user);
