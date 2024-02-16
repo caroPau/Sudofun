@@ -35,16 +35,14 @@ public class PlayActivity extends AppCompatActivity {
         setContentView(R.layout.activity_play);
         String username = getIntent().getStringExtra("username");
         // user = db.userDAO().findByName(username);
-        int level = getIntent().getIntExtra("level", 0);
         binding = ActivityPlayBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         binding.buttonHint.setOnClickListener(this::buttonHintClickEvent);
-        binding.buttonMode.setOnClickListener(this::buttonModeClickEvent);
         binding.btnPause.setChecked(false);
         setContentView(view);
         Bundle bundle = getIntent().getExtras();
         graphic = new PlayGraphic(this,this);
-        user = bundle.getSerializable("user", User.class);
+        //user = bundle.getSerializable("user", User.class);
         int level = bundle.getInt("selectedLevel", 0);
         initGame(level);
         graphic.generateGrid(game, binding.gridLayoutSudoku, binding.playScreen);
@@ -107,8 +105,8 @@ public class PlayActivity extends AppCompatActivity {
             game.setOccupiedCells(game.getHelper().getOccupiedCells(game.getField()));
             game.setOpenCells(81 - game.getOccupiedCells().size());
         }
-        PlayGraphic graphic = new PlayGraphic(this);
-        graphic.generateGrid(this, game, binding.gridLayoutSudoku);
+        PlayGraphic graphic = new PlayGraphic(this,this);
+        graphic.generateGrid(game, binding.gridLayoutSudoku, binding.playScreen);
         game.getTimer().start();
         Thread thread = new Thread(game.getTimer().getTimerRunnable());
         thread.start();

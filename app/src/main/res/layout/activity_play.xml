@@ -108,7 +108,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="50dp"
         android:layout_marginHorizontal="10dp"
-        android:orientation="vertical">
+        android:orientation="vertical" >
 
         <Button
             android:id="@+id/buttonHint"
@@ -118,8 +118,8 @@
             android:fontFamily="@font/alfa_slab_one_regular"
             android:text="@string/hinweis" />
 
-    <!-- Button für den Modus -->
-    <ToggleButton
+        <!-- Button für den Modus -->
+        <ToggleButton
         android:id="@+id/buttonMode"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
@@ -131,5 +131,6 @@
         android:textOn="Modus"
         android:textOff="Modus"
         android:textSize="14sp" />
+    </LinearLayout>
 
 </RelativeLayout>
