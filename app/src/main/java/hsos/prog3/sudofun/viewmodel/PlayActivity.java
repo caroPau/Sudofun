@@ -27,7 +27,7 @@ public class PlayActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play);
         String username = getIntent().getStringExtra("username");
-        user = db.userDAO().findByName(username);
+        // user = db.userDAO().findByName(username);
         int level = getIntent().getIntExtra("level", 0);
         binding = ActivityPlayBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();

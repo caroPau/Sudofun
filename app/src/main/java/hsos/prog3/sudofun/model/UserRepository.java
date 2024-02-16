@@ -10,12 +10,12 @@ import hsos.prog3.sudofun.database.AppDatabase;
 import hsos.prog3.sudofun.database.UserDAO;
 import hsos.prog3.sudofun.database.UserEntity;
 
-public class Repository {
+public class UserRepository {
     private UserDAO userDAO;
     private LiveData<List<UserEntity>> userList;
     private LiveData<UserEntity> user;
 
-    public Repository(Application application){
+    public UserRepository(Application application){
         AppDatabase db = AppDatabase.getDatabase(application);
         userDAO = db.userDAO();
         userList = userDAO.getAll();

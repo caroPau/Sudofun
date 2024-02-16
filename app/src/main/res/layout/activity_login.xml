@@ -24,6 +24,10 @@
             android:layout_gravity="center"
             android:layout_marginTop="100dp"
             android:fontFamily="@font/alfa_slab_one_regular"
+            android:shadowColor="@color/white"
+            android:shadowDx="3"
+            android:shadowDy="3"
+            android:shadowRadius="1.6"
             android:text="@string/sudofun"
             android:textColor="@color/black"
             android:textSize="50sp" />
@@ -34,6 +38,10 @@
             android:layout_gravity="center"
             android:layout_marginTop="150dp"
             android:fontFamily="@font/alfa_slab_one_regular"
+            android:shadowColor="@color/white"
+            android:shadowDx="3"
+            android:shadowDy="3"
+            android:shadowRadius="1.6"
             android:text="@string/dein_name"
             android:textColor="@color/black"
             android:textSize="25sp" />

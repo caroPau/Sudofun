@@ -28,7 +28,6 @@ public class LevelActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_level);
         //user = getIntent().getSerializableExtra("user", User.class);
-
         binding = ActivityLevelBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);

@@ -8,16 +8,16 @@ import androidx.lifecycle.LiveData;
 import java.util.List;
 
 import hsos.prog3.sudofun.database.UserEntity;
-import hsos.prog3.sudofun.model.Repository;
+import hsos.prog3.sudofun.model.UserRepository;
 
 public class DataViewModel extends AndroidViewModel {
-    private Repository repository;
+    private UserRepository userRepository;
     private final LiveData<List<UserEntity>> userList;
 
     public DataViewModel(Application application){
         super(application);
-        repository = new Repository(application);
-        userList = repository.getAll();
+        userRepository = new UserRepository(application);
+        userList = userRepository.getAll();
     }
 
     public LiveData<List<UserEntity>> getAll(){
@@ -25,16 +25,16 @@ public class DataViewModel extends AndroidViewModel {
     }
 
     public LiveData<UserEntity> findByName(String username){
-        return repository.findByName(username);
+        return userRepository.findByName(username);
     }
 
     public void updateUser(UserEntity user){
-        repository.updateUser(user);
+        userRepository.updateUser(user);
     }
     public void insertAll(UserEntity...user){
-        repository.insertAll(user);
+        userRepository.insertAll(user);
     }
     public void delete(UserEntity user){
-        repository.delete(user);
+        userRepository.delete(user);
     }
 }

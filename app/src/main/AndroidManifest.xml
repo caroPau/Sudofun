@@ -12,16 +12,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 
-        <activity android:name=".viewmodel.SplashActivity"
+     <!--   <activity android:name=".viewmodel.SplashActivity"
             android:exported="true">
-            <!--intent-filter>
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
-        </activity>
+            </intent-filter>
+        </activity>-->
         <activity android:name=".viewmodel.LoginActivity"
             android:exported="true">
-            <!-- Intent-Filter, falls erforderlich -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

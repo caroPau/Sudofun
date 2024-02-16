@@ -25,6 +25,10 @@
             android:color="@color/black"
             android:fontFamily="@font/alfa_slab_one_regular"
             android:text="@string/sudofun"
+            android:shadowColor="@color/white"
+            android:shadowDx="3"
+            android:shadowDy="3"
+            android:shadowRadius="1.6"
             android:textColor="@color/black"
             android:textSize="50sp" />
 

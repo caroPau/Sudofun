@@ -11,7 +11,7 @@
         android:scaleType="centerCrop"
         android:src="@drawable/splash_numbers" />
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/topbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -20,33 +20,10 @@
         android:orientation="horizontal">
 
         <LinearLayout
-            android:id="@+id/firstColumn"
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start|center_vertical"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <Button
-                android:id="@+id/buttonBack"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start|center_vertical"
-                android:background="@drawable/btn_primary"
-                android:fontFamily="@font/alfa_slab_one_regular"
-                android:text="@string/back"
-                android:onClick="navigateBack"
-                />
-
-        </LinearLayout>
-
-        <LinearLayout
             android:id="@+id/timer"
-            android:layout_weight="1"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="start|center_vertical"
+            android:layout_centerInParent="true"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -80,6 +57,10 @@
                     android:paddingHorizontal="2dp"
                     android:text="@string/time"
                     android:textColor="@color/black"
+                    android:shadowColor="@color/white"
+                    android:shadowDx="3"
+                    android:shadowDy="3"
+                    android:shadowRadius="1.6"
                     android:textSize="22sp" />
 
                 <ToggleButton
@@ -90,22 +71,19 @@
                     android:background="@drawable/icon_pause"
                     android:textOff=""
                     android:textOn="" />
-
-
             </LinearLayout>
-
         </LinearLayout>
-        <LinearLayout
-            android:id="@+id/thirdColumn"
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start|center_vertical"
-            android:gravity="center"
-            android:orientation="vertical">
 
-        </LinearLayout>
-    </LinearLayout>
+        <Button
+            android:id="@+id/buttonBack"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/ic_close"
+            android:onClick="navigateBack"
+            />
+
+    </RelativeLayout>
 
 
     <!-- Spielfeld -->
@@ -123,29 +101,31 @@
     </GridLayout>
 
     <!-- Button für den Modus -->
-    <Button
-        android:id="@+id/buttonHint"
-        android:layout_width="100dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/gridLayoutSudoku"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="39dp"
-        android:background="@drawable/btn_primary"
-        android:fontFamily="@font/alfa_slab_one_regular"
-        android:text="@string/hinweis" />
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="50dp"
+        android:layout_marginHorizontal="10dp"
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/buttonMode"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/gridLayoutSudoku"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="108dp"
-        android:layout_marginEnd="3dp"
-        android:background="@drawable/btn_primary"
-        android:fontFamily="@font/alfa_slab_one_regular"
-        android:text="@string/modus"
-        android:textSize="14sp" />
+        <Button
+            android:id="@+id/buttonHint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_primary"
+            android:fontFamily="@font/alfa_slab_one_regular"
+            android:text="@string/hinweis" />
+
+        <Button
+            android:id="@+id/buttonMode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/btn_primary"
+            android:fontFamily="@font/alfa_slab_one_regular"
+            android:text="@string/modus"
+            android:textSize="14sp" />
+    </LinearLayout>
 
 </RelativeLayout>
