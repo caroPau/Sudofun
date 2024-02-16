@@ -2,7 +2,10 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.Sudofun" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="android:windowSplashScreenBackground">@color/rose</item>
+        <item name="android:windowSplashScreenIconBackgroundColor">@color/rose</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/icon_timer</item>
+
     </style>
 
     <style name="Theme.Sudofun" parent="Base.Theme.Sudofun" />
