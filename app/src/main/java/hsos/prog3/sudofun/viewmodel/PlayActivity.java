@@ -99,7 +99,7 @@ public class PlayActivity extends AppCompatActivity {
         game.setSolvedField(creator.getSolvedField());
         game.setTimer(new TimerViewModel());
         game.getTimer().setActualTimerView(binding.textViewTimer);
-        showBestTime();
+        //showBestTime();
         if(game.getHelper().getOccupiedCells(game.getField()) != null) {
             game.setOccupiedCells(game.getHelper().getOccupiedCells(game.getField()));
             game.setOpenCells(81 - game.getOccupiedCells().size());
@@ -131,10 +131,12 @@ public class PlayActivity extends AppCompatActivity {
             default:
                 break;
         }
-        int secondsTemp = ((int) (bestTime / 1000));
-        int minutes = secondsTemp / 60;
-        int seconds = secondsTemp - minutes * 60;
-        binding.textViewTimerOld.setText(String.format("%02d", minutes) + ":" + String.format("%02d", seconds));
+        if (bestTime != 0) {
+            int secondsTemp = ((int) (bestTime / 1000));
+            int minutes = secondsTemp / 60;
+            int seconds = secondsTemp - minutes * 60;
+            binding.textViewTimerOld.setText(String.format("%02d", minutes) + ":" + String.format("%02d", seconds));
+        }
     }
 
 
