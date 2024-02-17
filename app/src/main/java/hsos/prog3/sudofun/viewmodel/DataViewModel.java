@@ -5,6 +5,8 @@ import android.app.Application;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+import java.util.List;
+
 import hsos.prog3.sudofun.database.UserEntity;
 import hsos.prog3.sudofun.model.UserRepository;
 
@@ -32,5 +34,15 @@ public class DataViewModel extends AndroidViewModel {
     }
     public int countByName(String username){
         return userRepository.countByName(username);
+    }
+    public LiveData<List<UserEntity>> getHighscoresEasy(){
+        return userRepository.getHighscoresEasy();
+    }
+
+    public LiveData<List<UserEntity>> getHighscoresMedium(){
+        return userRepository.getHighscoresMedium();
+    }
+    public LiveData<List<UserEntity>> getHighscoresHard(){
+        return userRepository.getHighscoresHard();
     }
 }

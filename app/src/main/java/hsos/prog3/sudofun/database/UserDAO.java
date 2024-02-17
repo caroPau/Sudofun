@@ -8,6 +8,9 @@ import androidx.room.Query;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Update;
 
+import java.util.List;
+
+
 
 @Dao
 public interface UserDAO {
@@ -16,6 +19,15 @@ public interface UserDAO {
 
     @Query("SELECT COUNT(*) FROM userentity WHERE username LIKE :username")
     int countByName(String username);
+
+    @Query("SELECT * FROM userentity ORDER BY highscore_easy DESC LIMIT 5")
+    LiveData<List<UserEntity>> getEasyHighscores();
+
+    @Query("SELECT * FROM userentity ORDER BY highscore_medium DESC LIMIT 5")
+    LiveData<List<UserEntity>> getMediumHighscores();
+
+    @Query("SELECT * FROM userentity ORDER BY highscore_hard DESC LIMIT 5")
+    LiveData<List<UserEntity>> getHardHighscores();
 
     @Update
     void updateUser(UserEntity user);
