@@ -2,6 +2,7 @@ package hsos.prog3.sudofun.model;
 
 import java.util.ArrayList;
 
+import hsos.prog3.sudofun.viewmodel.DataViewModel;
 import hsos.prog3.sudofun.viewmodel.SudokuHelper;
 import hsos.prog3.sudofun.viewmodel.TimerViewModel;
 
@@ -27,6 +28,7 @@ public class Play {
     private int rowHint;
     private int columnHint;
     private int freeCells;
+    public DataViewModel dataViewModel;
 
     public Play(){
         helper = new SudokuHelper();

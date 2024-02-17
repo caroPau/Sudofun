@@ -20,6 +20,9 @@ public interface UserDAO {
     @Query("SELECT * FROM userentity WHERE username LIKE :username LIMIT 1")
     LiveData<UserEntity> findByName(String username);
 
+    @Query("SELECT COUNT(*) FROM userentity WHERE username LIKE :username")
+    int countByName(String username);
+
     @Update
     void updateUser(UserEntity user);
 

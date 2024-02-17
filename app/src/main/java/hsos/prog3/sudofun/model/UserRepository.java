@@ -14,6 +14,7 @@ public class UserRepository {
     private UserDAO userDAO;
     private LiveData<List<UserEntity>> userList;
     private LiveData<UserEntity> user;
+    private int count;
 
     public UserRepository(Application application){
         AppDatabase db = AppDatabase.getDatabase(application);
@@ -27,9 +28,16 @@ public class UserRepository {
 
     public LiveData<UserEntity> findByName(String username){
         AppDatabase.databaseWriter.execute(() ->{
-             LiveData<UserEntity> user = userDAO.findByName(username);
+             user = userDAO.findByName(username);
         });
         return user;
+    }
+
+    public int countByName(String username){
+        AppDatabase.databaseWriter.execute(() ->{
+            count = userDAO.countByName(username);
+        });
+        return count;
     }
 
     public void updateUser(UserEntity user){

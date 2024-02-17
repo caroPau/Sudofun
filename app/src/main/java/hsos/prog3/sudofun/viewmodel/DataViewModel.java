@@ -37,4 +37,7 @@ public class DataViewModel extends AndroidViewModel {
     public void delete(UserEntity user){
         userRepository.delete(user);
     }
+    public int countByName(String username){
+        return userRepository.countByName(username);
+    }
 }

@@ -1,7 +1,5 @@
 package hsos.prog3.sudofun.viewmodel;
 
-import static hsos.prog3.sudofun.model.Login.db;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -11,6 +9,10 @@ import android.widget.GridLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModelProvider;
+
+import java.util.Objects;
 
 import java.util.List;
 
@@ -22,28 +24,29 @@ import hsos.prog3.sudofun.model.Play;
 
 public class PlayActivity extends AppCompatActivity {
     static Play game;
-    static UserEntity user;
+    static LiveData<UserEntity> user;
 
     static PlayGraphic graphic;
 
     private ActivityPlayBinding binding;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play);
         String username = getIntent().getStringExtra("username");
-        // user = db.userDAO().findByName(username);
+        if(game.dataViewModel != null) {
+            game.dataViewModel = new ViewModelProvider(this).get(DataViewModel.class);
+        }
+        assert game.dataViewModel != null;
+        user = game.dataViewModel.findByName(username);
+        int level = getIntent().getIntExtra("level", 0);
         binding = ActivityPlayBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         binding.buttonHint.setOnClickListener(this::buttonHintClickEvent);
         binding.btnPause.setChecked(false);
         setContentView(view);
-        Bundle bundle = getIntent().getExtras();
-        graphic = new PlayGraphic(this,this);
-        //user = bundle.getSerializable("user", User.class);
-        int level = bundle.getInt("selectedLevel", 0);
+        PlayGraphic graphic = new PlayGraphic(this, this);
         initGame(level);
         graphic.generateGrid(game, binding.gridLayoutSudoku, binding.playScreen);
 
@@ -113,51 +116,21 @@ public class PlayActivity extends AppCompatActivity {
     }
 
     /**
-     * Aktualisiert bei Bedarf den Highscore des Spielers und inkrementiert die gespielten Spiele
-     *
-     * @author C. Paul
-     */
-    private static void updateBestTime(){
-        switch (game.getLevel()){
-            case EASY:
-                if (user.highscoreEasy > game.getTimer().getMillisSinceStart()) {
-                    user.highscoreEasy = game.getTimer().getMillisSinceStart();
-                }
-                user.gamesEasy++;
-                break;
-            case MEDIUM:
-                if (user.highscoreMedium > game.getTimer().getMillisSinceStart()) {
-                    user.highscoreMedium = game.getTimer().getMillisSinceStart();
-                }
-                user.gamesMedium++;
-                break;
-            case HARD:
-                if (user.highscoreHard > game.getTimer().getMillisSinceStart()) {
-                    user.highscoreHard = game.getTimer().getMillisSinceStart();
-                }
-                user.highscoreHard++;
-                break;
-            default:
-                break;
-        }
-    }
-    /**
      * Stellt abhängig vom aktuellen Schwierigkeitsgrad die bisherige Bestzeit dar
      *
      * @author C. Paul
      */
     private void showBestTime() {
-
         long bestTime = 0;
         switch (game.getLevel()) {
             case EASY:
-                bestTime = user.highscoreEasy;
+                bestTime = user.getValue().gamesEasy;
                 break;
             case MEDIUM:
-                bestTime = user.highscoreMedium;
+                bestTime = user.getValue().highscoreMedium;
                 break;
             case HARD:
-                bestTime = user.highscoreHard;
+                bestTime = user.getValue().highscoreHard;
                 break;
             default:
                 break;
@@ -176,9 +149,9 @@ public class PlayActivity extends AppCompatActivity {
      * @author C. Paul
      */
     public void endGame(){
-        updateBestTime();
+        game.dataViewModel.updateUser(user.getValue());
         Bundle bundle = new Bundle();
-        bundle.putString("username", user.username);
+        bundle.putString("username", Objects.requireNonNull(user.getValue()).username);
         bundle.putString("level", game.getLevel().name());
         Intent intent = new Intent(PlayActivity.this, StatisticActivity.class);
         intent.putExtras(bundle);
