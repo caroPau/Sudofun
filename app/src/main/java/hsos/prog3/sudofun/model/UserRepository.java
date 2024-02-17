@@ -12,21 +12,15 @@ import hsos.prog3.sudofun.database.UserEntity;
 
 public class UserRepository {
     private UserDAO userDAO;
-    private LiveData<List<UserEntity>> userList;
-    private LiveData<UserEntity> user;
+    private UserEntity user;
     private int count;
 
     public UserRepository(Application application){
         AppDatabase db = AppDatabase.getDatabase(application);
         userDAO = db.userDAO();
-        userList = userDAO.getAll();
     }
 
-    public LiveData<List<UserEntity>> getAll(){
-        return userList;
-    }
-
-    public LiveData<UserEntity> findByName(String username){
+    public UserEntity findByName(String username){
         AppDatabase.databaseWriter.execute(() ->{
              user = userDAO.findByName(username);
         });

@@ -44,7 +44,6 @@ public class LoginActivity extends AppCompatActivity {
      */
     private void loginButtonClickEvent(View view){
         String username = login.getInput_username().getText().toString();
-        boolean isKnown = false;
         if (username.isEmpty()) {
             Toast.makeText(this, "Bitte gib einen Namen ein um fortzufahren!", Toast.LENGTH_SHORT).show();
         } else {

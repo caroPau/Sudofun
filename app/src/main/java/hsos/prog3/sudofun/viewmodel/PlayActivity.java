@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.GridLayout;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
@@ -24,7 +23,7 @@ import hsos.prog3.sudofun.model.Play;
 
 public class PlayActivity extends AppCompatActivity {
     static Play game;
-    static LiveData<UserEntity> user;
+    static UserEntity user;
 
     static PlayGraphic graphic;
 
@@ -35,17 +34,15 @@ public class PlayActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play);
         String username = getIntent().getStringExtra("username");
-        if(game.dataViewModel != null) {
-            game.dataViewModel = new ViewModelProvider(this).get(DataViewModel.class);
-        }
-        assert game.dataViewModel != null;
-        user = game.dataViewModel.findByName(username);
         int level = getIntent().getIntExtra("level", 0);
         binding = ActivityPlayBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         binding.buttonHint.setOnClickListener(this::buttonHintClickEvent);
         binding.btnPause.setChecked(false);
         setContentView(view);
+        game = new Play();
+        game.dataViewModel = new ViewModelProvider(this).get(DataViewModel.class);
+        user = game.dataViewModel.findByName(username);
         PlayGraphic graphic = new PlayGraphic(this, this);
         initGame(level);
         graphic.generateGrid(game, binding.gridLayoutSudoku, binding.playScreen);
@@ -96,7 +93,6 @@ public class PlayActivity extends AppCompatActivity {
      * @author C. Paul
      */
     private void initGame(int level){
-        game = new Play();
         SudokuCreator creator = new SudokuCreator(getSelectedLevel(game, level));
         game.setField(creator.createSudoku(getSelectedLevel(game, level)));
         game.setFreeCells(81 - game.getLevel().getOpenCells());
@@ -124,13 +120,13 @@ public class PlayActivity extends AppCompatActivity {
         long bestTime = 0;
         switch (game.getLevel()) {
             case EASY:
-                bestTime = user.getValue().gamesEasy;
+                bestTime = user.gamesEasy;
                 break;
             case MEDIUM:
-                bestTime = user.getValue().highscoreMedium;
+                bestTime = user.highscoreMedium;
                 break;
             case HARD:
-                bestTime = user.getValue().highscoreHard;
+                bestTime = user.highscoreHard;
                 break;
             default:
                 break;
@@ -149,9 +145,9 @@ public class PlayActivity extends AppCompatActivity {
      * @author C. Paul
      */
     public void endGame(){
-        game.dataViewModel.updateUser(user.getValue());
+        game.dataViewModel.updateUser(user);
         Bundle bundle = new Bundle();
-        bundle.putString("username", Objects.requireNonNull(user.getValue()).username);
+        bundle.putString("username", Objects.requireNonNull(user).username);
         bundle.putString("level", game.getLevel().name());
         Intent intent = new Intent(PlayActivity.this, StatisticActivity.class);
         intent.putExtras(bundle);
