@@ -1,8 +1,12 @@
 package hsos.prog3.sudofun.viewmodel;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.GridLayout;
@@ -31,7 +35,6 @@ public class PlayActivity extends AppCompatActivity {
     }
 
     private ActivityPlayBinding binding;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -106,7 +109,7 @@ public class PlayActivity extends AppCompatActivity {
             game.setOpenCells(81 - game.getOccupiedCells().size());
         }
         graphic = new PlayGraphic(this,this, game);
-        graphic.generateGrid(binding.gridLayoutSudoku, binding.playScreen);
+        graphic.generateGrid(binding.gridLayoutSudoku,binding.gridLayoutMask ,binding.playScreen);
         game.getTimer().start();
         Thread thread = new Thread(game.getTimer().getTimerRunnable());
         thread.start();
@@ -205,12 +208,17 @@ public class PlayActivity extends AppCompatActivity {
      */
     private void togglePauseButton(boolean isChecked, CompoundButton buttonView) {
         List<EditText> editTexts = graphic.getEditTexts();
+        List<GridLayout>  noteGrids = graphic.getNoteGrids();
         if (isChecked) {
             buttonView.setBackgroundResource(R.drawable.icon_play);
             game.getTimer().pause();
             for(EditText editText : editTexts){
                 editText.setEnabled(false);
-                editText.setVisibility(View.INVISIBLE);
+                binding.gridLayoutMask.setVisibility(View.VISIBLE);
+            }
+            for (GridLayout grid : noteGrids) {
+                grid.setEnabled(false);
+                grid.setVisibility(View.INVISIBLE);
             }
 
         } else {
@@ -218,7 +226,11 @@ public class PlayActivity extends AppCompatActivity {
             game.getTimer().startAfterPause();
             for(EditText editText : editTexts){
                 editText.setEnabled(true);
-                editText.setVisibility(View.VISIBLE);
+                binding.gridLayoutMask.setVisibility(View.INVISIBLE);
+            }
+            for (GridLayout grid : noteGrids) {
+                grid.setEnabled(true);
+                grid.setVisibility(View.VISIBLE);
             }
         }
     }

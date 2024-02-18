@@ -100,6 +100,18 @@
 
     </GridLayout>
 
+    <GridLayout
+        android:id="@+id/gridLayoutMask"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/topbar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:columnCount="9"
+        android:rowCount="9">
+    </GridLayout>
+
     <LinearLayout
         android:id="@+id/buttonLine"
         android:layout_width="match_parent"

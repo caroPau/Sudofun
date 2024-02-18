@@ -1,7 +1,7 @@
 package hsos.prog3.sudofun.viewmodel;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -9,21 +9,20 @@ import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import hsos.prog3.sudofun.View.KeyPad;
-import hsos.prog3.sudofun.viewmodel.PlayActivity;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
 
-import java.security.Key;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -106,46 +105,30 @@ public class PlayGraphic {
         keyPad = new KeyPad(playActivity,game,this);
     }
 
-    public void generateGrid(GridLayout grid, RelativeLayout playScreen){
+    @SuppressLint("ClickableViewAccessibility") //Warnung unterdrücken, dass man performClick nicht überschreibt
+    public void generateGrid(GridLayout grid,GridLayout gridMask, RelativeLayout playScreen){
         for(int row = 0; row <= 8; row++){
             for(int column = 0; column <= 8; column++){
+                View maskView = new View(context);
+                initMaskView(maskView,row,column);
+
                 EditText editText = new EditText(context);
-                editText.setId(game.getHelper().coordinateAsOneNumber(row,column));
-                editText.setGravity(Gravity.CENTER);
-                editText.setInputType(InputType.TYPE_CLASS_NUMBER);
-                editText.setTextColor(Color.BLACK);
-                editText.setBackground(AppCompatResources.getDrawable(context, R.drawable.edit_text_field_border_black));
-                ViewGroup.LayoutParams editTextParams = new ViewGroup.LayoutParams(getBildschirmBreite()/10,getBildschirmBreite()/10);
-                editText.setLayoutParams(editTextParams);
-                editText.setCursorVisible(false);
+                editTextInit(editText,row,column);
                 if(game.getField()[row][column] != 0){
                     editText.setText(String.valueOf(game.getField()[row][column]));
                     editText.setEnabled(false);
                 } else {
                     GridLayout noteGrid = new GridLayout(context);
-                    noteGrid.setX(gridBasePos[0]+column*fieldEdgeSize);
-                    noteGrid.setY(gridBasePos[1]+row*fieldEdgeSize);
-                    noteGrid.setVisibility(View.INVISIBLE);
-                    noteGrid.setColumnCount(3);
-                    noteGrid.setRowCount(3);
+                    noteGridInit(noteGrid,row,column);
                     int noteNum = 1;
                     for(int noteRow = 0; noteRow <= 2; noteRow++){
                         for(int noteColumn = 0; noteColumn <= 2; noteColumn++) {
                             TextView note = new TextView(context);
-                            ViewGroup.LayoutParams noteParams = new ViewGroup.LayoutParams(getBildschirmBreite()/30,getBildschirmBreite()/30);
-                            note.setLayoutParams(noteParams);
-                            note.setGravity(Gravity.CENTER);
-                            note.setTextColor(Color.BLACK);
-                            note.setTextSize((float)(fieldEdgeSize*0.1));
-                            if(noteRow == 1 && noteColumn == 1) {
-                                note.setBackground(AppCompatResources.getDrawable(context, R.drawable.whiteshape));
-                            } else {
-                                note.setBackground(noteBackgroundSelector[noteRow][noteColumn]);
-                            }
+                            noteInit(note,noteRow,noteColumn);
                             note.setText(String.valueOf(noteNum));
                             noteNum++;
-                            View.OnClickListener noteGridClickListener =  onClickListener(noteGrid,keyPad,this);
-                            noteGrid.setOnClickListener(noteGridClickListener);
+                            View.OnTouchListener noteGridTouchListener =  onTouchListener(noteGrid,this);
+                            noteGrid.setOnTouchListener(noteGridTouchListener);
                             noteGrid.addView(note);
                         }
                     }
@@ -155,11 +138,15 @@ public class PlayGraphic {
                 TextWatcher textWatcher = setTextWatcher(row, column, game, editText);
                 editText.addTextChangedListener(textWatcher);
                 editTexts.add(editText);
-                View.OnClickListener editTextClickListener =  onClickListener(editText,keyPad,this);
-                editText.setOnClickListener(editTextClickListener);
+                View.OnTouchListener editTextTouchListener =  onTouchListener(editText,this);
+                editText.setOnTouchListener(editTextTouchListener);
+                hideKeyboardFrom(context,editText);
                 grid.addView(editText);
+                gridMask.addView(maskView);
             }
         }
+
+        gridMask.setVisibility(View.INVISIBLE);
 
         //horizontal gridLine1
         generateGridLine(playScreen,9*fieldEdgeSize,gridLineStrength
@@ -175,6 +162,45 @@ public class PlayGraphic {
                 ,gridBasePos[0]+6*fieldEdgeSize-gridLineStrength/2,gridBasePos[1]);
     }
 
+    private void initMaskView(View maskView, int row, int column) {
+        maskView.setBackground(AppCompatResources.getDrawable(context, R.drawable.edit_text_field_border_black));
+        ViewGroup.LayoutParams maskParams = new ViewGroup.LayoutParams(getBildschirmBreite()/10,getBildschirmBreite()/10);
+        maskView.setLayoutParams(maskParams);
+    }
+
+    private void editTextInit(EditText editText,int row, int column){
+        editText.setId(game.getHelper().coordinateAsOneNumber(row,column));
+        editText.setGravity(Gravity.CENTER);
+        editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+        editText.setTextColor(Color.BLACK);
+        editText.setBackground(AppCompatResources.getDrawable(context, R.drawable.edit_text_field_border_black));
+        ViewGroup.LayoutParams editTextParams = new ViewGroup.LayoutParams(getBildschirmBreite()/10,getBildschirmBreite()/10);
+        editText.setLayoutParams(editTextParams);
+        editText.setCursorVisible(false);
+    }
+
+    private void noteGridInit(GridLayout noteGrid, int row, int column){
+        noteGrid.setX(gridBasePos[0]+column*fieldEdgeSize);
+        noteGrid.setY(gridBasePos[1]+row*fieldEdgeSize);
+        noteGrid.setVisibility(View.INVISIBLE);
+        noteGrid.setColumnCount(3);
+        noteGrid.setRowCount(3);
+    }
+
+    private void noteInit(TextView note,int noteRow, int noteColumn){
+        ViewGroup.LayoutParams noteParams = new ViewGroup.LayoutParams(getBildschirmBreite()/30,getBildschirmBreite()/30);
+        note.setLayoutParams(noteParams);
+        note.setVisibility(View.INVISIBLE);
+        note.setGravity(Gravity.CENTER);
+        note.setTextColor(Color.BLACK);
+        note.setTextSize((float)(fieldEdgeSize*0.1));
+        if(noteRow == 1 && noteColumn == 1) {
+            note.setBackground(AppCompatResources.getDrawable(context, R.drawable.whiteshape));
+        } else {
+            note.setBackground(noteBackgroundSelector[noteRow][noteColumn]);
+        }
+    }
+
     private void generateGridLine(RelativeLayout playScreen, int width, int height, int x, int y){
         View gridLine = new View(context);
         ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(width,height);
@@ -184,23 +210,40 @@ public class PlayGraphic {
         gridLine.setY(y);
         playScreen.addView(gridLine);
     }
-    public View.OnClickListener onClickListener(EditText editText, KeyPad keyPad, PlayGraphic graphic){
-        return view -> {
-            graphic.setFocusedEditText(editText);
-            System.out.println("Clicked TextEdit");
+    public View.OnTouchListener onTouchListener(EditText editText, PlayGraphic graphic){
+        return (view, motionEvent) -> {
+            switch (motionEvent.getAction()){
+                case MotionEvent.ACTION_DOWN:
+                    graphic.setFocusedEditText(editText);
+                    return true;
+
+                case MotionEvent.ACTION_UP:
+                    view.performClick();
+                    return true;
+            }
+            return false;
         };
     }
-    public View.OnClickListener onClickListener(GridLayout noteGrid, KeyPad keyPad, PlayGraphic graphic){
-        return view -> {
-            graphic.setFocusedNoteGrid(noteGrid);
-            System.out.println("Clicked NoteGrid");
+    public View.OnTouchListener onTouchListener(GridLayout noteGrid, PlayGraphic graphic){
+        return (view, motionEvent) -> {
+            switch (motionEvent.getAction()){
+                case MotionEvent.ACTION_DOWN:
+                    graphic.setFocusedNoteGrid(noteGrid);
+                    return true;
+                case MotionEvent.ACTION_UP:
+                    view.performClick();
+                    return true;
+            }
+            return false;
         };
     }
     public TextWatcher setTextWatcher(int row, int column, Play game, EditText editText){
         return new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                if(!s.toString().equals("")){
 
+                }
             }
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -220,5 +263,10 @@ public class PlayGraphic {
                 }
             }
         };
+    }
+    public static void hideKeyboardFrom(Context context, View view) {
+        view.requestFocus();
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(AppCompatActivity.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }

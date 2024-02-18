@@ -26,7 +26,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".viewmodel.PlayActivity">
+        <activity android:name=".viewmodel.PlayActivity"
+                  android:launchMode="singleTask">
             <!-- Intent-Filter, falls erforderlich -->
         </activity>
         <activity android:name=".viewmodel.LevelActivity">
