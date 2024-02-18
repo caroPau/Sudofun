@@ -110,15 +110,16 @@
         android:layout_marginHorizontal="10dp"
         android:orientation="vertical" >
 
+        <!-- Button für den Modus -->
+
         <Button
             android:id="@+id/buttonHint"
-            android:layout_width="match_parent"
+            android:layout_width="202dp"
             android:layout_height="wrap_content"
             android:background="@drawable/btn_primary"
             android:fontFamily="@font/alfa_slab_one_regular"
             android:text="@string/hinweis" />
 
-        <!-- Button für den Modus -->
         <ToggleButton
         android:id="@+id/buttonMode"
         android:layout_width="100dp"

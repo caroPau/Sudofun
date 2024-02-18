@@ -2,10 +2,13 @@ package hsos.prog3.sudofun.model;
 
 import java.util.HashSet;
 
+import hsos.prog3.sudofun.viewmodel.DataViewModel;
+
 public class Statistic {
     User user;
     int totalGames;
     long bestTime;
+    DataViewModel dataViewModel;
 
     public Statistic(User user){
         this.user = user;
@@ -38,7 +41,13 @@ public class Statistic {
         this.user = user;
     }
 
-    //TODO: Datenbank für Highscores
+    public DataViewModel getDataViewModel(){
+        return this.dataViewModel;
+    }
+
+    public void setDataViewModel(DataViewModel dataViewModel){
+        this.dataViewModel = dataViewModel;
+    }
 }
 
 

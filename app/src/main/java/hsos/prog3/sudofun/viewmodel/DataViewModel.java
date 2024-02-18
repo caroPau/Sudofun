@@ -5,6 +5,7 @@ import android.app.Application;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import hsos.prog3.sudofun.database.UserEntity;
@@ -38,7 +39,6 @@ public class DataViewModel extends AndroidViewModel {
     public LiveData<List<UserEntity>> getHighscoresEasy(){
         return userRepository.getHighscoresEasy();
     }
-
     public LiveData<List<UserEntity>> getHighscoresMedium(){
         return userRepository.getHighscoresMedium();
     }
