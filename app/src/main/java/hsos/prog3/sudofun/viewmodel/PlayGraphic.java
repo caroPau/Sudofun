@@ -12,15 +12,18 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import hsos.prog3.sudofun.View.KeyPad;
 import hsos.prog3.sudofun.viewmodel.PlayActivity;
 
 import androidx.appcompat.content.res.AppCompatResources;
 
+import java.security.Key;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +37,8 @@ public class PlayGraphic {
     static int[] gridBasePos;
     static int fieldEdgeSize;
     Context context;
+
+    Play game;
     static Drawable[][] noteBackgroundSelector;
 
     public List<EditText> getEditTexts() {
@@ -48,6 +53,29 @@ public class PlayGraphic {
         return noteGrids;
     }
     static int gridLineStrength;
+
+    public GridLayout getFocusedNoteGrid() {
+        return focusedNoteGrid;
+    }
+
+    public void setFocusedNoteGrid(GridLayout focusedNoteGrid) {
+        this.focusedNoteGrid = focusedNoteGrid;
+    }
+
+    GridLayout focusedNoteGrid;
+
+    public EditText getFocusedEditText() {
+        return focusedEditText;
+    }
+
+    public void setFocusedEditText(EditText focusedEditText) {
+        this.focusedEditText = focusedEditText;
+    }
+
+    EditText focusedEditText;
+
+    KeyPad keyPad;
+
     public static int getBildschirmBreite() {
         return Resources.getSystem().getDisplayMetrics().widthPixels;
     }
@@ -55,9 +83,10 @@ public class PlayGraphic {
         return Resources.getSystem().getDisplayMetrics().heightPixels;
     }
 
-    public PlayGraphic(PlayActivity playActivity, Context context){
+    public PlayGraphic(PlayActivity playActivity, Context context, Play game){
         this.context = context;
         this.playActivity = playActivity;
+        this.game = game;
         gridBasePos = new int[2];
         gridBasePos[0] = (int)(getBildschirmBreite()*0.05);
         gridBasePos[1] = (int)(getBildschirmHoehe()*0.156);
@@ -74,10 +103,10 @@ public class PlayGraphic {
         noteBackgroundSelector[2][2] = AppCompatResources.getDrawable(context, R.drawable.note_field_border_corner_bottom_right);
         noteGrids = new ArrayList<>();
         editTexts = new ArrayList<>();
+        keyPad = new KeyPad(playActivity,game,this);
     }
 
-    //TODO: Feld dynamisch erzeugen, OnClickListener
-    public void generateGrid(Play game, GridLayout grid, RelativeLayout playScreen){
+    public void generateGrid(GridLayout grid, RelativeLayout playScreen){
         for(int row = 0; row <= 8; row++){
             for(int column = 0; column <= 8; column++){
                 EditText editText = new EditText(context);
@@ -115,17 +144,19 @@ public class PlayGraphic {
                             }
                             note.setText(String.valueOf(noteNum));
                             noteNum++;
+                            View.OnClickListener noteGridClickListener =  onClickListener(noteGrid,keyPad,this);
+                            noteGrid.setOnClickListener(noteGridClickListener);
                             noteGrid.addView(note);
                         }
                     }
                     playScreen.addView(noteGrid);
-                    View.OnClickListener noteGridClickListener =  onClickListener(noteGrid);
-                    noteGrid.setOnClickListener(noteGridClickListener);
                     noteGrids.add(noteGrid);
                 }
                 TextWatcher textWatcher = setTextWatcher(row, column, game, editText);
                 editText.addTextChangedListener(textWatcher);
                 editTexts.add(editText);
+                View.OnClickListener editTextClickListener =  onClickListener(editText,keyPad,this);
+                editText.setOnClickListener(editTextClickListener);
                 grid.addView(editText);
             }
         }
@@ -153,14 +184,18 @@ public class PlayGraphic {
         gridLine.setY(y);
         playScreen.addView(gridLine);
     }
-
-    public View.OnClickListener onClickListener(GridLayout noteGrid){
+    public View.OnClickListener onClickListener(EditText editText, KeyPad keyPad, PlayGraphic graphic){
         return view -> {
-            InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT);
+            graphic.setFocusedEditText(editText);
+            System.out.println("Clicked TextEdit");
         };
     }
-
+    public View.OnClickListener onClickListener(GridLayout noteGrid, KeyPad keyPad, PlayGraphic graphic){
+        return view -> {
+            graphic.setFocusedNoteGrid(noteGrid);
+            System.out.println("Clicked NoteGrid");
+        };
+    }
     public TextWatcher setTextWatcher(int row, int column, Play game, EditText editText){
         return new TextWatcher() {
             @Override

@@ -138,7 +138,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/buttonLine"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="16dp"
         android:layout_centerHorizontal="true"
         android:rowCount="3"
         android:columnCount="3">
@@ -163,6 +163,57 @@
             android:background="@drawable/btn_primary"
             android:fontFamily="@font/alfa_slab_one_regular"
             android:text="@string/_3" />
+        <Button
+            android:id="@+id/numbFour"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_primary"
+            android:fontFamily="@font/alfa_slab_one_regular"
+            android:text="@string/_4" />
+        <Button
+            android:id="@+id/numbFive"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_primary"
+            android:fontFamily="@font/alfa_slab_one_regular"
+            android:text="@string/_5" />
+        <Button
+            android:id="@+id/numbSix"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_primary"
+            android:fontFamily="@font/alfa_slab_one_regular"
+            android:text="@string/_6" />
+        <Button
+            android:id="@+id/numbSeven"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_primary"
+            android:fontFamily="@font/alfa_slab_one_regular"
+            android:text="@string/_7" />
+        <Button
+            android:id="@+id/numbEight"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_primary"
+            android:fontFamily="@font/alfa_slab_one_regular"
+            android:text="@string/_8" />
+        <Button
+            android:id="@+id/numbNine"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_primary"
+            android:fontFamily="@font/alfa_slab_one_regular"
+            android:text="@string/_9" />
     </GridLayout>
+    <Button
+        android:id="@+id/clearButton"
+        android:layout_width="300dp"
+        android:layout_marginHorizontal="45dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/gridLayoutNumbers"
+        android:background="@drawable/btn_primary"
+        android:fontFamily="@font/alfa_slab_one_regular"
+        android:text="@string/clear" />
 
 </RelativeLayout>

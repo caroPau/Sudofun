@@ -26,6 +26,10 @@ public class PlayActivity extends AppCompatActivity {
 
     static PlayGraphic graphic;
 
+    public ActivityPlayBinding getBinding() {
+        return binding;
+    }
+
     private ActivityPlayBinding binding;
 
     @Override
@@ -101,8 +105,8 @@ public class PlayActivity extends AppCompatActivity {
             game.setOccupiedCells(game.getHelper().getOccupiedCells(game.getField()));
             game.setOpenCells(81 - game.getOccupiedCells().size());
         }
-        graphic = new PlayGraphic(this,this);
-        graphic.generateGrid(game, binding.gridLayoutSudoku, binding.playScreen);
+        graphic = new PlayGraphic(this,this, game);
+        graphic.generateGrid(binding.gridLayoutSudoku, binding.playScreen);
         game.getTimer().start();
         Thread thread = new Thread(game.getTimer().getTimerRunnable());
         thread.start();
@@ -200,13 +204,22 @@ public class PlayActivity extends AppCompatActivity {
      * @author M. Paul
      */
     private void togglePauseButton(boolean isChecked, CompoundButton buttonView) {
+        List<EditText> editTexts = graphic.getEditTexts();
         if (isChecked) {
             buttonView.setBackgroundResource(R.drawable.icon_play);
             game.getTimer().pause();
-            //TODO: Alle EditText Zellen deaktivieren
+            for(EditText editText : editTexts){
+                editText.setEnabled(false);
+                editText.setVisibility(View.INVISIBLE);
+            }
+
         } else {
             buttonView.setBackgroundResource(R.drawable.icon_pause);
             game.getTimer().startAfterPause();
+            for(EditText editText : editTexts){
+                editText.setEnabled(true);
+                editText.setVisibility(View.VISIBLE);
+            }
         }
     }
 
