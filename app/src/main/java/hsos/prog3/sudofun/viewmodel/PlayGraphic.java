@@ -11,6 +11,7 @@ import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.RelativeLayout;
@@ -29,13 +30,18 @@ import hsos.prog3.sudofun.model.Play;
 
 public class PlayGraphic {
 
-    static PlayActivity playActivity;
+    PlayActivity playActivity;
     static int[] gridBasePos;
     static int fieldEdgeSize;
-    static Context context;
+    Context context;
     static Drawable[][] noteBackgroundSelector;
 
-    static EditText[][] editTexts;
+    public List<EditText> getEditTexts() {
+        return editTexts;
+    }
+
+    List<EditText> editTexts;
+
     List<GridLayout> noteGrids;
 
     public List<GridLayout> getNoteGrids() {
@@ -66,8 +72,8 @@ public class PlayGraphic {
         noteBackgroundSelector[2][0] = AppCompatResources.getDrawable(context, R.drawable.note_field_border_corner_bottom_left);
         noteBackgroundSelector[2][1] = AppCompatResources.getDrawable(context, R.drawable.note_field_border_bottom);
         noteBackgroundSelector[2][2] = AppCompatResources.getDrawable(context, R.drawable.note_field_border_corner_bottom_right);
-        noteGrids = new ArrayList<GridLayout>();
-        editTexts = new EditText[9][9];
+        noteGrids = new ArrayList<>();
+        editTexts = new ArrayList<>();
     }
 
     //TODO: Feld dynamisch erzeugen, OnClickListener
@@ -75,7 +81,7 @@ public class PlayGraphic {
         for(int row = 0; row <= 8; row++){
             for(int column = 0; column <= 8; column++){
                 EditText editText = new EditText(context);
-                editTexts[row][column] = editText;
+                editText.setId(game.getHelper().coordinateAsOneNumber(row,column));
                 editText.setGravity(Gravity.CENTER);
                 editText.setInputType(InputType.TYPE_CLASS_NUMBER);
                 editText.setTextColor(Color.BLACK);
@@ -90,9 +96,9 @@ public class PlayGraphic {
                     GridLayout noteGrid = new GridLayout(context);
                     noteGrid.setX(gridBasePos[0]+column*fieldEdgeSize);
                     noteGrid.setY(gridBasePos[1]+row*fieldEdgeSize);
+                    noteGrid.setVisibility(View.INVISIBLE);
                     noteGrid.setColumnCount(3);
                     noteGrid.setRowCount(3);
-                    noteGrid.setVisibility(View.INVISIBLE);
                     int noteNum = 1;
                     for(int noteRow = 0; noteRow <= 2; noteRow++){
                         for(int noteColumn = 0; noteColumn <= 2; noteColumn++) {
@@ -112,14 +118,14 @@ public class PlayGraphic {
                             noteGrid.addView(note);
                         }
                     }
-
                     playScreen.addView(noteGrid);
+                    View.OnClickListener noteGridClickListener =  onClickListener(noteGrid);
+                    noteGrid.setOnClickListener(noteGridClickListener);
                     noteGrids.add(noteGrid);
                 }
                 TextWatcher textWatcher = setTextWatcher(row, column, game, editText);
-                View.OnClickListener editTextClickListener =  onClickListener(editText,game);
-                editText.setOnClickListener(editTextClickListener);
                 editText.addTextChangedListener(textWatcher);
+                editTexts.add(editText);
                 grid.addView(editText);
             }
         }
@@ -148,14 +154,10 @@ public class PlayGraphic {
         playScreen.addView(gridLine);
     }
 
-    public View.OnClickListener onClickListener(EditText editText, Play game){
+    public View.OnClickListener onClickListener(GridLayout noteGrid){
         return view -> {
-            if(game.isNoteMode()){
-                editText.setEnabled(false);
-            }
-            else {
-                editText.setEnabled(true);
-            }
+            InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT);
         };
     }
 
@@ -165,7 +167,6 @@ public class PlayGraphic {
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
             }
-
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if(s != null && !s.toString().equals("")) {
@@ -177,7 +178,6 @@ public class PlayGraphic {
                     }
                 }
             }
-
             @Override
             public void afterTextChanged(Editable s) {
                 if(game.getFreeCells() == 0){

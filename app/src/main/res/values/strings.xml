@@ -16,5 +16,9 @@
     <string name="colorful_numbers_background">colorful numbers background</string>
     <string name="gewonnen">Gewonnen!</string>
     <string name="best_name">best_name</string>
+    <string name="Modus">Modus</string>
+    <string name="_1">1</string>
+    <string name="_2">2</string>
+    <string name="_3">3</string>
 
 </resources>

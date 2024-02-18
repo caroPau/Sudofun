@@ -42,9 +42,7 @@ public class PlayActivity extends AppCompatActivity {
         game = new Play();
         game.dataViewModel = new ViewModelProvider(this).get(DataViewModel.class);
         user = game.dataViewModel.findByName(username);
-        PlayGraphic graphic = new PlayGraphic(this, this);
         initGame(level);
-        graphic.generateGrid(game, binding.gridLayoutSudoku, binding.playScreen);
 
         binding.buttonHint.setOnClickListener(this::buttonHintClickEvent);
         binding.btnPause.setChecked(false);
@@ -103,7 +101,7 @@ public class PlayActivity extends AppCompatActivity {
             game.setOccupiedCells(game.getHelper().getOccupiedCells(game.getField()));
             game.setOpenCells(81 - game.getOccupiedCells().size());
         }
-        PlayGraphic graphic = new PlayGraphic(this,this);
+        graphic = new PlayGraphic(this,this);
         graphic.generateGrid(game, binding.gridLayoutSudoku, binding.playScreen);
         game.getTimer().start();
         Thread thread = new Thread(game.getTimer().getTimerRunnable());
@@ -148,7 +146,7 @@ public class PlayActivity extends AppCompatActivity {
     public void endGame(){
         game.dataViewModel.updateUser(user);
         Bundle bundle = new Bundle();
-        bundle.putString("username", Objects.requireNonNull(user).username);
+//        bundle.putString("username", Objects.requireNonNull(user.getValue()).username);
         bundle.putString("level", game.getLevel().name());
         Intent intent = new Intent(PlayActivity.this, StatisticActivity.class);
         intent.putExtras(bundle);
@@ -174,14 +172,23 @@ public class PlayActivity extends AppCompatActivity {
      */
     private void toggleModeButton(boolean isChecked) {
             List<GridLayout>  noteGrids = graphic.getNoteGrids();
+            List<EditText> editTexts = graphic.getEditTexts();
             if (isChecked) {
                 for (GridLayout grid : noteGrids) {
+                    grid.setEnabled(true);
                     grid.setVisibility(View.VISIBLE);
+                }
+                for(EditText editText : editTexts){
+                    editText.setEnabled(false);
                 }
                 game.setNoteMode(true);
             } else {
                 for (GridLayout grid : noteGrids) {
+                    grid.setEnabled(false);
                     grid.setVisibility(View.INVISIBLE);
+                }
+                for(EditText editText : editTexts){
+                    editText.setEnabled(true);
                 }
                 game.setNoteMode(false);
             }
@@ -211,5 +218,4 @@ public class PlayActivity extends AppCompatActivity {
     public void navigateBack(View view) {
         this.finish();
     }
-
 }
