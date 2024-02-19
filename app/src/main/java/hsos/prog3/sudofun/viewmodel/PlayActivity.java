@@ -14,11 +14,11 @@ import android.widget.GridLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import java.util.List;
 import java.util.Objects;
 
-import java.util.List;
-
 import hsos.prog3.sudofun.R;
+import hsos.prog3.sudofun.View.PlayGraphic;
 import hsos.prog3.sudofun.database.UserEntity;
 import hsos.prog3.sudofun.databinding.ActivityPlayBinding;
 import hsos.prog3.sudofun.model.Level;
@@ -98,6 +98,8 @@ public class PlayActivity extends AppCompatActivity {
      */
     private void initGame(int level){
         SudokuCreator creator = new SudokuCreator(getSelectedLevel(game, level));
+        Thread threadCreator = new Thread(creator, "CreatorThread");
+        threadCreator.start();
         game.setField(creator.createSudoku(getSelectedLevel(game, level)));
         game.setFreeCells(81 - game.getLevel().getOpenCells());
         game.setSolvedField(creator.getSolvedField());
@@ -111,8 +113,8 @@ public class PlayActivity extends AppCompatActivity {
         graphic = new PlayGraphic(this,this, game);
         graphic.generateGrid(binding.gridLayoutSudoku,binding.gridLayoutMask ,binding.playScreen);
         game.getTimer().start();
-        Thread thread = new Thread(game.getTimer().getTimerRunnable());
-        thread.start();
+        Thread threadTimer = new Thread(game.getTimer().getTimerRunnable());
+        threadTimer.start();
     }
 
     /**
@@ -153,7 +155,7 @@ public class PlayActivity extends AppCompatActivity {
     public void endGame(){
         game.dataViewModel.updateUser(user);
         Bundle bundle = new Bundle();
-//        bundle.putString("username", Objects.requireNonNull(user.getValue()).username);
+        bundle.putString("username", Objects.requireNonNull(user.username));
         bundle.putString("level", game.getLevel().name());
         Intent intent = new Intent(PlayActivity.this, StatisticActivity.class);
         intent.putExtras(bundle);

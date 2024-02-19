@@ -12,7 +12,7 @@ import hsos.prog3.sudofun.model.Level;
  * @author Carolin Paul
  */
 
-public class SudokuCreator {
+public class SudokuCreator implements Runnable {
     /**
      * Verschiedene Schwierigkeitsstufen und die jeweils offengelegten Zellen
      */
@@ -243,6 +243,11 @@ public class SudokuCreator {
 
     public void setSolvedField(int[][] solvedField) {
         this.solvedField = solvedField;
+    }
+
+    @Override
+    public void run() {
+        Thread thread = Thread.currentThread();
     }
 }
 

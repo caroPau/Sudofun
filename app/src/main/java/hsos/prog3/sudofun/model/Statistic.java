@@ -1,19 +1,26 @@
 package hsos.prog3.sudofun.model;
 
-import java.util.HashSet;
+import androidx.lifecycle.ViewModelProvider;
 
+import java.util.HashSet;
+import java.util.Map;
+
+import hsos.prog3.sudofun.database.UserEntity;
 import hsos.prog3.sudofun.viewmodel.DataViewModel;
 
 public class Statistic {
-    User user;
-    int totalGames;
-    long bestTime;
-    DataViewModel dataViewModel;
+    private UserEntity user;
+    private int totalGames;
+    private long bestTime;
+    private DataViewModel dataViewModel;
+    private Map<UserEntity, Long> highscores;
 
-    public Statistic(User user){
-        this.user = user;
+
+    public Statistic(){
+        this.user = null;
         totalGames = 0;
         bestTime = 0;
+        dataViewModel = null;
     }
 
     public int getTotalGames() {
@@ -33,11 +40,11 @@ public class Statistic {
     }
 
 
-    public User getUser() {
+    public UserEntity getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(UserEntity user) {
         this.user = user;
     }
 
@@ -47,6 +54,14 @@ public class Statistic {
 
     public void setDataViewModel(DataViewModel dataViewModel){
         this.dataViewModel = dataViewModel;
+    }
+
+    public Map<UserEntity, Long> getHighscores() {
+        return highscores;
+    }
+
+    public void setHighscores(Map<UserEntity, Long> highscores) {
+        this.highscores = highscores;
     }
 }
 

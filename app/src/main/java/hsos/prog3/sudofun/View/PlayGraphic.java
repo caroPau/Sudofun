@@ -1,4 +1,4 @@
-package hsos.prog3.sudofun.viewmodel;
+package hsos.prog3.sudofun.View;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -28,6 +28,7 @@ import java.util.List;
 
 import hsos.prog3.sudofun.R;
 import hsos.prog3.sudofun.model.Play;
+import hsos.prog3.sudofun.viewmodel.PlayActivity;
 
 
 public class PlayGraphic {
