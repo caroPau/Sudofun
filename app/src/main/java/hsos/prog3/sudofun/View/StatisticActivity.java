@@ -1,4 +1,4 @@
-package hsos.prog3.sudofun.viewmodel;
+package hsos.prog3.sudofun.View;
 
 import android.os.Bundle;
 
@@ -11,6 +11,7 @@ import hsos.prog3.sudofun.R;
 import hsos.prog3.sudofun.database.UserEntity;
 import hsos.prog3.sudofun.model.Level;
 import hsos.prog3.sudofun.model.Statistic;
+import hsos.prog3.sudofun.viewmodel.DataViewModel;
 
 public class StatisticActivity extends AppCompatActivity {
     @Override

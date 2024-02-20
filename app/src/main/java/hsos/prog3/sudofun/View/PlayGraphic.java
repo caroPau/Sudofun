@@ -24,7 +24,6 @@ import java.util.List;
 
 import hsos.prog3.sudofun.R;
 import hsos.prog3.sudofun.model.Play;
-import hsos.prog3.sudofun.viewmodel.PlayActivity;
 import hsos.prog3.sudofun.viewmodel.PlayViewModel;
 
 

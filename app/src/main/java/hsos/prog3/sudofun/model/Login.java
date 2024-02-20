@@ -6,21 +6,27 @@ import hsos.prog3.sudofun.viewmodel.DataViewModel;
 
 public class Login {
 
-    private EditText input_username; //Textfeld für die Eingabe des Namens
-    public DataViewModel dataViewModel;
+    private String username; //Textfeld für die Eingabe des Namens
+    private DataViewModel dataViewModel;
 
     /**
      *  Getter
      */
-    public EditText getInput_username() {
-        return input_username;
+    public String getUsername() {
+        return username;
+    }
+    public DataViewModel getDataViewModel() {
+        return dataViewModel;
     }
 
     /**
      *  Setter
      */
-    public void setInput_username(EditText input_username) {
-        this.input_username = input_username;
+    public void setUsername(String input_username) {
+        this.username = username;
+    }
+    public void setDataViewModel(DataViewModel dataViewModel) {
+        this.dataViewModel = dataViewModel;
     }
 
 }

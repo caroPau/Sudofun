@@ -34,7 +34,7 @@ public class DataViewModel extends AndroidViewModel {
     public int countByName(String username){
         return userRepository.countByName(username);
     }
-    List<UserEntity> getHighscoresEasy(){
+    public List<UserEntity> getHighscoresEasy(){
         return userRepository.getHighscoresEasy();
     }
     public List<UserEntity> getHighscoresMedium(){

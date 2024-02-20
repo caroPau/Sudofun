@@ -4,7 +4,7 @@
  *
  */
 
-package hsos.prog3.sudofun.viewmodel;
+package hsos.prog3.sudofun.View;
 
 import android.app.Activity;
 import android.content.Intent;

@@ -19,21 +19,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>-->
-        <activity android:name=".viewmodel.LoginActivity"
+        <activity android:name=".View.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".viewmodel.PlayActivity"
+        <activity android:name=".View.PlayActivity"
                   android:launchMode="singleTask">
             <!-- Intent-Filter, falls erforderlich -->
         </activity>
-        <activity android:name=".viewmodel.LevelActivity">
+        <activity android:name=".View.LevelActivity">
             <!-- Intent-Filter, falls erforderlich -->
         </activity>
-        <activity android:name=".viewmodel.StatisticActivity">
+        <activity android:name=".View.StatisticActivity">
             <!-- Intent-Filter, falls erforderlich -->
         </activity>
 

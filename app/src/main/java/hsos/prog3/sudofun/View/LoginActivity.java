@@ -1,8 +1,9 @@
-package hsos.prog3.sudofun.viewmodel;
+package hsos.prog3.sudofun.View;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,26 +11,28 @@ import androidx.lifecycle.ViewModelProvider;
 
 import hsos.prog3.sudofun.R;
 import hsos.prog3.sudofun.databinding.ActivityLoginBinding;
-import hsos.prog3.sudofun.database.UserEntity;
 import hsos.prog3.sudofun.model.Login;
+import hsos.prog3.sudofun.viewmodel.DataViewModel;
+import hsos.prog3.sudofun.viewmodel.LoginViewModel;
 
 /**
  *  Logik für die LoginView
  */
 public class LoginActivity extends AppCompatActivity {
-    private Login login;
+    private LoginViewModel loginViewModel;
     private ActivityLoginBinding binding;
+    private EditText input_username;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        login = new Login();
-        login.setInput_username(this.findViewById(R.id.inputUsername));
-        login.dataViewModel = new ViewModelProvider(this).get(DataViewModel.class);
+        loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
+        input_username = this.findViewById(R.id.inputUsername);
+        loginViewModel.setDataViewModel(new ViewModelProvider(this).get(DataViewModel.class));
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-        login.setInput_username(binding.inputUsername);
+        input_username = binding.inputUsername;
         binding.btnLogin.setOnClickListener(this::loginButtonClickEvent);
     }
 
@@ -43,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
      * @author C. Paul
      */
     private void loginButtonClickEvent(View view){
-        String username = login.getInput_username().getText().toString();
+        String username = input_username.getText().toString();
         if (username.isEmpty()) {
             Toast.makeText(this, "Bitte gib einen Namen ein um fortzufahren!", Toast.LENGTH_SHORT).show();
         }
