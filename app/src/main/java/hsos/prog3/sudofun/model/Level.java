@@ -1,7 +1,7 @@
 package hsos.prog3.sudofun.model;
 
 public enum Level {
-    EASY(79),
+    EASY(45),
     MEDIUM(35),
     HARD(28);
 

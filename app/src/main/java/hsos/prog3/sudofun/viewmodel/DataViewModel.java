@@ -3,9 +3,7 @@ package hsos.prog3.sudofun.viewmodel;
 import android.app.Application;
 
 import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.LiveData;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import hsos.prog3.sudofun.database.UserEntity;
@@ -24,7 +22,7 @@ public class DataViewModel extends AndroidViewModel {
         return userRepository.findByName(username);
     }
 
-    public void updateUser(UserEntity user){
+    public void updateUserDB(UserEntity user){
         userRepository.updateUser(user);
     }
     public void insertAll(UserEntity...user){
@@ -36,13 +34,13 @@ public class DataViewModel extends AndroidViewModel {
     public int countByName(String username){
         return userRepository.countByName(username);
     }
-    public LiveData<List<UserEntity>> getHighscoresEasy(){
+    List<UserEntity> getHighscoresEasy(){
         return userRepository.getHighscoresEasy();
     }
-    public LiveData<List<UserEntity>> getHighscoresMedium(){
+    public List<UserEntity> getHighscoresMedium(){
         return userRepository.getHighscoresMedium();
     }
-    public LiveData<List<UserEntity>> getHighscoresHard(){
+    public List<UserEntity> getHighscoresHard(){
         return userRepository.getHighscoresHard();
     }
 }

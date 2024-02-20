@@ -23,7 +23,7 @@ import hsos.prog3.sudofun.model.Play;
 
 public class PlayActivity extends AppCompatActivity {
     static Play game;
-    static UserEntity user;
+    UserEntity user;
     PlayViewModel playViewModel;
 
     static PlayGraphic graphic;
@@ -38,7 +38,7 @@ public class PlayActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play);
         String username = getIntent().getStringExtra("username");
-        int level = getIntent().getIntExtra("level", 0);
+        int level = getIntent().getIntExtra("selectedLevel", 0);
         binding = ActivityPlayBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         binding.buttonHint.setOnClickListener(this::buttonHintClickEvent);
@@ -148,6 +148,30 @@ public class PlayActivity extends AppCompatActivity {
         }
     }
 
+    private void updateUser(Level level){
+        switch (level){
+            case EASY:
+                if(user.highscoreEasy == 0 || game.getTimer().getMillisSinceStart() < user.highscoreEasy) {
+                    user.highscoreEasy = game.getTimer().getMillisSinceStart();
+                }
+                user.gamesEasy++;
+                break;
+            case MEDIUM:
+                if(user.highscoreMedium == 0 || game.getTimer().getMillisSinceStart() < user.highscoreMedium) {
+                    user.highscoreMedium = game.getTimer().getMillisSinceStart();
+                }
+                user.gamesMedium++;
+                break;
+            case HARD:
+                if(user.highscoreHard == 0 || game.getTimer().getMillisSinceStart() < user.highscoreHard) {
+                    user.highscoreHard = game.getTimer().getMillisSinceStart();
+                }
+                user.gamesHard++;
+                break;
+            default:
+                break;
+        }
+    }
 
 
     /**
@@ -156,7 +180,8 @@ public class PlayActivity extends AppCompatActivity {
      * @author C. Paul
      */
     public void endGame(){
-        game.dataViewModel.updateUser(user);
+        updateUser(game.getLevel());
+        game.dataViewModel.updateUserDB(user);
         Bundle bundle = new Bundle();
         bundle.putString("username", Objects.requireNonNull(user.username));
         bundle.putString("level", game.getLevel().name());

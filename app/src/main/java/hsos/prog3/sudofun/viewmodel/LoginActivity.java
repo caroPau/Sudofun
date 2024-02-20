@@ -46,14 +46,9 @@ public class LoginActivity extends AppCompatActivity {
         String username = login.getInput_username().getText().toString();
         if (username.isEmpty()) {
             Toast.makeText(this, "Bitte gib einen Namen ein um fortzufahren!", Toast.LENGTH_SHORT).show();
-        } else {
-            int count = login.dataViewModel.countByName(username);
-            if (count == 0) {
-                login.dataViewModel.insertAll(new UserEntity(username, 0, 0, 0, 0, 0, 0));
-            }
+        }
             Intent intent = new Intent(LoginActivity.this, LevelActivity.class);
             intent.putExtra("username", username);
             startActivity(intent);
         }
-    }
 }

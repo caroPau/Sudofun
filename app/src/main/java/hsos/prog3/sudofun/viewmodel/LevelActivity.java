@@ -8,14 +8,12 @@ package hsos.prog3.sudofun.viewmodel;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import hsos.prog3.sudofun.R;
 import hsos.prog3.sudofun.databinding.ActivityLevelBinding;
-import hsos.prog3.sudofun.model.User;
 
 public class LevelActivity extends AppCompatActivity {
     private int selectedLevel = -1;
@@ -26,7 +24,6 @@ public class LevelActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_level);
-        //user = getIntent().getSerializableExtra("user", User.class);
         binding = ActivityLevelBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);

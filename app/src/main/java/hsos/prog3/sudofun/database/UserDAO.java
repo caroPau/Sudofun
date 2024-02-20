@@ -21,13 +21,13 @@ public interface UserDAO {
     int countByName(String username);
 
     @Query("SELECT * FROM userentity ORDER BY highscore_easy DESC LIMIT 5")
-    LiveData<List<UserEntity>> getEasyHighscores();
+    List<UserEntity> getEasyHighscores();
 
     @Query("SELECT * FROM userentity ORDER BY highscore_medium DESC LIMIT 5")
-    LiveData<List<UserEntity>> getMediumHighscores();
+    List<UserEntity> getMediumHighscores();
 
     @Query("SELECT * FROM userentity ORDER BY highscore_hard DESC LIMIT 5")
-    LiveData<List<UserEntity>> getHardHighscores();
+    List<UserEntity> getHardHighscores();
 
     @Update
     void updateUser(UserEntity user);

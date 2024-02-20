@@ -123,10 +123,6 @@ public class SudokuHelper {
         }
     }
 
-    public boolean isCoordinateEditable(ArrayList<Integer> occupiedCells, int row, int column){
-        return !occupiedCells.contains(coordinateAsOneNumber(row, column));
-    }
-
     public ArrayList<Integer> getOccupiedCells(int[][] field){
         ArrayList<Integer> occupiedCells = new ArrayList<>();
         for(int i = 0; i < field.length; i++){

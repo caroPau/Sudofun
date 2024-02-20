@@ -5,6 +5,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridLayout;
 
+import hsos.prog3.sudofun.R;
 import hsos.prog3.sudofun.model.Play;
 import hsos.prog3.sudofun.viewmodel.PlayActivity;
 import hsos.prog3.sudofun.viewmodel.PlayViewModel;
@@ -102,9 +103,11 @@ public class KeyPad {
                  */
                 if (buttonText.toString().equals("clear")) {
                     if (!focusedEditText.getText().toString().equals("")) {
-                        game.setFreeCells(game.getFreeCells() + 1);
+                        game.getHelper().numberToCoordinate(focusedEditText.getId(), game);
+                        playViewModel.reactToClear(game);
+                        System.out.println(game.getFreeCells());
+                        focusedEditText.setText("");
                     }
-                    focusedEditText.setText("");
                 } else {
                     focusedEditText.setText(buttonText);
                     game.getHelper().numberToCoordinate(focusedEditText.getId(), game);

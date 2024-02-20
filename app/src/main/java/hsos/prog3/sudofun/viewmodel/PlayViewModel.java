@@ -21,4 +21,11 @@ public class PlayViewModel extends AndroidViewModel {
             game.getField()[row][column] = number;
         }
     }
+
+    public void reactToClear(Play game){
+        if(game.getField()[game.getRowHint()][game.getColumnHint()] != 0){
+            game.getField()[game.getRowHint()][game.getColumnHint()] = 0;
+            game.setFreeCells(game.getFreeCells() + 1);
+        }
+    }
 }

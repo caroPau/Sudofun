@@ -15,9 +15,9 @@ public class UserRepository {
     private UserDAO userDAO;
     private UserEntity user;
     private int count;
-    private LiveData<List<UserEntity>> highscoresEasy;
-    private LiveData<List<UserEntity>> highscoresMedium;
-    private LiveData<List<UserEntity>> highscoresHard;
+    private List<UserEntity> highscoresEasy;
+    private List<UserEntity> highscoresMedium;
+    private List<UserEntity> highscoresHard;
 
     public UserRepository(Application application){
         AppDatabase db = AppDatabase.getDatabase(application);
@@ -56,21 +56,21 @@ public class UserRepository {
         });
     }
 
-    public LiveData<List<UserEntity>> getHighscoresEasy(){
+    public List<UserEntity> getHighscoresEasy(){
         AppDatabase.databaseWriter.execute(() ->{
             highscoresEasy = userDAO.getEasyHighscores();
         });
         return highscoresEasy;
     }
 
-    public LiveData<List<UserEntity>> getHighscoresMedium(){
+    public List<UserEntity> getHighscoresMedium(){
         AppDatabase.databaseWriter.execute(() ->{
             highscoresMedium = userDAO.getMediumHighscores();
         });
         return highscoresMedium;
     }
 
-    public LiveData<List<UserEntity>> getHighscoresHard(){
+    public List<UserEntity> getHighscoresHard(){
         AppDatabase.databaseWriter.execute(() ->{
             highscoresHard = userDAO.getHardHighscores();
         });
