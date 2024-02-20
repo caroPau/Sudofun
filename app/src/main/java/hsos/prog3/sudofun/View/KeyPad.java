@@ -7,21 +7,34 @@ import android.widget.GridLayout;
 
 import hsos.prog3.sudofun.model.Play;
 import hsos.prog3.sudofun.viewmodel.PlayActivity;
-import hsos.prog3.sudofun.viewmodel.PlayGraphic;
+import hsos.prog3.sudofun.viewmodel.PlayViewModel;
 
 public class KeyPad {
     PlayActivity playActivity;
     Play game;
     PlayGraphic graphic;
-    public KeyPad(PlayActivity playActivity, Play game, PlayGraphic graphic){
+    PlayViewModel playViewModel;
+
+    public KeyPad(PlayActivity playActivity, Play game, PlayGraphic graphic, PlayViewModel playViewModel) {
         this.playActivity = playActivity;
         this.game = game;
         this.graphic = graphic;
-        /**
-         * Registrieren des onClickListeners auf die Buttons im Tastenfeld
-         *
-         * @author C. Paul
-         */
+        this.playViewModel = playViewModel;
+        registerAllListeners();
+    }
+
+    /**
+     * Funktion für das Registrieren des onClickListeners auf einen Button
+     */
+    private void registerListener(Button button) {
+        View.OnClickListener numbClickListener = onClickListener(button, graphic, game);
+        button.setOnClickListener(numbClickListener);
+    }
+
+    /**
+     * Funktion für das Registrieren der onClickListener für alle Buttons
+     */
+    private void registerAllListeners() {
         registerListener(playActivity.getBinding().numbOne);
         registerListener(playActivity.getBinding().numbTwo);
         registerListener(playActivity.getBinding().numbThree);
@@ -32,83 +45,73 @@ public class KeyPad {
         registerListener(playActivity.getBinding().numbEight);
         registerListener(playActivity.getBinding().numbNine);
         registerListener(playActivity.getBinding().clearButton);
+    }
 
-    }
-    /**
-     * Funktion für das Registrieren des onClickListeners auf einen Button
-     * @author C. Paul
-     */
-    private void registerListener(Button button){
-        View.OnClickListener numbClickListener =  onClickListener(button,graphic,game);
-        button.setOnClickListener(numbClickListener);
-    }
     /**
      * Funktion für die Rückgabe der indizierten Notiz im GridLayout
-     *
-     * @author C. Paul
      */
-    private View getNote(int index,GridLayout noteGrid){
-        return noteGrid.getChildAt(index-1);
+    private View getNote(int index, GridLayout noteGrid) {
+        return noteGrid.getChildAt(index - 1);
     }
 
     /**
      * OnClickListener für alle Zahlen auf dem Tastenfeld
      * je nach Modus wird der Inhalt des zuletzt fokussierten Views mit dem jeweiligen Zahlenwert überschrieben
-     *  bzw. gelöscht
-     * @author C. Paul
+     * bzw. gelöscht
+     *
      */
 
-    public View.OnClickListener onClickListener(Button button,PlayGraphic graphic, Play game){
+    public View.OnClickListener onClickListener(Button button, PlayGraphic graphic, Play game) {
         return view -> {
             CharSequence buttonText = button.getText();
             EditText focusedEditText = graphic.getFocusedEditText();
             GridLayout focusedNoteGrid = graphic.getFocusedNoteGrid();
             View note = null;
-            /**
+            /*
              * Behandlung des Falls, bei dem der Notizmodus aktiviert ist
-             * @author C. Paul
              */
-            if(game.isNoteMode()){
-                /**
+            if (game.isNoteMode()) {
+                /*
                  * löschen aller Notizen bei "clear" als Eingabe
-                 * @author C. Paul
                  */
-                if(buttonText.toString().equals("clear")){
-                    for(int i = 1; i<=9;i++){
-                        note = getNote(i,focusedNoteGrid);
+                if (buttonText.toString().equals("clear")) {
+                    for (int i = 1; i <= 9; i++) {
+                        note = getNote(i, focusedNoteGrid);
                         note.setVisibility(View.INVISIBLE);
                     }
                     return;
-                }
-                else{
-                    /**
+                } else {
+                    /*
                      * Parsen der Notiz, die getoggled werden soll
-                     * @author C. Paul
                      */
-                    note = getNote(Integer.parseInt(buttonText.toString()),focusedNoteGrid);
+                    note = getNote(Integer.parseInt(buttonText.toString()), focusedNoteGrid);
                 }
-                /**
+                /*
                  * Toggeln der jeweiligen Notiz
-                 * @author C. Paul
                  */
-                if(note != null) {
+                if (note != null) {
                     if (note.getVisibility() == View.INVISIBLE) {
                         note.setVisibility(View.VISIBLE);
                     } else {
                         note.setVisibility(View.INVISIBLE);
                     }
                 }
-            }else{
-                /**
+            } else {
+                /*
                  * Behandlung des Falls, bei dem der Notizmodus deaktiviert ist
-                 *
-                 * @author C. Paul
                  */
-                if(buttonText.toString().equals("clear")) {
+                if (buttonText.toString().equals("clear")) {
+                    if (!focusedEditText.getText().toString().equals("")) {
+                        game.setFreeCells(game.getFreeCells() + 1);
+                    }
                     focusedEditText.setText("");
-                }
-                else{
+                } else {
                     focusedEditText.setText(buttonText);
+                    game.getHelper().numberToCoordinate(focusedEditText.getId(), game);
+                    playViewModel.reactToNewNumber(game, game.getRowHint(), game.getColumnHint(), Integer.parseInt(buttonText.toString()));
+                }
+                if (game.getFreeCells() == 0) {
+                    playActivity.endGame();
                 }
             }
         };

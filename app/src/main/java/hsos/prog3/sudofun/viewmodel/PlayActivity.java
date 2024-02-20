@@ -1,12 +1,9 @@
 package hsos.prog3.sudofun.viewmodel;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.content.Context;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.GridLayout;
@@ -27,6 +24,7 @@ import hsos.prog3.sudofun.model.Play;
 public class PlayActivity extends AppCompatActivity {
     static Play game;
     static UserEntity user;
+    PlayViewModel playViewModel;
 
     static PlayGraphic graphic;
 
@@ -48,7 +46,11 @@ public class PlayActivity extends AppCompatActivity {
         setContentView(view);
         game = new Play();
         game.dataViewModel = new ViewModelProvider(this).get(DataViewModel.class);
-        user = game.dataViewModel.findByName(username);
+        playViewModel = new ViewModelProvider(this).get(PlayViewModel.class);
+        if((user = game.dataViewModel.findByName(username)) == null){
+            user = new UserEntity(username, 0, 0, 0, 0, 0, 0);
+        }
+
         initGame(level);
 
         binding.buttonHint.setOnClickListener(this::buttonHintClickEvent);
@@ -110,7 +112,7 @@ public class PlayActivity extends AppCompatActivity {
             game.setOccupiedCells(game.getHelper().getOccupiedCells(game.getField()));
             game.setOpenCells(81 - game.getOccupiedCells().size());
         }
-        graphic = new PlayGraphic(this,this, game);
+        graphic = new PlayGraphic(this,this, game, playViewModel);
         graphic.generateGrid(binding.gridLayoutSudoku,binding.gridLayoutMask ,binding.playScreen);
         game.getTimer().start();
         Thread threadTimer = new Thread(game.getTimer().getTimerRunnable());
@@ -141,7 +143,8 @@ public class PlayActivity extends AppCompatActivity {
             int secondsTemp = ((int) (bestTime / 1000));
             int minutes = secondsTemp / 60;
             int seconds = secondsTemp - minutes * 60;
-            binding.textViewTimerOld.setText(String.format("%02d", minutes) + ":" + String.format("%02d", seconds));
+            String time = String.format("%02d", minutes) + ":" + String.format("%02d", seconds);
+            binding.textViewTimerOld.setText(time);
         }
     }
 
