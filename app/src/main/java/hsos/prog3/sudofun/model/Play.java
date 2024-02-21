@@ -132,4 +132,16 @@ public class Play {
     public void setLastFocusedCell(EditText lastFocusedCell){
         this.lastFocusedCell = lastFocusedCell;
     }
+
+    public void reset() {
+        if (timer != null) {
+            timer.reset();
+        }
+        field = null;
+        solvedField = null;
+        occupiedCells.clear();
+        openCells = 0;
+        noteMode = false;
+        lastFocusedCell = null;
+    }
 }

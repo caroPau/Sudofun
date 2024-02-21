@@ -2,6 +2,7 @@ package hsos.prog3.sudofun.View;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -58,19 +59,25 @@ public class LoginActivity extends AppCompatActivity {
         if (username.isEmpty()) {
             Toast.makeText(this, "Bitte gib einen Namen ein um fortzufahren!", Toast.LENGTH_SHORT).show();
         }
+        Intent intent = new Intent(LoginActivity.this, LevelActivity.class);
+        Bundle bundle = new Bundle();
 
         dataViewModel.findByName(username).observe(this, new Observer<UserEntity>() {
             @Override
-            public void onChanged(UserEntity retreivedUser) {
-                if (retreivedUser == null) {
+            public void onChanged(UserEntity retrievedUser) {
+                if (retrievedUser == null) {
                     // Benutzer nicht gefunden, erstellen Sie einen neuen Benutzer und fügen Sie ihn hinzu
                     user = new UserEntity(username, 0, 0, 0, 0, 0, 0);
                     dataViewModel.insertAll(user);
+                } else {
+                    user = retrievedUser;
+                    Log.w("INFOTAG", "LoginActivity - Username: " + user.getUsername());
                 }
+
+                bundle.putSerializable("user", user);
+                intent.putExtras(bundle);
+                startActivity(intent);
             }
         });
-        Intent intent = new Intent(LoginActivity.this, LevelActivity.class);
-        intent.putExtra("username", username);
-        startActivity(intent);
     }
 }

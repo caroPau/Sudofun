@@ -108,4 +108,14 @@ public class TimerViewModel{
         actualTimerView = txtview;
     }
 
+    public void reset() {
+        isRunning = false;
+        handler.removeCallbacks(timerRunnable);
+        start = 0;
+        pause = 0;
+        millisSinceStart = 0;
+        seconds = 0;
+        minutes = 0;
+        actualTimerView = null;
+    }
 }

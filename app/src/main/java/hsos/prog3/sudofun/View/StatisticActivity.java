@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import java.util.List;
+import java.util.Objects;
 
 import hsos.prog3.sudofun.R;
 import hsos.prog3.sudofun.model.UserEntity;
@@ -18,13 +19,15 @@ import hsos.prog3.sudofun.model.Statistic;
 import hsos.prog3.sudofun.viewmodel.DataViewModel;
 
 public class StatisticActivity extends AppCompatActivity {
-    @Override
+
+    UserEntity user;
+   /* @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistic);
         Bundle bundle = getIntent().getExtras();
         Level level = Level.valueOf(bundle.getString("level"));
-        String username = bundle.getString("username");
+        username = bundle.getString("username");
         Statistic statistic = new Statistic();
         statistic.setDataViewModel(new ViewModelProvider(this).get(DataViewModel.class));
         statistic.getDataViewModel().findByName(username).observe(this, new Observer<UserEntity>() {
@@ -37,7 +40,23 @@ public class StatisticActivity extends AppCompatActivity {
                 }
             }
         });
+    }*/
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_statistic);
+        Statistic statistic = new Statistic();
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            user = bundle.getSerializable("user", UserEntity.class);
+            if (user != null) {
+                statistic.setUser(user);
+                //TODO Sollten wir das Level auch in statisic setzen können?
+                Level level = Level.valueOf(bundle.getString("level"));
+            }
+        }
     }
+
 
 
     private List<UserEntity> getStatistics(Statistic statistic, Level level) {
@@ -54,6 +73,9 @@ public class StatisticActivity extends AppCompatActivity {
     }
     public void startLevelActivity(View view) {
         Intent intent = new Intent(StatisticActivity.this, LevelActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("user", user);
+        intent.putExtras(bundle);
         startActivity(intent);
     }
 }
