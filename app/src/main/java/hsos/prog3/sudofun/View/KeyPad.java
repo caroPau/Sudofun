@@ -69,6 +69,10 @@ public class KeyPad {
             EditText focusedEditText = graphic.getFocusedEditText();
             GridLayout focusedNoteGrid = graphic.getFocusedNoteGrid();
             View note = null;
+
+            if (focusedEditText == null) {
+                return;
+            }
             /*
              * Behandlung des Falls, bei dem der Notizmodus aktiviert ist
              */
