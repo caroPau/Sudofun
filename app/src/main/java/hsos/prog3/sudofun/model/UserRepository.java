@@ -1,12 +1,13 @@
 package hsos.prog3.sudofun.model;
 
 import android.app.Application;
+import android.util.Log;
 
 import java.util.List;
 
 public class UserRepository {
     private UserDAO userDAO;
-    private UserEntity user;
+    private LiveData<UserEntity> user;
     private int count;
     private List<UserEntity> highscoresEasy;
     private List<UserEntity> highscoresMedium;
@@ -17,10 +18,12 @@ public class UserRepository {
         userDAO = db.userDAO();
     }
 
-    public UserEntity findByName(String username){
-        AppDatabase.databaseWriter.execute(() ->{
+    public LiveData<UserEntity> findByName(String username){
+/*        AppDatabase.databaseWriter.execute(() ->{
              user = userDAO.findByName(username);
-        });
+             Log.w("INFOTAG", "User " + user);
+        });*/
+        user = userDAO.findByName(username);
         return user;
     }
 

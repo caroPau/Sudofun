@@ -7,11 +7,15 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import hsos.prog3.sudofun.R;
+import hsos.prog3.sudofun.database.UserEntity;
 import hsos.prog3.sudofun.databinding.ActivityLoginBinding;
 import hsos.prog3.sudofun.model.Login;
+import hsos.prog3.sudofun.model.Play;
 import hsos.prog3.sudofun.viewmodel.DataViewModel;
 import hsos.prog3.sudofun.viewmodel.LoginViewModel;
 
@@ -20,8 +24,10 @@ import hsos.prog3.sudofun.viewmodel.LoginViewModel;
  */
 public class LoginActivity extends AppCompatActivity {
     private LoginViewModel loginViewModel;
+    private DataViewModel dataViewModel;
     private ActivityLoginBinding binding;
     private EditText input_username;
+    LiveData<UserEntity> user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +40,8 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(view);
         input_username = binding.inputUsername;
         binding.btnLogin.setOnClickListener(this::loginButtonClickEvent);
+
+        dataViewModel = new ViewModelProvider(this).get(DataViewModel.class);
     }
 
     /**
@@ -50,8 +58,19 @@ public class LoginActivity extends AppCompatActivity {
         if (username.isEmpty()) {
             Toast.makeText(this, "Bitte gib einen Namen ein um fortzufahren!", Toast.LENGTH_SHORT).show();
         }
-            Intent intent = new Intent(LoginActivity.this, LevelActivity.class);
-            intent.putExtra("username", username);
-            startActivity(intent);
-        }
+
+        dataViewModel.findByName(username).observe(this, new Observer<UserEntity>() {
+            @Override
+            public void onChanged(UserEntity user) {
+                if (user == null) {
+                    // Benutzer nicht gefunden, erstellen Sie einen neuen Benutzer und fügen Sie ihn hinzu
+                    user = new UserEntity(username, 0, 0, 0, 0, 0, 0);
+                    dataViewModel.insertAll(user);
+                }
+            }
+        });
+        Intent intent = new Intent(LoginActivity.this, LevelActivity.class);
+        intent.putExtra("username", username);
+        startActivity(intent);
+    }
 }

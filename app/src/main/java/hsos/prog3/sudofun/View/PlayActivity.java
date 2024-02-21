@@ -3,12 +3,15 @@ package hsos.prog3.sudofun.View;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.GridLayout;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import java.util.List;
@@ -28,6 +31,7 @@ public class PlayActivity extends AppCompatActivity {
     static Play game;
     UserEntity user;
     PlayViewModel playViewModel;
+    DataViewModel dataViewModel;
 
     static PlayGraphic graphic;
 
@@ -48,13 +52,31 @@ public class PlayActivity extends AppCompatActivity {
         binding.btnPause.setChecked(false);
         setContentView(view);
         game = new Play();
-        game.dataViewModel = new ViewModelProvider(this).get(DataViewModel.class);
+        //game.dataViewModel = new ViewModelProvider(this).get(DataViewModel.class);
+        dataViewModel = new ViewModelProvider(this).get(DataViewModel.class);
         playViewModel = new ViewModelProvider(this).get(PlayViewModel.class);
-        if((user = game.dataViewModel.findByName(username)) == null){
+        /* if((user = game.dataViewModel.findByName(username)) == null){
             user = new UserEntity(username, 0, 0, 0, 0, 0, 0);
-        }
+        } */
+        Log.w("INFOTAG", "Username: " + username);
 
-        initGame(level);
+        dataViewModel.findByName(username).observe(this, new Observer<UserEntity>() {
+            @Override
+            public void onChanged(UserEntity retrievedUser) {
+                if (retrievedUser != null) {
+                    // User gefunden, initGame aufrufen
+                    user = retrievedUser;
+                    initGame(level);
+                } else {
+                    Log.w("INFOTAG", "User " + username + " not found.");
+                }
+            }
+        });
+
+        /*if((user = dataViewModel.findByName(username)) == null) {
+            Log.w("INFOTAG", "User " + username + " not found.");
+        }
+        initGame(level);*/
 
         binding.buttonHint.setOnClickListener(this::buttonHintClickEvent);
         binding.btnPause.setChecked(false);
@@ -151,7 +173,7 @@ public class PlayActivity extends AppCompatActivity {
         }
     }
 
-    private void updateUser(Level level){
+    private void updateUser(@NonNull Level level){
         switch (level){
             case EASY:
                 if(user.highscoreEasy == 0 || game.getTimer().getMillisSinceStart() < user.highscoreEasy) {
@@ -184,7 +206,8 @@ public class PlayActivity extends AppCompatActivity {
      */
     public void endGame(){
         updateUser(game.getLevel());
-        game.dataViewModel.updateUserDB(user);
+        Log.w("INFOTAG", "Model is: " + game.dataViewModel);
+        dataViewModel.updateUserDB(user);
         Bundle bundle = new Bundle();
         bundle.putString("username", Objects.requireNonNull(user.username));
         bundle.putString("level", game.getLevel().name());

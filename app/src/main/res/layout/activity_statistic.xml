@@ -82,22 +82,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:layout_below="@id/statisticTable"
             android:background="@drawable/btn_primary"
             android:fontFamily="@font/alfa_slab_one_regular"
-            android:text="Statistik" />
+            android:text="@string/statistik" />
 
         <!-- Button für den Modus -->
         <Button
             android:id="@+id/buttonMode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/buttonHint"
             android:layout_margin="10dp"
             android:background="@drawable/btn_primary"
             android:fontFamily="@font/alfa_slab_one_regular"
-            android:text="Neues Spiel"
-            android:textSize="14sp" />
+            android:text="@string/neues_spiel"
+            android:textSize="14sp"
+            android:onClick="startLevelActivity"
+            />
 
     </LinearLayout>
 

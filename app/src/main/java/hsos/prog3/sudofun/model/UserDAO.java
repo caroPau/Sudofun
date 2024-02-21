@@ -14,8 +14,8 @@ import hsos.prog3.sudofun.model.UserEntity;
 
 @Dao
 public interface UserDAO {
-    @Query("SELECT * FROM userentity WHERE username LIKE :username LIMIT 1")
-    UserEntity findByName(String username);
+    @Query("SELECT * FROM userentity WHERE username = :username")
+    LiveData<UserEntity> findByName(String username);
 
     @Query("SELECT COUNT(*) FROM userentity WHERE username LIKE :username")
     int countByName(String username);
@@ -32,7 +32,7 @@ public interface UserDAO {
     @Update
     void updateUser(UserEntity user);
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.NONE)
     void insertAll(UserEntity... users);
 
     @Delete

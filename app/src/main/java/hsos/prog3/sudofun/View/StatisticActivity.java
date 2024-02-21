@@ -1,8 +1,10 @@
 package hsos.prog3.sudofun.View;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import java.util.List;
@@ -23,7 +25,16 @@ public class StatisticActivity extends AppCompatActivity {
         String username = bundle.getString("username");
         Statistic statistic = new Statistic();
         statistic.setDataViewModel(new ViewModelProvider(this).get(DataViewModel.class));
-        statistic.setUser(statistic.getDataViewModel().findByName(username));
+        statistic.getDataViewModel().findByName(username).observe(this, new Observer<UserEntity>() {
+            @Override
+            public void onChanged(UserEntity user) {
+                if (user != null) {
+                    statistic.setUser(user);
+                } else {
+                    Log.w("INFOTAG", "User " + username + " not found.");
+                }
+            }
+        });
     }
 
 

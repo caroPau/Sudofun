@@ -3,6 +3,7 @@ package hsos.prog3.sudofun.viewmodel;
 import android.app.Application;
 
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
@@ -15,10 +16,9 @@ public class DataViewModel extends AndroidViewModel {
     public DataViewModel(Application application){
         super(application);
         userRepository = new UserRepository(application);
-
     }
 
-    public UserEntity findByName(String username){
+    public LiveData<UserEntity> findByName(String username) {
         return userRepository.findByName(username);
     }
 
