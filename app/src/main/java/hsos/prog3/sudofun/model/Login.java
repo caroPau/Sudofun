@@ -6,7 +6,7 @@ import hsos.prog3.sudofun.viewmodel.DataViewModel;
 
 public class Login {
 
-    private String username; //Textfeld für die Eingabe des Namens
+    private String username;
     private DataViewModel dataViewModel;
 
     /**
@@ -22,7 +22,7 @@ public class Login {
     /**
      *  Setter
      */
-    public void setUsername(String input_username) {
+    public void setUsername(String username) {
         this.username = username;
     }
     public void setDataViewModel(DataViewModel dataViewModel) {

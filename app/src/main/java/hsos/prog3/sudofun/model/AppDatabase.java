@@ -1,9 +1,8 @@
-package hsos.prog3.sudofun.database;
+package hsos.prog3.sudofun.model;
 
 import android.content.Context;
 
 import androidx.annotation.NonNull;
-import androidx.room.Dao;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;

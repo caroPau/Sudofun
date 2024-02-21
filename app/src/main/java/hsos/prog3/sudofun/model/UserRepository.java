@@ -2,14 +2,7 @@ package hsos.prog3.sudofun.model;
 
 import android.app.Application;
 
-import androidx.lifecycle.LiveData;
-
-import java.util.ArrayList;
 import java.util.List;
-
-import hsos.prog3.sudofun.database.AppDatabase;
-import hsos.prog3.sudofun.database.UserDAO;
-import hsos.prog3.sudofun.database.UserEntity;
 
 public class UserRepository {
     private UserDAO userDAO;

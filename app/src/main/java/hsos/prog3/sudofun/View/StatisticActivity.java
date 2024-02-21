@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModelProvider;
 import java.util.List;
 
 import hsos.prog3.sudofun.R;
-import hsos.prog3.sudofun.database.UserEntity;
+import hsos.prog3.sudofun.model.UserEntity;
 import hsos.prog3.sudofun.model.Level;
 import hsos.prog3.sudofun.model.Statistic;
 import hsos.prog3.sudofun.viewmodel.DataViewModel;

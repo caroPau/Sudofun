@@ -5,6 +5,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridLayout;
 
+import androidx.appcompat.content.res.AppCompatResources;
+
+import hsos.prog3.sudofun.R;
 import hsos.prog3.sudofun.model.Play;
 import hsos.prog3.sudofun.viewmodel.PlayViewModel;
 
@@ -115,6 +118,8 @@ public class KeyPad {
                     playActivity.endGame();
                 }
             }
+            focusedEditText.setBackground(AppCompatResources.getDrawable(playActivity.getApplicationContext(), R.drawable.edit_text_field_border_black));
         };
+
     }
 }

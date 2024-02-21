@@ -1,4 +1,4 @@
-package hsos.prog3.sudofun.database;
+package hsos.prog3.sudofun.model;
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;

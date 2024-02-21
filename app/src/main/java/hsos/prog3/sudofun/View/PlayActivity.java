@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Objects;
 
 import hsos.prog3.sudofun.R;
-import hsos.prog3.sudofun.database.UserEntity;
+import hsos.prog3.sudofun.model.UserEntity;
 import hsos.prog3.sudofun.databinding.ActivityPlayBinding;
 import hsos.prog3.sudofun.model.Level;
 import hsos.prog3.sudofun.model.Play;

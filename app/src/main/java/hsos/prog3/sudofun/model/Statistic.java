@@ -1,11 +1,7 @@
 package hsos.prog3.sudofun.model;
 
-import androidx.lifecycle.ViewModelProvider;
-
-import java.util.HashSet;
 import java.util.Map;
 
-import hsos.prog3.sudofun.database.UserEntity;
 import hsos.prog3.sudofun.viewmodel.DataViewModel;
 
 public class Statistic {

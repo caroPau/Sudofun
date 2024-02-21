@@ -6,7 +6,7 @@ import androidx.lifecycle.AndroidViewModel;
 
 import java.util.List;
 
-import hsos.prog3.sudofun.database.UserEntity;
+import hsos.prog3.sudofun.model.UserEntity;
 import hsos.prog3.sudofun.model.UserRepository;
 
 public class DataViewModel extends AndroidViewModel {

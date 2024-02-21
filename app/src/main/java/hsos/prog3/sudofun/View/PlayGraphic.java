@@ -133,8 +133,6 @@ public class PlayGraphic {
                     playScreen.addView(noteGrid);
                     noteGrids.add(noteGrid);
                 }
-                //TextWatcher textWatcher = setTextWatcher(row, column, game, editText);
-                //editText.addTextChangedListener(textWatcher);
                 editTexts.add(editText);
                 View.OnTouchListener editTextTouchListener =  onTouchListener(editText,this);
                 editText.setOnTouchListener(editTextTouchListener);
@@ -214,9 +212,14 @@ public class PlayGraphic {
             switch (motionEvent.getAction()){
                 case MotionEvent.ACTION_DOWN:
                     graphic.setFocusedEditText(editText);
+                    if(playViewModel.getLastFocusedCell() != null) {
+                        playViewModel.getLastFocusedCell().setBackground(AppCompatResources.getDrawable(context, R.drawable.edit_text_field_border_black));
+                    }
+                    editText.setBackgroundResource(R.color.rose);
                     return true;
 
                 case MotionEvent.ACTION_UP:
+                    playViewModel.setLastFocusedCell(editText);
                     view.performClick();
                     return true;
             }
@@ -236,33 +239,7 @@ public class PlayGraphic {
             return false;
         };
     }
-    /*public TextWatcher setTextWatcher(int row, int column, Play game, EditText editText){
-        return new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                if(!s.toString().equals("")){
 
-                }
-            }
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(s != null && !s.toString().equals("")) {
-                    if(!game.isNoteMode()) {
-                        if (game.getField()[row][column] == 0 && game.getHelper().isValid(row, column, Integer.parseInt(s.toString()), game.getField())) {
-                            game.setFreeCells(game.getFreeCells() - 1);
-                            game.getField()[row][column] = Integer.parseInt(s.toString());
-                        }
-                    }
-                }
-            }
-            @Override
-            public void afterTextChanged(Editable s) {
-                if(game.getFreeCells() == 0){
-                    playActivity.endGame();
-                }
-            }
-        };
-    }*/
     public static void hideKeyboardFrom(Context context, View view) {
         view.requestFocus();
         InputMethodManager imm = (InputMethodManager) context.getSystemService(AppCompatActivity.INPUT_METHOD_SERVICE);

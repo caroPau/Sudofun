@@ -1,6 +1,5 @@
-package hsos.prog3.sudofun.database;
+package hsos.prog3.sudofun.model;
 
-import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -10,6 +9,7 @@ import androidx.room.Update;
 
 import java.util.List;
 
+import hsos.prog3.sudofun.model.UserEntity;
 
 
 @Dao
