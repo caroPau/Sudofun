@@ -11,10 +11,10 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
-import java.util.Objects;
 
 import hsos.prog3.sudofun.R;
 import hsos.prog3.sudofun.databinding.ActivityStatisticBinding;
+import hsos.prog3.sudofun.model.Statistic;
 import hsos.prog3.sudofun.model.UserEntity;
 import hsos.prog3.sudofun.model.Level;
 import hsos.prog3.sudofun.viewmodel.DataViewModel;
@@ -29,6 +29,7 @@ public class StatisticActivity extends AppCompatActivity {
     private List<UserEntity> bestUsers;
     private RecyclerView recyclerView;
     private HighscoreAdapter adapter;
+    private UserEntity user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +42,7 @@ public class StatisticActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
+        Statistic statistic = new Statistic();
         recyclerView = binding.bestListRecycler;
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -63,23 +65,6 @@ public class StatisticActivity extends AppCompatActivity {
             }
         });
     }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_statistic);
-        Statistic statistic = new Statistic();
-        Bundle bundle = getIntent().getExtras();
-        if (bundle != null) {
-            user = bundle.getSerializable("user", UserEntity.class);
-            if (user != null) {
-                statistic.setUser(user);
-                //TODO Sollten wir das Level auch in statisic setzen können?
-                Level level = Level.valueOf(bundle.getString("level"));
-            }
-        }
-    }
-
 
     private LiveData<List<UserEntity>> getStatistics(Level level) {
         LiveData<List<UserEntity>> users = null;
