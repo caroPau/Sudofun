@@ -10,9 +10,6 @@ import androidx.room.Update;
 
 import java.util.List;
 
-import hsos.prog3.sudofun.model.UserEntity;
-
-
 @Dao
 public interface UserDAO {
     @Query("SELECT * FROM userentity WHERE username = :username")
