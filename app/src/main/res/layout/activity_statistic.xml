@@ -62,19 +62,18 @@
         android:shadowDy="3"
         android:shadowRadius="1.6"
         />
+
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="377dp"
+            android:layout_height="wrap_content"
 
             >
 
-            <GridView
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/best_list_recycler"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginTop="25dp"
-                android:layout_marginEnd="-2dp" />
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="40dp" />
         </RelativeLayout>
 
         <Button

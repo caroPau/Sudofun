@@ -65,7 +65,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (retreivedUser == null) {
                     // Benutzer nicht gefunden, erstellen Sie einen neuen Benutzer und fügen Sie ihn hinzu
                     user = new UserEntity(username, 0, 0, 0, 0, 0, 0);
-                    dataViewModel.insertAll(retreivedUser);
+                    dataViewModel.insertAll(user);
                 }
             }
         });

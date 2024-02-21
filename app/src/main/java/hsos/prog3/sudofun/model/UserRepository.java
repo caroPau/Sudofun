@@ -54,25 +54,27 @@ public class UserRepository {
         });
     }
 
-    public List<UserEntity> getHighscoresEasy(){
-        AppDatabase.databaseWriter.execute(() ->{
+    public LiveData<List<UserEntity>> getHighscoresEasy(){
+        /*AppDatabase.databaseWriter.execute(() ->{
             highscoresEasy = userDAO.getEasyHighscores();
         });
-        return highscoresEasy;
+        return highscoresEasy;*/
+        return userDAO.getEasyHighscores();
     }
 
-    public List<UserEntity> getHighscoresMedium(){
-        AppDatabase.databaseWriter.execute(() ->{
+    public LiveData<List<UserEntity>> getHighscoresMedium(){
+        /*AppDatabase.databaseWriter.execute(() ->{
             highscoresMedium = userDAO.getMediumHighscores();
         });
-        return highscoresMedium;
+        return highscoresMedium;*/
+        return userDAO.getMediumHighscores();
     }
 
-    public List<UserEntity> getHighscoresHard(){
-        AppDatabase.databaseWriter.execute(() ->{
+    public LiveData<List<UserEntity>> getHighscoresHard(){
+        /*AppDatabase.databaseWriter.execute(() ->{
             highscoresHard = userDAO.getHardHighscores();
         });
-        return highscoresHard;
+        return highscoresHard;*/
+        return userDAO.getHardHighscores();
     }
-
 }

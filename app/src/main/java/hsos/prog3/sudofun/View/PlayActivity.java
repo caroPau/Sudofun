@@ -202,6 +202,7 @@ public class PlayActivity extends AppCompatActivity {
         Bundle bundle = new Bundle();
         bundle.putString("username", Objects.requireNonNull(user.username));
         bundle.putString("level", game.getLevel().name());
+        bundle.putLong("time", game.getTimer().getMillisSinceStart());
 
         Intent intent = new Intent(PlayActivity.this, StatisticActivity.class);
         intent.putExtras(bundle);

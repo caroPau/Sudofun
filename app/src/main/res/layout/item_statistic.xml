@@ -13,29 +13,34 @@
         tools:layout_editor_absoluteY="28dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
         <TextView
-            android:id="@+id/player_score_total"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:text="0"
-            android:padding="5dp"
+            android:id="@+id/player_name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
             android:fontFamily="@font/alfa_slab_one_regular"
+            android:gravity="start"
+            android:padding="5dp"
+            android:text="@string/best_name"
             android:textColor="@color/black"
             android:textSize="22sp" />
+
         <TextView
-            android:id="@+id/best_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/player_score"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
             android:fontFamily="@font/alfa_slab_one_regular"
+            android:gravity="end"
             android:padding="5dp"
             android:shadowColor="#000000"
             android:shadowDx="1.5"
             android:shadowDy="1.5"
             android:shadowRadius="1.6"
-            android:text="@string/best_name"
+            android:text="@string/best_score"
             android:textColor="@color/black"
-            android:textSize="22sp"
-            />
+            android:textSize="22sp" />
 
     </LinearLayout>
 

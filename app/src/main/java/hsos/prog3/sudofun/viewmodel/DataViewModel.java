@@ -34,13 +34,13 @@ public class DataViewModel extends AndroidViewModel {
     public int countByName(String username){
         return userRepository.countByName(username);
     }
-    public List<UserEntity> getHighscoresEasy(){
+    public LiveData<List<UserEntity>> getHighscoresEasy(){
         return userRepository.getHighscoresEasy();
     }
-    public List<UserEntity> getHighscoresMedium(){
+    public LiveData<List<UserEntity>> getHighscoresMedium(){
         return userRepository.getHighscoresMedium();
     }
-    public List<UserEntity> getHighscoresHard(){
+    public LiveData<List<UserEntity>> getHighscoresHard(){
         return userRepository.getHighscoresHard();
     }
 }
