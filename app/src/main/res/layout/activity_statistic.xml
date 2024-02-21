@@ -5,12 +5,22 @@
    >
 
     <ImageView
+        android:id="@+id/background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:alpha="0.5"
         android:contentDescription="@string/background_numbers"
         android:scaleType="centerCrop"
         android:src="@drawable/splash_numbers" />
+    <Button
+        android:id="@+id/buttonBack"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignEnd="@+id/background"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/ic_logout"
+        android:onClick="navigateLogout" />
 
     <LinearLayout
         android:id="@+id/statisticTable"
@@ -18,17 +28,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center"
-        android:layout_marginVertical="10dp"
         >
-
-        <Button
-            android:id="@+id/buttonBack"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_gravity="end"
-            android:layout_marginEnd="16dp"
-            android:background="@drawable/ic_logout"
-            android:onClick="navigateLogout" />
 
     <LinearLayout
         android:id="@+id/timer"
@@ -74,9 +74,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             >
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/best_list_recycler"
                 android:layout_width="match_parent"

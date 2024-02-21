@@ -145,6 +145,7 @@ public class PlayActivity extends AppCompatActivity {
             game.setOpenCells(81 - game.getOccupiedCells().size());
         }
         graphic = new PlayGraphic(this,this, game, playViewModel);
+        //graphic.setFocusedEditText(findFreeCell());
         graphic.generateGrid(binding.gridLayoutSudoku,binding.gridLayoutMask ,binding.playScreen);
         showBestTime();
         game.getTimer().start();
@@ -244,6 +245,11 @@ public class PlayActivity extends AppCompatActivity {
         if(game.getFreeCells() == 0){
             endGame();
         }
+    }
+
+    private EditText findFreeCell(){
+        int id = game.getHelper().getRandomFreeCell(game.getField(), game.getSolvedField());
+        return findViewById(id);
     }
 
     /**
