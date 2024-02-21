@@ -78,4 +78,11 @@ public class StatisticActivity extends AppCompatActivity {
         intent.putExtras(bundle);
         startActivity(intent);
     }
+
+    public void navigateLogout(View view) {
+        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); //FLAG entfernt alle Activities im Task BackStack, sodass nach dem Logout nicht zurück navigiert werden kann
+        startActivity(intent);
+        finishAffinity();
+    }
 }
