@@ -1,6 +1,7 @@
 package hsos.prog3.sudofun.View;
 
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,22 +20,23 @@ import java.util.List;
 import java.util.Objects;
 
 import hsos.prog3.sudofun.R;
-import hsos.prog3.sudofun.model.UserEntity;
 import hsos.prog3.sudofun.databinding.ActivityPlayBinding;
 import hsos.prog3.sudofun.model.Level;
 import hsos.prog3.sudofun.model.Play;
+import hsos.prog3.sudofun.model.UserEntity;
 import hsos.prog3.sudofun.viewmodel.DataViewModel;
 import hsos.prog3.sudofun.viewmodel.PlayViewModel;
 import hsos.prog3.sudofun.viewmodel.SudokuCreator;
 import hsos.prog3.sudofun.viewmodel.TimerViewModel;
 
 public class PlayActivity extends AppCompatActivity {
-    static Play game;
+    Play game;
     UserEntity user;
     PlayViewModel playViewModel;
     DataViewModel dataViewModel;
+    String username;
 
-    static PlayGraphic graphic;
+    PlayGraphic graphic;
 
     public ActivityPlayBinding getBinding() {
         return binding;
@@ -45,14 +47,28 @@ public class PlayActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play);
-        String username = getIntent().getStringExtra("username");
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            Log.w("INFOTAG", "PlayActivity: bundle ist nicht null");
+            user = bundle.getSerializable("user", UserEntity.class);
+            if (user != null) {
+                username = user.getUsername();
+                Log.w("INFOTAG", "PlayActivity: username" + username);
+            } else {
+                Log.w("INFOTAG", "PlayActivity: user ist null");
+            }
+        } else {
+            Log.w("INFOTAG", "PlayActivity: bundle ist null :(");
+        }
         int level = getIntent().getIntExtra("selectedLevel", 0);
         binding = ActivityPlayBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         binding.buttonHint.setOnClickListener(this::buttonHintClickEvent);
         binding.btnPause.setChecked(false);
         setContentView(view);
-        game = new Play();
+        Log.w("INFOTAG", "PlayActivity - oncreate()");
+
+
         dataViewModel = new ViewModelProvider(this).get(DataViewModel.class);
         playViewModel = new ViewModelProvider(this).get(PlayViewModel.class);
 
@@ -113,6 +129,8 @@ public class PlayActivity extends AppCompatActivity {
      * @author C. Paul
      */
     private void initGame(int level){
+        game = new Play();
+        resetGameVariables();
         SudokuCreator creator = new SudokuCreator(getSelectedLevel(game, level));
         Thread threadCreator = new Thread(creator, "CreatorThread");
         threadCreator.start();
@@ -132,6 +150,11 @@ public class PlayActivity extends AppCompatActivity {
         game.getTimer().start();
         Thread threadTimer = new Thread(game.getTimer().getTimerRunnable());
         threadTimer.start();
+    }
+
+
+    private void resetGameVariables() {
+        game.reset();
     }
 
     /**
@@ -195,18 +218,19 @@ public class PlayActivity extends AppCompatActivity {
      *
      * @author C. Paul
      */
-    public void endGame(){
+    public void endGame() {
         updateUser(game.getLevel());
-        Log.w("INFOTAG", "Model is: " + game.dataViewModel);
         dataViewModel.updateUserDB(user);
+
         Bundle bundle = new Bundle();
-        bundle.putString("username", Objects.requireNonNull(user.username));
         bundle.putString("level", game.getLevel().name());
         bundle.putLong("time", game.getTimer().getMillisSinceStart());
+        bundle.putSerializable("user", user);
 
         Intent intent = new Intent(PlayActivity.this, StatisticActivity.class);
         intent.putExtras(bundle);
-        this.finish();
+
+        finish();
         startActivity(intent);
     }
 

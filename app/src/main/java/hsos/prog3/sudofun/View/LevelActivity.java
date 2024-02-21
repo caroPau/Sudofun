@@ -7,6 +7,7 @@ package hsos.prog3.sudofun.View;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -14,11 +15,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import hsos.prog3.sudofun.R;
 import hsos.prog3.sudofun.databinding.ActivityLevelBinding;
+import hsos.prog3.sudofun.model.Level;
+import hsos.prog3.sudofun.model.UserEntity;
 
 public class LevelActivity extends AppCompatActivity {
     private int selectedLevel = -1;
-
     private ActivityLevelBinding binding;
+    UserEntity user;
+    String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +31,11 @@ public class LevelActivity extends AppCompatActivity {
         binding = ActivityLevelBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            user = bundle.getSerializable("user", UserEntity.class);
+            Log.w("INFOTAG", "LevelActivity: username" + user.getUsername());
+        }
     }
 
     public void selectLevel(View view) {
@@ -51,7 +60,8 @@ public class LevelActivity extends AppCompatActivity {
             Intent intent = new Intent(LevelActivity.this, PlayActivity.class);
             Bundle bundle = new Bundle();
             bundle.putInt("selectedLevel", selectedLevel);
-            bundle.putString("username", getIntent().getStringExtra("username"));
+            bundle.putSerializable("user", user);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.putExtras(bundle);
             startActivity(intent);
         } else {

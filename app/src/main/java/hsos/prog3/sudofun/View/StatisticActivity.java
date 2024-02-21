@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
+import java.util.Objects;
 
 import hsos.prog3.sudofun.R;
 import hsos.prog3.sudofun.databinding.ActivityStatisticBinding;
@@ -44,6 +45,14 @@ public class StatisticActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         dataViewModel = new ViewModelProvider(this).get(DataViewModel.class);
+
+        if (bundle != null) {
+            user = bundle.getSerializable("user", UserEntity.class);
+            if (user != null) {
+                statistic.setUser(user);
+            }
+        }
+
         getStatistics(level).observe(this, new Observer<List<UserEntity>>() {
             @Override
             public void onChanged(List<UserEntity> retrievedUsers) {
@@ -53,6 +62,22 @@ public class StatisticActivity extends AppCompatActivity {
                 binding.textViewTimer.setText(formatTime(bundle.getLong("time")));
             }
         });
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_statistic);
+        Statistic statistic = new Statistic();
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            user = bundle.getSerializable("user", UserEntity.class);
+            if (user != null) {
+                statistic.setUser(user);
+                //TODO Sollten wir das Level auch in statisic setzen können?
+                Level level = Level.valueOf(bundle.getString("level"));
+            }
+        }
     }
 
 
@@ -73,8 +98,12 @@ public class StatisticActivity extends AppCompatActivity {
         }
         return users;
     }
+    
     public void startLevelActivity(View view) {
         Intent intent = new Intent(StatisticActivity.this, LevelActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("user", user);
+        intent.putExtras(bundle);
         startActivity(intent);
     }
 
@@ -83,5 +112,12 @@ public class StatisticActivity extends AppCompatActivity {
         int minutes = secondsTemp / 60;
         int seconds = secondsTemp - minutes * 60;
         return String.format("%02d", minutes) + ":" + String.format("%02d", seconds);
+    }
+    
+    public void navigateLogout(View view) {
+        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); //FLAG entfernt alle Activities im Task BackStack, sodass nach dem Logout nicht zurück navigiert werden kann
+        startActivity(intent);
+        finishAffinity();
     }
 }
