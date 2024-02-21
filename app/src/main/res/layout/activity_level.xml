@@ -17,11 +17,23 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <Button
+            android:id="@+id/buttonBack"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="end"
+            android:background="@drawable/ic_logout"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="16dp"
+            android:onClick="navigateLogout"
+            />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="60dp"
             android:color="@color/black"
             android:fontFamily="@font/alfa_slab_one_regular"
             android:text="@string/sudofun"
@@ -37,15 +49,15 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="447dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="60dp"
             android:gravity="center"
             android:orientation="vertical"
-
             >
 
             <Button
                 android:id="@+id/btnEasy"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:background="@drawable/btn_secondary"
@@ -63,10 +75,10 @@
 
             <Button
                 android:id="@+id/btnMedium"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="30dp"
                 android:background="@drawable/btn_secondary"
                 android:fontFamily="@font/alfa_slab_one_regular"
                 android:paddingHorizontal="30dp"
@@ -79,10 +91,10 @@
 
             <Button
                 android:id="@+id/btnHard"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="30dp"
                 android:background="@drawable/btn_secondary"
                 android:fontFamily="@font/alfa_slab_one_regular"
                 android:paddingHorizontal="30dp"
@@ -93,22 +105,24 @@
                 android:onClick="selectLevel"
                 />
 
+            <Button
+                android:id="@+id/startGame"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:background="@drawable/btn_primary"
+                android:fontFamily="@font/alfa_slab_one_regular"
+                android:onClick="startNextActivity"
+                android:paddingHorizontal="30dp"
+                android:paddingVertical="10dp"
+                android:layout_marginTop="60dp"
+                android:text="@string/play"
+                android:textColor="@color/black"
+                android:textSize="25sp" />
+
         </LinearLayout>
 
-        <Button
-            android:id="@+id/startGame"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:paddingHorizontal="30dp"
-            android:paddingVertical="10dp"
-            android:background="@drawable/btn_primary"
-            android:text="@string/play"
-            android:textColor="@color/black"
-            android:textSize="25sp"
-            android:fontFamily="@font/alfa_slab_one_regular"
-            android:onClick="startNextActivity"
-            />
+
     </LinearLayout>
 
 

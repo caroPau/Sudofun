@@ -1,7 +1,9 @@
 package hsos.prog3.sudofun.View;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
@@ -49,5 +51,9 @@ public class StatisticActivity extends AppCompatActivity {
             default:
                 return null;
         }
+    }
+    public void startLevelActivity(View view) {
+        Intent intent = new Intent(StatisticActivity.this, LevelActivity.class);
+        startActivity(intent);
     }
 }

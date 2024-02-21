@@ -27,7 +27,7 @@ public class LoginActivity extends AppCompatActivity {
     private DataViewModel dataViewModel;
     private ActivityLoginBinding binding;
     private EditText input_username;
-    LiveData<UserEntity> user;
+    UserEntity user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,11 +61,11 @@ public class LoginActivity extends AppCompatActivity {
 
         dataViewModel.findByName(username).observe(this, new Observer<UserEntity>() {
             @Override
-            public void onChanged(UserEntity user) {
-                if (user == null) {
+            public void onChanged(UserEntity retreivedUser) {
+                if (retreivedUser == null) {
                     // Benutzer nicht gefunden, erstellen Sie einen neuen Benutzer und fügen Sie ihn hinzu
                     user = new UserEntity(username, 0, 0, 0, 0, 0, 0);
-                    dataViewModel.insertAll(user);
+                    dataViewModel.insertAll(retreivedUser);
                 }
             }
         });

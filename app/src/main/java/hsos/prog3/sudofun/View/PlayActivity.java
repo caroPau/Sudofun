@@ -53,7 +53,6 @@ public class PlayActivity extends AppCompatActivity {
         binding.btnPause.setChecked(false);
         setContentView(view);
         game = new Play();
-        //game.dataViewModel = new ViewModelProvider(this).get(DataViewModel.class);
         dataViewModel = new ViewModelProvider(this).get(DataViewModel.class);
         playViewModel = new ViewModelProvider(this).get(PlayViewModel.class);
 
@@ -69,6 +68,7 @@ public class PlayActivity extends AppCompatActivity {
                 }
             }
         });
+
 
         binding.buttonHint.setOnClickListener(this::buttonHintClickEvent);
         binding.btnPause.setChecked(false);
@@ -202,8 +202,10 @@ public class PlayActivity extends AppCompatActivity {
         Bundle bundle = new Bundle();
         bundle.putString("username", Objects.requireNonNull(user.username));
         bundle.putString("level", game.getLevel().name());
+
         Intent intent = new Intent(PlayActivity.this, StatisticActivity.class);
         intent.putExtras(bundle);
+        this.finish();
         startActivity(intent);
     }
 
