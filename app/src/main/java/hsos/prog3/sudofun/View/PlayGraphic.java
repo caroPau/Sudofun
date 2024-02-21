@@ -115,7 +115,9 @@ public class PlayGraphic {
                 if(game.getField()[row][column] != 0){
                     editText.setText(String.valueOf(game.getField()[row][column]));
                     editText.setEnabled(false);
+                    game.getFreeCellsArray()[row][column] = false;
                 } else {
+                    game.getFreeCellsArray()[row][column] = true;
                     GridLayout noteGrid = new GridLayout(context);
                     noteGridInit(noteGrid,row,column);
                     int noteNum = 1;
@@ -177,6 +179,7 @@ public class PlayGraphic {
     }
 
     private void noteGridInit(GridLayout noteGrid, int row, int column){
+        noteGrid.setId(game.getHelper().coordinateAsOneNumber(row, column));
         noteGrid.setX(gridBasePos[0]+column*fieldEdgeSize);
         noteGrid.setY(gridBasePos[1]+row*fieldEdgeSize);
         noteGrid.setVisibility(View.INVISIBLE);
@@ -215,7 +218,7 @@ public class PlayGraphic {
                     if(playViewModel.getLastFocusedCell() != null) {
                         playViewModel.getLastFocusedCell().setBackground(AppCompatResources.getDrawable(context, R.drawable.edit_text_field_border_black));
                     }
-                    editText.setBackgroundResource(R.color.rose);
+                    editText.setBackgroundResource(R.drawable.edit_text_focused);
                     return true;
 
                 case MotionEvent.ACTION_UP:
@@ -230,9 +233,15 @@ public class PlayGraphic {
         return (view, motionEvent) -> {
             switch (motionEvent.getAction()){
                 case MotionEvent.ACTION_DOWN:
+
                     graphic.setFocusedNoteGrid(noteGrid);
+                    if(playViewModel.getLastFocusedGrid() != null){
+                        playViewModel.getLastFocusedGrid().setBackgroundResource(R.drawable.edit_text_field_border_black);
+                    }
+                    noteGrid.setBackgroundResource(R.drawable.edit_text_focused);
                     return true;
                 case MotionEvent.ACTION_UP:
+                    playViewModel.setLastFocusedGrid(noteGrid);
                     view.performClick();
                     return true;
             }

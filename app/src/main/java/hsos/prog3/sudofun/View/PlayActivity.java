@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Objects;
 
 import hsos.prog3.sudofun.R;
+import hsos.prog3.sudofun.model.UserEntity;
 import hsos.prog3.sudofun.databinding.ActivityPlayBinding;
 import hsos.prog3.sudofun.model.Level;
 import hsos.prog3.sudofun.model.Play;
@@ -49,16 +50,10 @@ public class PlayActivity extends AppCompatActivity {
         setContentView(R.layout.activity_play);
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            Log.w("INFOTAG", "PlayActivity: bundle ist nicht null");
             user = bundle.getSerializable("user", UserEntity.class);
             if (user != null) {
                 username = user.getUsername();
-                Log.w("INFOTAG", "PlayActivity: username" + username);
-            } else {
-                Log.w("INFOTAG", "PlayActivity: user ist null");
             }
-        } else {
-            Log.w("INFOTAG", "PlayActivity: bundle ist null :(");
         }
         int level = getIntent().getIntExtra("selectedLevel", 0);
         binding = ActivityPlayBinding.inflate(getLayoutInflater());
@@ -66,9 +61,6 @@ public class PlayActivity extends AppCompatActivity {
         binding.buttonHint.setOnClickListener(this::buttonHintClickEvent);
         binding.btnPause.setChecked(false);
         setContentView(view);
-        Log.w("INFOTAG", "PlayActivity - oncreate()");
-
-
         dataViewModel = new ViewModelProvider(this).get(DataViewModel.class);
         playViewModel = new ViewModelProvider(this).get(PlayViewModel.class);
 
@@ -139,7 +131,7 @@ public class PlayActivity extends AppCompatActivity {
         game.setSolvedField(creator.getSolvedField());
         game.setTimer(new TimerViewModel());
         game.getTimer().setActualTimerView(binding.textViewTimer);
-        //showBestTime();
+        showBestTime();
         if(game.getHelper().getOccupiedCells(game.getField()) != null) {
             game.setOccupiedCells(game.getHelper().getOccupiedCells(game.getField()));
             game.setOpenCells(81 - game.getOccupiedCells().size());
@@ -147,7 +139,6 @@ public class PlayActivity extends AppCompatActivity {
         graphic = new PlayGraphic(this,this, game, playViewModel);
         //graphic.setFocusedEditText(findFreeCell());
         graphic.generateGrid(binding.gridLayoutSudoku,binding.gridLayoutMask ,binding.playScreen);
-        showBestTime();
         game.getTimer().start();
         Thread threadTimer = new Thread(game.getTimer().getTimerRunnable());
         threadTimer.start();
@@ -178,7 +169,6 @@ public class PlayActivity extends AppCompatActivity {
             default:
                 break;
         }
-
         if (bestTime != 0) {
             int secondsTemp = ((int) (bestTime / 1000));
             int minutes = secondsTemp / 60;
@@ -219,8 +209,9 @@ public class PlayActivity extends AppCompatActivity {
      *
      * @author C. Paul
      */
-    public void endGame() {
+    public void endGame(){
         updateUser(game.getLevel());
+        Log.w("INFOTAG", "Model is: " + game.dataViewModel);
         dataViewModel.updateUserDB(user);
         Bundle bundle = new Bundle();
         bundle.putString("level", game.getLevel().name());
@@ -257,15 +248,26 @@ public class PlayActivity extends AppCompatActivity {
             List<GridLayout>  noteGrids = graphic.getNoteGrids();
             List<EditText> editTexts = graphic.getEditTexts();
             if (isChecked) {
-                for (GridLayout grid : noteGrids) {
-                    grid.setEnabled(true);
-                    grid.setVisibility(View.VISIBLE);
+                binding.buttonMode.setBackgroundResource(R.drawable.btn_primary_toggled);
+                if(playViewModel.getLastFocusedCell() != null){
+                    playViewModel.getLastFocusedCell().setBackgroundResource(R.drawable.edit_text_field_border_black);
                 }
-                for(EditText editText : editTexts){
-                    editText.setEnabled(false);
+                if(game.getTimer().isRunning()) {
+
+                    for (GridLayout grid : noteGrids) {
+                        grid.setEnabled(true);
+                        grid.setVisibility(View.VISIBLE);
+                    }
+                    for (EditText editText : editTexts) {
+                        editText.setEnabled(false);
+                    }
                 }
                 game.setNoteMode(true);
             } else {
+                binding.buttonMode.setBackgroundResource(R.drawable.btn_primary);
+                if(playViewModel.getLastFocusedGrid() != null){
+                    playViewModel.getLastFocusedGrid().setBackgroundResource(R.drawable.edit_text_field_border_black);
+                }
                 for (GridLayout grid : noteGrids) {
                     grid.setEnabled(false);
                     grid.setVisibility(View.INVISIBLE);

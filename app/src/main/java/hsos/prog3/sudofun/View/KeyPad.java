@@ -1,5 +1,6 @@
 package hsos.prog3.sudofun.View;
 
+import android.graphics.Color;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -90,16 +91,21 @@ public class KeyPad {
                     /*
                      * Parsen der Notiz, die getoggled werden soll
                      */
+
                     note = getNote(Integer.parseInt(buttonText.toString()), focusedNoteGrid);
                 }
                 /*
                  * Toggeln der jeweiligen Notiz
                  */
                 if (note != null) {
-                    if (note.getVisibility() == View.INVISIBLE) {
-                        note.setVisibility(View.VISIBLE);
-                    } else {
-                        note.setVisibility(View.INVISIBLE);
+                    game.getHelper().numberToCoordinate(focusedNoteGrid.getId(), game);
+                    boolean temp = game.getFreeCellsArray()[game.getRowHint()][game.getColumnHint()];
+                    if (temp) {
+                        if (note.getVisibility() == View.INVISIBLE) {
+                            note.setVisibility(View.VISIBLE);
+                        } else {
+                            note.setVisibility(View.INVISIBLE);
+                        }
                     }
                 }
             } else {
@@ -112,17 +118,24 @@ public class KeyPad {
                         playViewModel.reactToClear(game);
                         System.out.println(game.getFreeCells());
                         focusedEditText.setText("");
+                        game.getHelper().numberToCoordinate(focusedEditText.getId(), game);
+                        game.getFreeCellsArray()[game.getRowHint()][game.getColumnHint()] = true;
                     }
                 } else {
                     focusedEditText.setText(buttonText);
                     game.getHelper().numberToCoordinate(focusedEditText.getId(), game);
-                    playViewModel.reactToNewNumber(game, game.getRowHint(), game.getColumnHint(), Integer.parseInt(buttonText.toString()));
+                    if(playViewModel.reactToNewNumber(game, game.getRowHint(), game.getColumnHint(), Integer.parseInt(buttonText.toString()))) {
+                        focusedEditText.setTextColor(Color.BLACK);
+                        game.getFreeCellsArray()[game.getRowHint()][game.getColumnHint()] = false;
+                    }else{
+                        focusedEditText.setTextColor(Color.RED);
+                    }
+
                 }
                 if (game.getFreeCells() == 0) {
                     playActivity.endGame();
                 }
             }
-            focusedEditText.setBackground(AppCompatResources.getDrawable(playActivity.getApplicationContext(), R.drawable.edit_text_field_border_black));
         };
 
     }
