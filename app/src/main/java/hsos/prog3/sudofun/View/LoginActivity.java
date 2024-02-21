@@ -2,7 +2,6 @@ package hsos.prog3.sudofun.View;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -13,6 +12,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import hsos.prog3.sudofun.R;
+import hsos.prog3.sudofun.model.UserEntity;
 import hsos.prog3.sudofun.databinding.ActivityLoginBinding;
 import hsos.prog3.sudofun.model.Login;
 import hsos.prog3.sudofun.model.Play;
@@ -71,7 +71,6 @@ public class LoginActivity extends AppCompatActivity {
                     dataViewModel.insertAll(user);
                 } else {
                     user = retrievedUser;
-                    Log.w("INFOTAG", "LoginActivity - Username: " + user.getUsername());
                 }
 
                 bundle.putSerializable("user", user);

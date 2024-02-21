@@ -86,16 +86,21 @@ public class KeyPad {
                     /*
                      * Parsen der Notiz, die getoggled werden soll
                      */
+
                     note = getNote(Integer.parseInt(buttonText.toString()), focusedNoteGrid);
                 }
                 /*
                  * Toggeln der jeweiligen Notiz
                  */
                 if (note != null) {
-                    if (note.getVisibility() == View.INVISIBLE) {
-                        note.setVisibility(View.VISIBLE);
-                    } else {
-                        note.setVisibility(View.INVISIBLE);
+                    game.getHelper().numberToCoordinate(focusedNoteGrid.getId(), game);
+                    boolean temp = game.getFreeCellsArray()[game.getRowHint()][game.getColumnHint()];
+                    if (temp) {
+                        if (note.getVisibility() == View.INVISIBLE) {
+                            note.setVisibility(View.VISIBLE);
+                        } else {
+                            note.setVisibility(View.INVISIBLE);
+                        }
                     }
                 }
             } else {
@@ -108,17 +113,20 @@ public class KeyPad {
                         playViewModel.reactToClear(game);
                         System.out.println(game.getFreeCells());
                         focusedEditText.setText("");
+                        game.getHelper().numberToCoordinate(focusedEditText.getId(), game);
+                        game.getFreeCellsArray()[game.getRowHint()][game.getColumnHint()] = true;
                     }
                 } else {
                     focusedEditText.setText(buttonText);
                     game.getHelper().numberToCoordinate(focusedEditText.getId(), game);
                     playViewModel.reactToNewNumber(game, game.getRowHint(), game.getColumnHint(), Integer.parseInt(buttonText.toString()));
+                    game.getFreeCellsArray()[game.getRowHint()][game.getColumnHint()] = false;
+
                 }
                 if (game.getFreeCells() == 0) {
                     playActivity.endGame();
                 }
             }
-            focusedEditText.setBackground(AppCompatResources.getDrawable(playActivity.getApplicationContext(), R.drawable.edit_text_field_border_black));
         };
 
     }

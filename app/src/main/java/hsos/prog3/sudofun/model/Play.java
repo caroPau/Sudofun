@@ -1,6 +1,7 @@
 package hsos.prog3.sudofun.model;
 
 import android.widget.EditText;
+import android.widget.GridLayout;
 
 import java.util.ArrayList;
 
@@ -16,17 +17,20 @@ public class Play {
     public DataViewModel dataViewModel;
     private int[][] field;
     private int[][] solvedField;
+    private boolean[][] freeCellsArray;
     private boolean noteMode;
     private int rowHint;
     private int columnHint;
     private int freeCells;
     private int openCells;
     private EditText lastFocusedCell;
+    private GridLayout lastFocusedGrid;
 
     //  Konstruktor
     public Play() {
         helper = new SudokuHelper();
         occupiedCells = new ArrayList<>();
+        freeCellsArray = new boolean[9][9];
     }
 
     //Getter
@@ -48,6 +52,10 @@ public class Play {
 
     public int[][] getSolvedField() {
         return solvedField;
+    }
+
+    public boolean[][] getFreeCellsArray(){
+        return freeCellsArray;
     }
 
     public SudokuHelper getHelper() {
@@ -78,6 +86,10 @@ public class Play {
         return lastFocusedCell;
     }
 
+    public GridLayout getLastFocusedGrid(){
+        return lastFocusedGrid;
+    }
+
     //  Setter
 
 
@@ -105,6 +117,9 @@ public class Play {
         this.solvedField = solvedField;
     }
 
+    public void setFreeCellsArray(boolean[][] freeCellsArray) {
+        this.freeCellsArray = freeCellsArray;
+    }
 
     public void setOccupiedCells(ArrayList<Integer> occupiedCells) {
         this.occupiedCells = occupiedCells;
@@ -143,5 +158,9 @@ public class Play {
         openCells = 0;
         noteMode = false;
         lastFocusedCell = null;
+    }
+
+    public void setLastFocusedGrid(GridLayout lastFocusedGrid) {
+        this.lastFocusedGrid = lastFocusedGrid;
     }
 }

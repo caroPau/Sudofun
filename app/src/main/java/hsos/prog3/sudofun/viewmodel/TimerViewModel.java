@@ -99,6 +99,9 @@ public class TimerViewModel{
     public Runnable getTimerRunnable() {
         return timerRunnable;
     }
+    public boolean isRunning(){
+        return this.isRunning;
+    }
 
     /**
      *  Setter
