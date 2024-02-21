@@ -18,7 +18,8 @@
     <string name="best_name">best_name</string>
     <string name="best_score">best_score</string>
     <string name="user_score_format">%d. %s</string>
-    <string name="Modus">Modus</string>
+    <string name="ModusOn">Spielen</string>
+    <string name="ModusOff">Notizen</string>
     <string name="_1">1</string>
     <string name="_2">2</string>
     <string name="_3">3</string>
@@ -31,5 +32,6 @@
     <string name="clear">clear</string>
     <string name="statistik">Statistik</string>
     <string name="neues_spiel">Neues Spiel</string>
+    <string name="spiel_wird_geladen">Spiel wird geladen..</string>
 
 </resources>

@@ -120,7 +120,8 @@ public class PlayActivity extends AppCompatActivity {
      *
      * @author C. Paul
      */
-    private void initGame(int level){
+    private void initGame(int level) {
+
         game = new Play();
         resetGameVariables();
         SudokuCreator creator = new SudokuCreator(getSelectedLevel(game, level));
@@ -142,6 +143,8 @@ public class PlayActivity extends AppCompatActivity {
         game.getTimer().start();
         Thread threadTimer = new Thread(game.getTimer().getTimerRunnable());
         threadTimer.start();
+        binding.progressBar.setVisibility(View.INVISIBLE);
+        binding.loadedGameView.setVisibility(View.VISIBLE);
     }
 
 
