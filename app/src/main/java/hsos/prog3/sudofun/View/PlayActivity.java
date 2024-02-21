@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.GridLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -55,10 +56,6 @@ public class PlayActivity extends AppCompatActivity {
         //game.dataViewModel = new ViewModelProvider(this).get(DataViewModel.class);
         dataViewModel = new ViewModelProvider(this).get(DataViewModel.class);
         playViewModel = new ViewModelProvider(this).get(PlayViewModel.class);
-        /* if((user = game.dataViewModel.findByName(username)) == null){
-            user = new UserEntity(username, 0, 0, 0, 0, 0, 0);
-        } */
-        Log.w("INFOTAG", "Username: " + username);
 
         dataViewModel.findByName(username).observe(this, new Observer<UserEntity>() {
             @Override
@@ -73,16 +70,8 @@ public class PlayActivity extends AppCompatActivity {
             }
         });
 
-        /*if((user = dataViewModel.findByName(username)) == null) {
-            Log.w("INFOTAG", "User " + username + " not found.");
-        }
-        initGame(level);*/
-
         binding.buttonHint.setOnClickListener(this::buttonHintClickEvent);
         binding.btnPause.setChecked(false);
-
-
-
         binding.btnPause.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -139,6 +128,7 @@ public class PlayActivity extends AppCompatActivity {
         }
         graphic = new PlayGraphic(this,this, game, playViewModel);
         graphic.generateGrid(binding.gridLayoutSudoku,binding.gridLayoutMask ,binding.playScreen);
+        showBestTime();
         game.getTimer().start();
         Thread threadTimer = new Thread(game.getTimer().getTimerRunnable());
         threadTimer.start();
@@ -153,7 +143,7 @@ public class PlayActivity extends AppCompatActivity {
         long bestTime = 0;
         switch (game.getLevel()) {
             case EASY:
-                bestTime = user.gamesEasy;
+                bestTime = user.highscoreEasy;
                 break;
             case MEDIUM:
                 bestTime = user.highscoreMedium;
@@ -164,6 +154,7 @@ public class PlayActivity extends AppCompatActivity {
             default:
                 break;
         }
+
         if (bestTime != 0) {
             int secondsTemp = ((int) (bestTime / 1000));
             int minutes = secondsTemp / 60;

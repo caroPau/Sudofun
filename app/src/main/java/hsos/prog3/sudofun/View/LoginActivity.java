@@ -12,10 +12,10 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import hsos.prog3.sudofun.R;
-import hsos.prog3.sudofun.database.UserEntity;
 import hsos.prog3.sudofun.databinding.ActivityLoginBinding;
 import hsos.prog3.sudofun.model.Login;
 import hsos.prog3.sudofun.model.Play;
+import hsos.prog3.sudofun.model.UserEntity;
 import hsos.prog3.sudofun.viewmodel.DataViewModel;
 import hsos.prog3.sudofun.viewmodel.LoginViewModel;
 
