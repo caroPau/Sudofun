@@ -56,11 +56,17 @@ public class PlayViewModel extends AndroidViewModel {
     public SudokuHelper getHelper(){
         return play.getHelper();
     }
-    public void reactToNewNumber(Play game, int row, int column, int number){
-        if (game.getField()[row][column] == 0 && game.getHelper().isValid(row, column, number, game.getField())) {
-            game.setFreeCells(game.getFreeCells() - 1);
-            game.getField()[row][column] = number;
+
+    public boolean reactToNewNumber(Play game, int row, int column, int number) {
+        if (game.getField()[row][column] == 0) {
+            if (getHelper().isValid(row, column, number, game.getField())) {
+                game.setFreeCells(game.getFreeCells() - 1);
+                game.getField()[row][column] = number;
+            }else{
+                return false;
+            }
         }
+        return true;
     }
 
     public void reactToClear(Play game){

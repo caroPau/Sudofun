@@ -1,5 +1,6 @@
 package hsos.prog3.sudofun.View;
 
+import android.graphics.Color;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -119,8 +120,12 @@ public class KeyPad {
                 } else {
                     focusedEditText.setText(buttonText);
                     game.getHelper().numberToCoordinate(focusedEditText.getId(), game);
-                    playViewModel.reactToNewNumber(game, game.getRowHint(), game.getColumnHint(), Integer.parseInt(buttonText.toString()));
-                    game.getFreeCellsArray()[game.getRowHint()][game.getColumnHint()] = false;
+                    if(playViewModel.reactToNewNumber(game, game.getRowHint(), game.getColumnHint(), Integer.parseInt(buttonText.toString()))) {
+                        focusedEditText.setTextColor(Color.BLACK);
+                        game.getFreeCellsArray()[game.getRowHint()][game.getColumnHint()] = false;
+                    }else{
+                        focusedEditText.setTextColor(Color.RED);
+                    }
 
                 }
                 if (game.getFreeCells() == 0) {

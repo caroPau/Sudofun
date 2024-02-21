@@ -50,16 +50,10 @@ public class PlayActivity extends AppCompatActivity {
         setContentView(R.layout.activity_play);
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            Log.w("INFOTAG", "PlayActivity: bundle ist nicht null");
             user = bundle.getSerializable("user", UserEntity.class);
             if (user != null) {
                 username = user.getUsername();
-                Log.w("INFOTAG", "PlayActivity: username" + username);
-            } else {
-                Log.w("INFOTAG", "PlayActivity: user ist null");
             }
-        } else {
-            Log.w("INFOTAG", "PlayActivity: bundle ist null :(");
         }
         int level = getIntent().getIntExtra("selectedLevel", 0);
         binding = ActivityPlayBinding.inflate(getLayoutInflater());
@@ -67,7 +61,6 @@ public class PlayActivity extends AppCompatActivity {
         binding.buttonHint.setOnClickListener(this::buttonHintClickEvent);
         binding.btnPause.setChecked(false);
         setContentView(view);
-        //game.dataViewModel = new ViewModelProvider(this).get(DataViewModel.class);
         dataViewModel = new ViewModelProvider(this).get(DataViewModel.class);
         playViewModel = new ViewModelProvider(this).get(PlayViewModel.class);
 

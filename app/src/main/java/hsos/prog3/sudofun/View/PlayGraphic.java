@@ -233,6 +233,7 @@ public class PlayGraphic {
         return (view, motionEvent) -> {
             switch (motionEvent.getAction()){
                 case MotionEvent.ACTION_DOWN:
+
                     graphic.setFocusedNoteGrid(noteGrid);
                     if(playViewModel.getLastFocusedGrid() != null){
                         playViewModel.getLastFocusedGrid().setBackgroundResource(R.drawable.edit_text_field_border_black);
