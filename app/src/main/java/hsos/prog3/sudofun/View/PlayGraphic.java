@@ -82,8 +82,8 @@ public class PlayGraphic {
         this.playActivity = playActivity;
         this.playViewModel = playViewModel;
         gridBasePos = new int[2];
-        gridBasePos[0] = (int)(getBildschirmBreite()*0.05);
-        gridBasePos[1] = (int)(getBildschirmHoehe()*0.156);
+        gridBasePos[0] = (int)(getBildschirmBreite()*0.05);  //Hardcoded, da getX und getY von grid nicht die richtige Lage liefern
+        gridBasePos[1] = (int)(getBildschirmHoehe()*0.136);
         fieldEdgeSize = getBildschirmBreite()/10;
         gridLineStrength = (int)(getBildschirmBreite()*0.01);
         noteBackgroundSelector = new Drawable[3][3];
@@ -102,11 +102,11 @@ public class PlayGraphic {
 
     @SuppressLint("ClickableViewAccessibility") //Warnung unterdrücken, dass man performClick nicht überschreibt
     public void generateGrid(GridLayout grid,GridLayout gridMask, RelativeLayout playScreen){
+
         for(int row = 0; row <= 8; row++){
             for(int column = 0; column <= 8; column++){
                 View maskView = new View(context);
                 initMaskView(maskView);
-
                 EditText editText = new EditText(context);
                 editTextInit(editText,row,column);
                 if(playViewModel.getField()[row][column] != 0){
@@ -192,7 +192,7 @@ public class PlayGraphic {
         note.setTextColor(Color.BLACK);
         note.setTextSize((float)(fieldEdgeSize*0.1));
         if(noteRow == 1 && noteColumn == 1) {
-            note.setBackground(AppCompatResources.getDrawable(context, R.drawable.whiteshape));
+            note.setBackground(AppCompatResources.getDrawable(context, R.drawable.transparentshape));
         } else {
             note.setBackground(noteBackgroundSelector[noteRow][noteColumn]);
         }

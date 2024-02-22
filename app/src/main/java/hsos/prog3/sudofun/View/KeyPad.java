@@ -6,6 +6,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridLayout;
 
+import hsos.prog3.sudofun.R;
 import hsos.prog3.sudofun.viewmodel.PlayViewModel;
 
 public class KeyPad {
@@ -69,9 +70,9 @@ public class KeyPad {
              */
             if (playViewModel.isNoteMode()) {
                 /*
-                 * löschen aller Notizen bei "clear" als Eingabe
+                 * löschen aller Notizen wenn es sich um den clear Button handelt
                  */
-                if (buttonText.toString().equals("clear")) {
+                if (button.getId()== R.id.clearButton) {
                     for (int i = 1; i <= 9; i++) {
                         note = getNote(i, focusedNoteGrid);
                         note.setVisibility(View.INVISIBLE);
@@ -102,7 +103,7 @@ public class KeyPad {
                 /*
                  * Behandlung des Falls, bei dem der Notizmodus deaktiviert ist
                  */
-                if (buttonText.toString().equals("clear")) {
+                if (button.getId()==R.id.clearButton) {
                     if (!focusedEditText.getText().toString().equals("")) {
                         playViewModel.getHelper().numberToCoordinate(focusedEditText.getId(), playViewModel);
                         playViewModel.reactToClear();
