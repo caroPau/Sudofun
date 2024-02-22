@@ -23,7 +23,9 @@ import hsos.prog3.sudofun.viewmodel.StatisticViewModel;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-
+/**
+ * Activity der Ansicht für Statistik nach beendetem Spiel.
+ */
 public class StatisticActivity extends AppCompatActivity {
     private StatisticViewModel statisticViewModel;
     private DataViewModel dataViewModel;

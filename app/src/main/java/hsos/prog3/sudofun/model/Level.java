@@ -1,5 +1,8 @@
 package hsos.prog3.sudofun.model;
 
+/**
+ * Enum für Schwierigkeitsgrade des Spiels.
+ */
 public enum Level {
     EASY(45),
     MEDIUM(35),

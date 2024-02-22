@@ -23,6 +23,9 @@ import hsos.prog3.sudofun.viewmodel.PlayViewModel;
 import hsos.prog3.sudofun.viewmodel.SudokuCreator;
 import hsos.prog3.sudofun.viewmodel.TimerViewModel;
 
+/**
+ * Activity für das Spiel mit Spielfeld.
+ */
 public class PlayActivity extends AppCompatActivity {
     PlayViewModel playViewModel;
     DataViewModel dataViewModel;

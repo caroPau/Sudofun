@@ -7,6 +7,9 @@ import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
 
+/**
+ * Entität eines Benutzers.
+ */
 @Entity
 public class UserEntity implements Serializable {
     @PrimaryKey

@@ -18,6 +18,9 @@ import hsos.prog3.sudofun.databinding.ActivityLevelBinding;
 import hsos.prog3.sudofun.model.Level;
 import hsos.prog3.sudofun.model.UserEntity;
 
+/**
+ * Activity der Ansicht für Auswahl des Schwierigkeitsgrades.
+ */
 public class LevelActivity extends AppCompatActivity {
     private int selectedLevel = -1;
     private ActivityLevelBinding binding;
