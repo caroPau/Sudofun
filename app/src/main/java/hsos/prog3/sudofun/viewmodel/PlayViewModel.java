@@ -9,8 +9,8 @@ import androidx.lifecycle.AndroidViewModel;
 
 import java.util.ArrayList;
 
+import hsos.prog3.sudofun.View.PlayActivity;
 import hsos.prog3.sudofun.model.Level;
-import hsos.prog3.sudofun.model.Login;
 import hsos.prog3.sudofun.model.Play;
 import hsos.prog3.sudofun.model.UserEntity;
 
@@ -79,7 +79,6 @@ public class PlayViewModel extends AndroidViewModel {
         return play.getField();
     }
 
-
     public boolean reactToNewNumber(int row, int column, int number) {
         if(getField()[row][column] == 0) {
             if (getHelper().isValid(row, column, number, getField())) {
@@ -91,15 +90,19 @@ public class PlayViewModel extends AndroidViewModel {
             }
         }
         else {
+            if(number == getField()[row][column]){
+                return true;
+            }
             if (getHelper().isValid(row, column, number, getField())) {
                 setFreeCells(getFreeCells() - 1);
                 getField()[row][column] = number;
                 return true;
             } else if (getHelper().isValid(row, column, getField()[row][column], getField())) {
-                getField()[row][column] = 0;
-                setFreeCells(getFreeCells() + 1);
-                return false;
-            } else {
+                    getField()[row][column] = 0;
+                    setFreeCells(getFreeCells() + 1);
+                    return false;
+            }
+            else {
                 getField()[row][column] = 0;
                 return false;
             }
@@ -170,5 +173,67 @@ public class PlayViewModel extends AndroidViewModel {
         setNoteMode(false);
         setLastFocusedCell(null);
         setLastFocusedGrid(null);
+    }
+
+    public Level getSelectedLevel(int lvl, PlayActivity playActivity) {
+        switch (lvl) {
+            case 0:
+                setLevel(Level.EASY);
+                break;
+            case 1:
+                setLevel(Level.MEDIUM);
+                break;
+            case 2:
+                setLevel(Level.HARD);
+                break;
+            default:
+                playActivity.startLevelActivity();
+                break;
+        }
+        return getLevel();
+    }
+
+    public long getBestTime(){
+        long bestTime;
+        switch (getLevel()) {
+            case EASY:
+                bestTime = getUser().highscoreEasy;
+                break;
+            case MEDIUM:
+                bestTime = getUser().highscoreMedium;
+                break;
+            case HARD:
+                bestTime = getUser().highscoreHard;
+                break;
+            default:
+                bestTime = 0;
+                break;
+        }
+        return bestTime;
+    }
+
+    public void updateUser(){
+        switch (getLevel()){
+            case EASY:
+                if(getUser().highscoreEasy == 0 || getTimer().getMillisSinceStart() < getUser().highscoreEasy) {
+                    getUser().highscoreEasy = getTimer().getMillisSinceStart();
+                }
+                getUser().gamesEasy++;
+                break;
+            case MEDIUM:
+                if(getUser().highscoreMedium == 0 || getTimer().getMillisSinceStart() < getUser().highscoreMedium) {
+                    getUser().highscoreMedium = getTimer().getMillisSinceStart();
+                }
+                getUser().gamesMedium++;
+                break;
+            case HARD:
+                if(getUser().highscoreHard == 0 || getTimer().getMillisSinceStart() < getUser().highscoreHard) {
+                    getUser().highscoreHard = getTimer().getMillisSinceStart();
+                }
+                getUser().gamesHard++;
+                break;
+            default:
+                break;
+        }
     }
 }

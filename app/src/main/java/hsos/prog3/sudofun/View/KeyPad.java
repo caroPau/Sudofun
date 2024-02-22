@@ -125,7 +125,6 @@ public class KeyPad {
                     }else{
                         focusedEditText.setTextColor(Color.RED);
                     }
-
                 }
                 if (playViewModel.getFreeCells() == 0) {
                     playActivity.endGame();

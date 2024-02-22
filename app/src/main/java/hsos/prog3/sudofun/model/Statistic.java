@@ -1,5 +1,6 @@
 package hsos.prog3.sudofun.model;
 
+import java.util.List;
 import java.util.Map;
 
 import hsos.prog3.sudofun.viewmodel.DataViewModel;
@@ -10,6 +11,7 @@ public class Statistic {
     private long bestTime;
     private DataViewModel dataViewModel;
     private Map<UserEntity, Long> highscores;
+    private List<UserEntity> bestUsers;
 
 
     public Statistic(){
@@ -35,6 +37,13 @@ public class Statistic {
         this.bestTime = bestTime;
     }
 
+    public List<UserEntity> getBestUsers() {
+        return bestUsers;
+    }
+
+    public void setBestUsers(List<UserEntity> bestUsers) {
+        this.bestUsers = bestUsers;
+    }
 
     public UserEntity getUser() {
         return user;
