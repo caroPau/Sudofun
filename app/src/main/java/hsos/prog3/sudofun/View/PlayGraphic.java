@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import hsos.prog3.sudofun.R;
-import hsos.prog3.sudofun.model.Play;
 import hsos.prog3.sudofun.viewmodel.PlayViewModel;
 
 
@@ -37,6 +36,9 @@ public class PlayGraphic {
     static Drawable[][] noteBackgroundSelector;
     List<EditText> editTexts;
     List<GridLayout> noteGrids;
+    EditText focusedEditText;
+    GridLayout focusedNoteGrid;
+    KeyPad keyPad;
 
     public List<EditText> getEditTexts() {
         return editTexts;
@@ -56,19 +58,9 @@ public class PlayGraphic {
         this.focusedNoteGrid = focusedNoteGrid;
     }
 
-    GridLayout focusedNoteGrid;
-
     public EditText getFocusedEditText() {
         return focusedEditText;
     }
-
-    public void setFocusedEditText(EditText focusedEditText) {
-        this.focusedEditText = focusedEditText;
-    }
-
-    EditText focusedEditText;
-
-    KeyPad keyPad;
 
     public static int getBildschirmBreite() {
         return Resources.getSystem().getDisplayMetrics().widthPixels;
@@ -211,7 +203,7 @@ public class PlayGraphic {
         return (view, motionEvent) -> {
             switch (motionEvent.getAction()){
                 case MotionEvent.ACTION_DOWN:
-                    graphic.setFocusedEditText(editText);
+                    focusedEditText = editText;
                     if(playViewModel.getLastFocusedCell() != null) {
                         playViewModel.getLastFocusedCell().setBackground(AppCompatResources.getDrawable(context, R.drawable.edit_text_field_border_black));
                     }

@@ -19,47 +19,43 @@ import hsos.prog3.sudofun.model.UserEntity;
 import hsos.prog3.sudofun.model.Level;
 import hsos.prog3.sudofun.viewmodel.DataViewModel;
 import hsos.prog3.sudofun.viewmodel.HighscoreAdapter;
+import hsos.prog3.sudofun.viewmodel.StatisticViewModel;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 
 public class StatisticActivity extends AppCompatActivity {
+    private StatisticViewModel statisticViewModel;
     private DataViewModel dataViewModel;
     private ActivityStatisticBinding binding;
 
-    private List<UserEntity> bestUsers;
+
+
     private RecyclerView recyclerView;
     private HighscoreAdapter adapter;
-    private UserEntity user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistic);
+        statisticViewModel = new ViewModelProvider(this).get(StatisticViewModel.class);
         Bundle bundle = getIntent().getExtras();
         Level level = Level.valueOf(bundle.getString("level"));
-        String username = bundle.getString("username");
         binding = ActivityStatisticBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-
-        Statistic statistic = new Statistic();
         recyclerView = binding.bestListRecycler;
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         dataViewModel = new ViewModelProvider(this).get(DataViewModel.class);
 
-        if (bundle != null) {
-            user = bundle.getSerializable("user", UserEntity.class);
-            if (user != null) {
-                statistic.setUser(user);
-            }
-        }
+        statisticViewModel.setUser(bundle.getSerializable("user", UserEntity.class));
 
         getStatistics(level).observe(this, new Observer<List<UserEntity>>() {
             @Override
             public void onChanged(List<UserEntity> retrievedUsers) {
-                bestUsers = retrievedUsers;
-                adapter = new HighscoreAdapter(bestUsers, level);
+                statisticViewModel.setBestUsers(retrievedUsers);
+                adapter = new HighscoreAdapter(statisticViewModel.getBestUsers(), level);
                 recyclerView.setAdapter(adapter);
                 binding.textViewTimer.setText(formatTime(bundle.getLong("time")));
             }
@@ -67,7 +63,7 @@ public class StatisticActivity extends AppCompatActivity {
     }
 
     private LiveData<List<UserEntity>> getStatistics(Level level) {
-        LiveData<List<UserEntity>> users = null;
+        LiveData<List<UserEntity>> users ;
         switch (level) {
             case EASY:
                 users = dataViewModel.getHighscoresEasy();
@@ -79,7 +75,7 @@ public class StatisticActivity extends AppCompatActivity {
                 users = dataViewModel.getHighscoresHard();
                 break;
             default:
-                return null;
+                users = null;
         }
         return users;
     }
@@ -87,7 +83,7 @@ public class StatisticActivity extends AppCompatActivity {
     public void startLevelActivity(View view) {
         Intent intent = new Intent(StatisticActivity.this, LevelActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putSerializable("user", user);
+        bundle.putSerializable("user", statisticViewModel.getUser());
         intent.putExtras(bundle);
         startActivity(intent);
     }

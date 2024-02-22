@@ -19,17 +19,17 @@ public class SudokuCreator implements Runnable {
 
     private int[][] solvedField;
     private Level level;
-    private static SudokuHelper helper;
+    private SudokuHelper helper;
 
     /**
      * Konstruktor
      *
      * @param level Schwierigkeitsgrad des Sudokus
      */
-    public SudokuCreator(Level level){
+    public SudokuCreator(Level level, SudokuHelper helper){
         solvedField = new int[9][9];
         this.level = level;
-        helper = new SudokuHelper();
+        this.helper = helper;
     }
 
 
@@ -44,7 +44,7 @@ public class SudokuCreator implements Runnable {
      * @param yPosFirstCell Die y-Position der oberen linken Ecke des 3x3-Blocks.
      * @param rand          Ein Random-Objekt für die Zufallsgenerierung.
      */
-    private static void fillOneBox(int[][] field, int xPosFirstCell, int yPosFirstCell, Random rand) {
+    private void fillOneBox(int[][] field, int xPosFirstCell, int yPosFirstCell, Random rand) {
         List<Integer> list = new ArrayList<>();
         for (int k = 1; k <= 9; k++) {
             list.add(k);
@@ -67,7 +67,7 @@ public class SudokuCreator implements Runnable {
      *
      * @param field Das Sudoku-Feld als 2D-Array.
      */
-    private static void fillDiagonalBoxes(int[][] field) {
+    private void fillDiagonalBoxes(int[][] field) {
         for (int i = 0; i <= 6; i += 3) {
             fillOneBox(field, i, i, new Random());
         }
@@ -79,7 +79,7 @@ public class SudokuCreator implements Runnable {
      * @param field Das Sudoku-Feld als 2D-Array.
      * @return true, wenn eine Lösung gefunden wurde, andernfalls false.
      */
-    private static boolean solveSudoku(int[][] field) {
+    private boolean solveSudoku(int[][] field) {
         for (int row = 0; row < 9; row++) {
             for (int column = 0; column < 9; column++) {
                 if (field[row][column] == 0) {
@@ -107,7 +107,7 @@ public class SudokuCreator implements Runnable {
      * @param row Reihennummer der Zelle
      * @param column Zeilennummer der Zelle
      */
-    private static void fillEasyCells(int[][] field, int row, int column){
+    private void fillEasyCells(int[][] field, int row, int column){
         int counter = 0;
         int numberInQuestion = 0;
         for(int i = 1; i <= 9; i++){
@@ -126,7 +126,7 @@ public class SudokuCreator implements Runnable {
      * @param field Das Sudoku-Feld als 2D-Array
      * @return true, wenn das Sudoku ohne Raten lösbar ist, andernfalls false
      */
-    private static boolean solveEasySudoku(int[][] field){
+    private boolean solveEasySudoku(int[][] field){
         int[][] tempSudoku = copySudoku(field);
         int counter = 0;
         int lastCounter = 0;

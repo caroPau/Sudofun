@@ -5,8 +5,6 @@ import android.widget.GridLayout;
 
 import java.util.ArrayList;
 
-import hsos.prog3.sudofun.viewmodel.DataViewModel;
-import hsos.prog3.sudofun.viewmodel.SudokuHelper;
 import hsos.prog3.sudofun.viewmodel.TimerViewModel;
 
 public class Play {
@@ -14,7 +12,6 @@ public class Play {
     private UserEntity user;
     private TimerViewModel timer;
     private ArrayList<Integer> occupiedCells;
-    public DataViewModel dataViewModel;
     private int[][] field;
     private int[][] solvedField;
     private boolean[][] freeCellsArray;

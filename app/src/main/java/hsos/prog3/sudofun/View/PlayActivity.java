@@ -4,13 +4,11 @@ package hsos.prog3.sudofun.View;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.GridLayout;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -20,14 +18,12 @@ import java.util.List;
 import hsos.prog3.sudofun.R;
 import hsos.prog3.sudofun.model.UserEntity;
 import hsos.prog3.sudofun.databinding.ActivityPlayBinding;
-import hsos.prog3.sudofun.model.Level;
 import hsos.prog3.sudofun.viewmodel.DataViewModel;
 import hsos.prog3.sudofun.viewmodel.PlayViewModel;
 import hsos.prog3.sudofun.viewmodel.SudokuCreator;
 import hsos.prog3.sudofun.viewmodel.TimerViewModel;
 
 public class PlayActivity extends AppCompatActivity {
-    UserEntity user;
     PlayViewModel playViewModel;
     DataViewModel dataViewModel;
     String username;
@@ -42,11 +38,12 @@ public class PlayActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play);
+        playViewModel = new ViewModelProvider(this).get(PlayViewModel.class);
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            user = bundle.getSerializable("user", UserEntity.class);
-            if (user != null) {
-                username = user.getUsername();
+            playViewModel.setUser(bundle.getSerializable("user", UserEntity.class));
+            if (playViewModel.getUser() != null) {
+                username = playViewModel.getUser().getUsername();
             }
         }
         int level = getIntent().getIntExtra("selectedLevel", 0);
@@ -56,17 +53,14 @@ public class PlayActivity extends AppCompatActivity {
         binding.btnPause.setChecked(false);
         setContentView(view);
         dataViewModel = new ViewModelProvider(this).get(DataViewModel.class);
-        playViewModel = new ViewModelProvider(this).get(PlayViewModel.class);
 
         dataViewModel.findByName(username).observe(this, new Observer<UserEntity>() {
             @Override
             public void onChanged(UserEntity retrievedUser) {
                 if (retrievedUser != null) {
                     // User gefunden, initGame aufrufen
-                    user = retrievedUser;
+                    playViewModel.setUser(retrievedUser);
                     initGame(level);
-                } else {
-                    Log.w("INFOTAG", "User " + username + " not found.");
                 }
             }
         });
@@ -89,24 +83,12 @@ public class PlayActivity extends AppCompatActivity {
         });
     }
 
-    private Level getSelectedLevel(int lvl) {
-        switch (lvl) {
-            case 0:
-                playViewModel.setLevel(Level.EASY);
-                break;
-            case 1:
-                playViewModel.setLevel(Level.MEDIUM);
-                break;
-            case 2:
-                playViewModel.setLevel(Level.HARD);
-                break;
-            default:
-                Intent intent = new Intent(PlayActivity.this, LevelActivity.class);
-                startActivity(intent);
-                break;
-        }
-        return playViewModel.getLevel();
+    public void startLevelActivity(){
+        Intent intent = new Intent(PlayActivity.this, LevelActivity.class);
+        startActivity(intent);
     }
+
+
 
     /**
      * Erstellt ein neues Spiel und initialisiert dessen Variablen, erstellt neues Spielfeld und startet den Timer
@@ -116,10 +98,10 @@ public class PlayActivity extends AppCompatActivity {
      */
     private void initGame(int level) {
         resetGameVariables();
-        SudokuCreator creator = new SudokuCreator(getSelectedLevel(level));
+        SudokuCreator creator = new SudokuCreator(playViewModel.getSelectedLevel(level, this), playViewModel.getHelper());
         Thread threadCreator = new Thread(creator, "CreatorThread");
         threadCreator.start();
-        playViewModel.setField(creator.createSudoku(getSelectedLevel(level)));
+        playViewModel.setField(creator.createSudoku(playViewModel.getSelectedLevel(level, this)));
         playViewModel.setFreeCells(81 - playViewModel.getLevel().getOpenCells());
         playViewModel.setSolvedField(creator.getSolvedField());
         playViewModel.setTimer(new TimerViewModel());
@@ -130,15 +112,13 @@ public class PlayActivity extends AppCompatActivity {
             playViewModel.setOpenCells(81 - playViewModel.getOccupiedCells().size());
         }
         graphic = new PlayGraphic(this,this, playViewModel);
-        //graphic.setFocusedEditText(findFreeCell());
         graphic.generateGrid(binding.gridLayoutSudoku,binding.gridLayoutMask ,binding.playScreen);
         playViewModel.getTimer().start();
-        Thread threadTimer = new Thread(playViewModel.getTimer().getTimerRunnable());
+        Thread threadTimer = new Thread(playViewModel.getTimer().getTimerRunnable(),"TimerThread");
         threadTimer.start();
         binding.progressBar.setVisibility(View.INVISIBLE);
         binding.loadedGameView.setVisibility(View.VISIBLE);
     }
-
 
     private void resetGameVariables() {
         playViewModel.reset();
@@ -150,20 +130,7 @@ public class PlayActivity extends AppCompatActivity {
      * @author C. Paul
      */
     private void showBestTime() {
-        long bestTime = 0;
-        switch (playViewModel.getLevel()) {
-            case EASY:
-                bestTime = user.highscoreEasy;
-                break;
-            case MEDIUM:
-                bestTime = user.highscoreMedium;
-                break;
-            case HARD:
-                bestTime = user.highscoreHard;
-                break;
-            default:
-                break;
-        }
+        long bestTime = playViewModel.getBestTime();
         if (bestTime != 0) {
             int secondsTemp = ((int) (bestTime / 1000));
             int minutes = secondsTemp / 60;
@@ -173,44 +140,21 @@ public class PlayActivity extends AppCompatActivity {
         }
     }
 
-    private void updateUser(@NonNull Level level){
-        switch (level){
-            case EASY:
-                if(user.highscoreEasy == 0 || playViewModel.getTimer().getMillisSinceStart() < user.highscoreEasy) {
-                    user.highscoreEasy = playViewModel.getTimer().getMillisSinceStart();
-                }
-                user.gamesEasy++;
-                break;
-            case MEDIUM:
-                if(user.highscoreMedium == 0 || playViewModel.getTimer().getMillisSinceStart() < user.highscoreMedium) {
-                    user.highscoreMedium = playViewModel.getTimer().getMillisSinceStart();
-                }
-                user.gamesMedium++;
-                break;
-            case HARD:
-                if(user.highscoreHard == 0 || playViewModel.getTimer().getMillisSinceStart() < user.highscoreHard) {
-                    user.highscoreHard = playViewModel.getTimer().getMillisSinceStart();
-                }
-                user.gamesHard++;
-                break;
-            default:
-                break;
-        }
-    }
+
 
 
     /**
-     * Ruft die Methode @updateBestTime auf, erstellt das Bundle und den Intent für die nächste Activity und startet diese
+     * Ruft die Methode @updateUser auf, erstellt das Bundle und den Intent für die nächste Activity und startet diese
      *
      * @author C. Paul
      */
     public void endGame(){
-        updateUser(playViewModel.getLevel());
-        dataViewModel.updateUserDB(user);
+        playViewModel.updateUser();
+        dataViewModel.updateUserDB(playViewModel.getUser());
         Bundle bundle = new Bundle();
         bundle.putString("level", playViewModel.getLevel().name());
         bundle.putLong("time", playViewModel.getTimer().getMillisSinceStart());
-        bundle.putSerializable("user", user);
+        bundle.putSerializable("user", playViewModel.getUser());
 
         Intent intent = new Intent(PlayActivity.this, StatisticActivity.class);
         intent.putExtras(bundle);
