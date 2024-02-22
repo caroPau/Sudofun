@@ -9,6 +9,9 @@ import android.widget.GridLayout;
 import hsos.prog3.sudofun.R;
 import hsos.prog3.sudofun.viewmodel.PlayViewModel;
 
+/**
+ * Klasse für die Darstellung des KeyPads während eines laufenden Spiels.
+ */
 public class KeyPad {
     PlayActivity playActivity;
     PlayGraphic graphic;

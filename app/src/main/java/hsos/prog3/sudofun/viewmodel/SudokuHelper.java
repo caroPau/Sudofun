@@ -8,6 +8,7 @@ import hsos.prog3.sudofun.model.Play;
 
 /**
  * Hilfsklasse zum Erstellen und Lösen von Sudokus
+ * 
  * Author: C. Paul
  */
 public class SudokuHelper {

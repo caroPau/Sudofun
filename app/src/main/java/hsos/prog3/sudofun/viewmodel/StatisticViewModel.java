@@ -14,6 +14,9 @@ import hsos.prog3.sudofun.model.Level;
 import hsos.prog3.sudofun.model.Statistic;
 import hsos.prog3.sudofun.model.UserEntity;
 
+/**
+ * ViewModel für die Ansicht der Statistik.
+ */
 public class StatisticViewModel extends AndroidViewModel {
     private Statistic statistic;
 

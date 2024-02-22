@@ -14,6 +14,9 @@ import hsos.prog3.sudofun.model.Level;
 import hsos.prog3.sudofun.model.Play;
 import hsos.prog3.sudofun.model.UserEntity;
 
+/**
+ * ViewModel für die Spielansicht.
+ */
 public class PlayViewModel extends AndroidViewModel {
 
     private Play play;

@@ -14,6 +14,9 @@ import hsos.prog3.sudofun.R;
 import hsos.prog3.sudofun.model.Level;
 import hsos.prog3.sudofun.model.UserEntity;
 
+/**
+ * Adapter für dynamische Erzeugung einer Liste für Ansicht der besten Spieler.
+ */
 public class HighscoreAdapter extends RecyclerView.Adapter<HighscoreAdapter.HighscoreViewHolder> {
 
     private List<UserEntity> highscoreList;

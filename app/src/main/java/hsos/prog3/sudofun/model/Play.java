@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import hsos.prog3.sudofun.viewmodel.TimerViewModel;
 
 /**
- *
+ * Klasse Play hält alle Parameter eines laufenden Spiels.
  */
 public class Play {
     private Level level;
@@ -25,13 +25,10 @@ public class Play {
     private EditText lastFocusedCell;
     private GridLayout lastFocusedGrid;
 
-    //  Konstruktor
     public Play() {
         occupiedCells = new ArrayList<>();
         freeCellsArray = new boolean[9][9];
     }
-
-    //Getter
 
     public UserEntity getUser() {
         return user;
@@ -85,9 +82,6 @@ public class Play {
         return lastFocusedGrid;
     }
 
-    //  Setter
-
-
     public void setUser(UserEntity user) {
         this.user = user;
     }
@@ -96,45 +90,36 @@ public class Play {
         this.noteMode = noteMode;
     }
 
-
     public void setLevel(Level level) {
         this.level = level;
     }
-
 
     public void setField(int[][] field) {
         this.field = field;
     }
 
-
     public void setTimer(TimerViewModel timer) {
         this.timer = timer;
     }
-
 
     public void setSolvedField(int[][] solvedField) {
         this.solvedField = solvedField;
     }
 
-
     public void setOccupiedCells(ArrayList<Integer> occupiedCells) {
         this.occupiedCells = occupiedCells;
     }
 
-
     public void setOpenCells(int openCells){
     }
-
 
     public void setRowHint(int rowHint) {
         this.rowHint = rowHint;
     }
 
-
     public void setColumnHint(int columnHint) {
         this.columnHint = columnHint;
     }
-
 
     public void setFreeCells(int freeCells) {
         this.freeCells = freeCells;
@@ -143,8 +128,6 @@ public class Play {
     public void setLastFocusedCell(EditText lastFocusedCell){
         this.lastFocusedCell = lastFocusedCell;
     }
-
-
 
     public void setLastFocusedGrid(GridLayout lastFocusedGrid) {
         this.lastFocusedGrid = lastFocusedGrid;

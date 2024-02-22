@@ -7,6 +7,9 @@ import androidx.lifecycle.AndroidViewModel;
 
 import hsos.prog3.sudofun.model.Login;
 
+/**
+ * ViewModel für Login-Ansicht.
+ */
 public class LoginViewModel extends AndroidViewModel {
 
     private Login login;
@@ -19,5 +22,4 @@ public class LoginViewModel extends AndroidViewModel {
     public void setDataViewModel(DataViewModel dataViewModel){
         login.setDataViewModel(dataViewModel);
     }
-
 }

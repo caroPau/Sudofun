@@ -14,9 +14,6 @@ public class UserRepository {
     private UserDAO userDAO;
     private LiveData<UserEntity> user;
     private int count;
-    private List<UserEntity> highscoresEasy;
-    private List<UserEntity> highscoresMedium;
-    private List<UserEntity> highscoresHard;
 
     public UserRepository(Application application){
         AppDatabase db = AppDatabase.getDatabase(application);

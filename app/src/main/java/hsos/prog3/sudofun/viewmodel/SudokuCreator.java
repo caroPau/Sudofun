@@ -8,10 +8,10 @@ import java.util.Random;
 import hsos.prog3.sudofun.model.Level;
 
 /**
- * Implementiert die Spiellogik
+ * Implementiert die Spiellogik.
+ *
  * @author Carolin Paul
  */
-
 public class SudokuCreator implements Runnable {
     /**
      * Verschiedene Schwierigkeitsstufen und die jeweils offengelegten Zellen

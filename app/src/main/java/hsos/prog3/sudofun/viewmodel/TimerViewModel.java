@@ -5,7 +5,7 @@ import android.widget.TextView;
 
 
 /**
- *  Implementiert einen Timer und zeigt die verstrichene Zeit in einer TextView
+ *  Implementiert einen Timer und zeigt die verstrichene Zeit in einer TextView.
  */
 public class TimerViewModel{
 
