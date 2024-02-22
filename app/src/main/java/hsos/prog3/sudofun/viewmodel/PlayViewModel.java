@@ -79,7 +79,6 @@ public class PlayViewModel extends AndroidViewModel {
         return play.getField();
     }
 
-
     public boolean reactToNewNumber(int row, int column, int number) {
         if(getField()[row][column] == 0) {
             if (getHelper().isValid(row, column, number, getField())) {
@@ -91,6 +90,9 @@ public class PlayViewModel extends AndroidViewModel {
             }
         }
         else {
+            if(number == getField()[row][column]){
+                return true;
+            }
             if (getHelper().isValid(row, column, number, getField())) {
                 setFreeCells(getFreeCells() - 1);
                 getField()[row][column] = number;
