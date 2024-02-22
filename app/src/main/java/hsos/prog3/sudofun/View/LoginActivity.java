@@ -21,12 +21,13 @@ import hsos.prog3.sudofun.viewmodel.LoginViewModel;
  */
 public class LoginActivity extends AppCompatActivity {
     private DataViewModel dataViewModel;
-    private ActivityLoginBinding binding;
     private EditText input_username;
+    private LoginViewModel loginViewModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
         loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
         input_username = this.findViewById(R.id.inputUsername);
         dataViewModel = new ViewModelProvider(this).get(DataViewModel.class);

@@ -105,7 +105,7 @@ public class PlayActivity extends AppCompatActivity {
      */
     private void initGame(int level) {
         resetGameVariables();
-        SudokuCreator creator = new SudokuCreator(playViewModel.getHelper());
+        SudokuCreator creator = new SudokuCreator(playViewModel.getSelectedLevel(level, this), playViewModel.getHelper());
         Thread threadCreator = new Thread(creator, "CreatorThread");
         threadCreator.start();
         playViewModel.setField(creator.createSudoku(playViewModel.getSelectedLevel(level, this)));
