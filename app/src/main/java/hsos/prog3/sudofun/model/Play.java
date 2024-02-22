@@ -22,7 +22,6 @@ public class Play {
     private int rowHint;
     private int columnHint;
     private int freeCells;
-    private int openCells;
     private EditText lastFocusedCell;
     private GridLayout lastFocusedGrid;
 
@@ -62,9 +61,6 @@ public class Play {
         return helper;
     }
 
-    public int getOpenCells(){
-        return this.openCells;
-    }
 
     public ArrayList<Integer> getOccupiedCells() {
         return occupiedCells;
@@ -117,16 +113,13 @@ public class Play {
         this.solvedField = solvedField;
     }
 
-    public void setFreeCellsArray(boolean[][] freeCellsArray) {
-        this.freeCellsArray = freeCellsArray;
-    }
 
     public void setOccupiedCells(ArrayList<Integer> occupiedCells) {
         this.occupiedCells = occupiedCells;
     }
 
+
     public void setOpenCells(int openCells){
-        this.openCells = openCells;
     }
 
 
@@ -155,7 +148,6 @@ public class Play {
         field = null;
         solvedField = null;
         occupiedCells.clear();
-        openCells = 0;
         noteMode = false;
         lastFocusedCell = null;
     }

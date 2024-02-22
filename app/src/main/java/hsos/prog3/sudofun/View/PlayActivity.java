@@ -3,6 +3,7 @@ package hsos.prog3.sudofun.View;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -233,6 +234,7 @@ public class PlayActivity extends AppCompatActivity {
         EditText editText = findViewById(id);
         game.getHelper().numberToCoordinate(id, game);
         int value = game.getSolvedField()[game.getRowHint()][game.getColumnHint()];
+        editText.setTextColor(Color.BLACK);
         editText.setText(String.valueOf(value));
         game.setFreeCells(game.getFreeCells() - 1);
         if(game.getFreeCells() == 0){
@@ -240,10 +242,6 @@ public class PlayActivity extends AppCompatActivity {
         }
     }
 
-    private EditText findFreeCell(){
-        int id = game.getHelper().getRandomFreeCell(game.getField(), game.getSolvedField());
-        return findViewById(id);
-    }
 
     /**
      * Ermöglicht das Aktivieren/Deaktivieren des Notizmodus

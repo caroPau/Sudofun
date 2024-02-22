@@ -1,6 +1,7 @@
 package hsos.prog3.sudofun.View;
 
 import android.graphics.Color;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -118,8 +119,9 @@ public class KeyPad {
                         game.getFreeCellsArray()[game.getRowHint()][game.getColumnHint()] = true;
                     }
                 } else {
-                    focusedEditText.setText(buttonText);
                     game.getHelper().numberToCoordinate(focusedEditText.getId(), game);
+
+                    focusedEditText.setText(buttonText);
                     if(playViewModel.reactToNewNumber(game, game.getRowHint(), game.getColumnHint(), Integer.parseInt(buttonText.toString()))) {
                         focusedEditText.setTextColor(Color.BLACK);
                         game.getFreeCellsArray()[game.getRowHint()][game.getColumnHint()] = false;

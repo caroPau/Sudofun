@@ -57,16 +57,36 @@ public class PlayViewModel extends AndroidViewModel {
         return play.getHelper();
     }
 
+
+    public int[][] getField(){
+        return play.getField();
+    }
+
+
     public boolean reactToNewNumber(Play game, int row, int column, int number) {
-        if (game.getField()[row][column] == 0) {
+        if(game.getField()[row][column] == 0) {
             if (getHelper().isValid(row, column, number, game.getField())) {
                 game.setFreeCells(game.getFreeCells() - 1);
                 game.getField()[row][column] = number;
+                return true;
             }else{
                 return false;
             }
         }
-        return true;
+        else {
+            if (getHelper().isValid(row, column, number, game.getField())) {
+                game.setFreeCells(game.getFreeCells() - 1);
+                game.getField()[row][column] = number;
+                return true;
+            } else if (getHelper().isValid(row, column, game.getField()[row][column], game.getField())) {
+                game.getField()[row][column] = 0;
+                game.setFreeCells(game.getFreeCells() + 1);
+                return false;
+            } else {
+                game.getField()[row][column] = 0;
+                return false;
+            }
+        }
     }
 
     public void reactToClear(Play game){
