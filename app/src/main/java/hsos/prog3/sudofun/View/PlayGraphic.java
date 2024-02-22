@@ -33,7 +33,6 @@ public class PlayGraphic {
     private static int fieldEdgeSize;
     private final Context context;
     private final PlayViewModel playViewModel;
-    private static Drawable[][] noteBackgroundSelector;
     private final List<EditText> editTexts;
     private final List<GridLayout> noteGrids;
     private EditText focusedEditText;
@@ -47,15 +46,6 @@ public class PlayGraphic {
         gridBasePos[1] = (int)(getBildschirmHoehe()*0.136);
         fieldEdgeSize = getBildschirmBreite()/10;
         gridLineStrength = (int)(getBildschirmBreite()*0.01);
-        noteBackgroundSelector = new Drawable[3][3];
-        noteBackgroundSelector[0][0] = AppCompatResources.getDrawable(context, R.drawable.note_field_border_corner_top_left);
-        noteBackgroundSelector[0][1] = AppCompatResources.getDrawable(context, R.drawable.note_field_border_top);
-        noteBackgroundSelector[0][2] = AppCompatResources.getDrawable(context, R.drawable.note_field_border_corner_top_right);
-        noteBackgroundSelector[1][0] = AppCompatResources.getDrawable(context, R.drawable.note_field_border_left);
-        noteBackgroundSelector[1][2] = AppCompatResources.getDrawable(context, R.drawable.note_field_border_right);
-        noteBackgroundSelector[2][0] = AppCompatResources.getDrawable(context, R.drawable.note_field_border_corner_bottom_left);
-        noteBackgroundSelector[2][1] = AppCompatResources.getDrawable(context, R.drawable.note_field_border_bottom);
-        noteBackgroundSelector[2][2] = AppCompatResources.getDrawable(context, R.drawable.note_field_border_corner_bottom_right);
         noteGrids = new ArrayList<>();
         editTexts = new ArrayList<>();
         new KeyPad(playActivity, this, playViewModel);
@@ -180,11 +170,7 @@ public class PlayGraphic {
         note.setGravity(Gravity.CENTER);
         note.setTextColor(Color.BLACK);
         note.setTextSize((float)(fieldEdgeSize*0.1));
-        if(noteRow == 1 && noteColumn == 1) {
-            note.setBackground(AppCompatResources.getDrawable(context, R.drawable.transparentshape));
-        } else {
-            note.setBackground(noteBackgroundSelector[noteRow][noteColumn]);
-        }
+        note.setBackground(AppCompatResources.getDrawable(context, R.drawable.transparentshape));
     }
 
     private void generateGridLine(RelativeLayout playScreen, int width, int height, int x, int y){
