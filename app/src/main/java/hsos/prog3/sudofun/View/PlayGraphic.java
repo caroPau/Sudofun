@@ -79,7 +79,6 @@ public class PlayGraphic {
         return Resources.getSystem().getDisplayMetrics().heightPixels;
     }
 
-    @SuppressLint("ClickableViewAccessibility") //Warnung unterdrücken, dass man performClick nicht überschreibt
     public void generateGrid(GridLayout grid,GridLayout gridMask, RelativeLayout playScreen){
 
         for(int row = 0; row <= 8; row++){
@@ -100,11 +99,8 @@ public class PlayGraphic {
                     for(int noteRow = 0; noteRow <= 2; noteRow++){
                         for(int noteColumn = 0; noteColumn <= 2; noteColumn++) {
                             TextView note = new TextView(context);
-                            noteInit(note,noteRow,noteColumn);
-                            note.setText(String.valueOf(noteNum));
+                            noteInit(note,noteRow,noteColumn,noteNum);
                             noteNum++;
-                            View.OnTouchListener noteGridTouchListener =  onTouchListener(noteGrid,this);
-                            noteGrid.setOnTouchListener(noteGridTouchListener);
                             noteGrid.addView(note);
                         }
                     }
@@ -112,8 +108,6 @@ public class PlayGraphic {
                     noteGrids.add(noteGrid);
                 }
                 editTexts.add(editText);
-                View.OnTouchListener editTextTouchListener =  onTouchListener(editText);
-                editText.setOnTouchListener(editTextTouchListener);
                 hideKeyboardFrom(context,editText);
                 grid.addView(editText);
                 gridMask.addView(maskView);
@@ -141,7 +135,7 @@ public class PlayGraphic {
         ViewGroup.LayoutParams maskParams = new ViewGroup.LayoutParams(getBildschirmBreite()/10,getBildschirmBreite()/10);
         maskView.setLayoutParams(maskParams);
     }
-
+    @SuppressLint("ClickableViewAccessibility") //Warnung unterdrücken, dass man im Listener performClick nicht überschreibt
     private void editTextInit(EditText editText,int row, int column){
         editText.setId(playViewModel.getHelper().coordinateAsOneNumber(row,column));
         editText.setGravity(Gravity.CENTER);
@@ -152,8 +146,11 @@ public class PlayGraphic {
         ViewGroup.LayoutParams editTextParams = new ViewGroup.LayoutParams(getBildschirmBreite()/10,getBildschirmBreite()/10);
         editText.setLayoutParams(editTextParams);
         editText.setCursorVisible(false);
+        View.OnTouchListener editTextTouchListener =  onTouchListener(editText);
+        editText.setOnTouchListener(editTextTouchListener);
     }
 
+    @SuppressLint("ClickableViewAccessibility") //Warnung unterdrücken, dass man im Listener performClick nicht überschreibt
     private void noteGridInit(GridLayout noteGrid, int row, int column){
         noteGrid.setId(playViewModel.getHelper().coordinateAsOneNumber(row, column));
         noteGrid.setX(gridBasePos[0]+column*fieldEdgeSize);
@@ -161,12 +158,15 @@ public class PlayGraphic {
         noteGrid.setVisibility(View.INVISIBLE);
         noteGrid.setColumnCount(3);
         noteGrid.setRowCount(3);
+        View.OnTouchListener noteGridTouchListener =  onTouchListener(noteGrid,this);
+        noteGrid.setOnTouchListener(noteGridTouchListener);
     }
 
-    private void noteInit(TextView note,int noteRow, int noteColumn){
+    private void noteInit(TextView note,int noteRow, int noteColumn, int noteNum){
         ViewGroup.LayoutParams noteParams = new ViewGroup.LayoutParams(getBildschirmBreite()/30,getBildschirmBreite()/30);
         note.setLayoutParams(noteParams);
         note.setVisibility(View.INVISIBLE);
+        note.setText(String.valueOf(noteNum));
         note.setGravity(Gravity.CENTER);
         note.setTextColor(Color.BLACK);
         note.setTextSize((float)(fieldEdgeSize*0.1));
