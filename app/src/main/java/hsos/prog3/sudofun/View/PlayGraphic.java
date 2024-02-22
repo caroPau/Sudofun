@@ -34,16 +34,14 @@ public class PlayGraphic {
     static int fieldEdgeSize;
     Context context;
     PlayViewModel playViewModel;
-    Play game;
     static Drawable[][] noteBackgroundSelector;
+    List<EditText> editTexts;
+    List<GridLayout> noteGrids;
 
     public List<EditText> getEditTexts() {
         return editTexts;
     }
 
-    List<EditText> editTexts;
-
-    List<GridLayout> noteGrids;
 
     public List<GridLayout> getNoteGrids() {
         return noteGrids;
@@ -79,14 +77,13 @@ public class PlayGraphic {
         return Resources.getSystem().getDisplayMetrics().heightPixels;
     }
 
-    public PlayGraphic(PlayActivity playActivity, Context context, Play game, PlayViewModel playViewModel){
+    public PlayGraphic(PlayActivity playActivity, Context context, PlayViewModel playViewModel){
         this.context = context;
         this.playActivity = playActivity;
-        this.game = game;
         this.playViewModel = playViewModel;
         gridBasePos = new int[2];
-        gridBasePos[0] = (int)(getBildschirmBreite()*0.05);
-        gridBasePos[1] = (int)(getBildschirmHoehe()*0.156);
+        gridBasePos[0] = (int)(getBildschirmBreite()*0.05);  //Hardcoded, da getX und getY von grid nicht die richtige Lage liefern
+        gridBasePos[1] = (int)(getBildschirmHoehe()*0.136);
         fieldEdgeSize = getBildschirmBreite()/10;
         gridLineStrength = (int)(getBildschirmBreite()*0.01);
         noteBackgroundSelector = new Drawable[3][3];
@@ -100,24 +97,24 @@ public class PlayGraphic {
         noteBackgroundSelector[2][2] = AppCompatResources.getDrawable(context, R.drawable.note_field_border_corner_bottom_right);
         noteGrids = new ArrayList<>();
         editTexts = new ArrayList<>();
-        keyPad = new KeyPad(playActivity,game,this, playViewModel);
+        keyPad = new KeyPad(playActivity,this, playViewModel);
     }
 
     @SuppressLint("ClickableViewAccessibility") //Warnung unterdrücken, dass man performClick nicht überschreibt
     public void generateGrid(GridLayout grid,GridLayout gridMask, RelativeLayout playScreen){
+
         for(int row = 0; row <= 8; row++){
             for(int column = 0; column <= 8; column++){
                 View maskView = new View(context);
                 initMaskView(maskView);
-
                 EditText editText = new EditText(context);
                 editTextInit(editText,row,column);
-                if(game.getField()[row][column] != 0){
-                    editText.setText(String.valueOf(game.getField()[row][column]));
+                if(playViewModel.getField()[row][column] != 0){
+                    editText.setText(String.valueOf(playViewModel.getField()[row][column]));
                     editText.setEnabled(false);
-                    game.getFreeCellsArray()[row][column] = false;
+                    playViewModel.getFreeCellsArray()[row][column] = false;
                 } else {
-                    game.getFreeCellsArray()[row][column] = true;
+                    playViewModel.getFreeCellsArray()[row][column] = true;
                     GridLayout noteGrid = new GridLayout(context);
                     noteGridInit(noteGrid,row,column);
                     int noteNum = 1;
@@ -167,7 +164,7 @@ public class PlayGraphic {
     }
 
     private void editTextInit(EditText editText,int row, int column){
-        editText.setId(game.getHelper().coordinateAsOneNumber(row,column));
+        editText.setId(playViewModel.getHelper().coordinateAsOneNumber(row,column));
         editText.setGravity(Gravity.CENTER);
         editText.setInputType(InputType.TYPE_CLASS_NUMBER);
         editText.setTextColor(Color.BLACK);
@@ -179,7 +176,7 @@ public class PlayGraphic {
     }
 
     private void noteGridInit(GridLayout noteGrid, int row, int column){
-        noteGrid.setId(game.getHelper().coordinateAsOneNumber(row, column));
+        noteGrid.setId(playViewModel.getHelper().coordinateAsOneNumber(row, column));
         noteGrid.setX(gridBasePos[0]+column*fieldEdgeSize);
         noteGrid.setY(gridBasePos[1]+row*fieldEdgeSize);
         noteGrid.setVisibility(View.INVISIBLE);
@@ -195,7 +192,7 @@ public class PlayGraphic {
         note.setTextColor(Color.BLACK);
         note.setTextSize((float)(fieldEdgeSize*0.1));
         if(noteRow == 1 && noteColumn == 1) {
-            note.setBackground(AppCompatResources.getDrawable(context, R.drawable.whiteshape));
+            note.setBackground(AppCompatResources.getDrawable(context, R.drawable.transparentshape));
         } else {
             note.setBackground(noteBackgroundSelector[noteRow][noteColumn]);
         }

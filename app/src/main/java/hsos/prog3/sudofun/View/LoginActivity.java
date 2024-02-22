@@ -54,29 +54,30 @@ public class LoginActivity extends AppCompatActivity {
      *
      * @author C. Paul
      */
-    private void loginButtonClickEvent(View view){
+    private void loginButtonClickEvent(View view) {
         String username = input_username.getText().toString();
         if (username.isEmpty()) {
             Toast.makeText(this, "Bitte gib einen Namen ein um fortzufahren!", Toast.LENGTH_SHORT).show();
-        }
-        Intent intent = new Intent(LoginActivity.this, LevelActivity.class);
-        Bundle bundle = new Bundle();
+        } else {
+            Intent intent = new Intent(LoginActivity.this, LevelActivity.class);
+            Bundle bundle = new Bundle();
 
-        dataViewModel.findByName(username).observe(this, new Observer<UserEntity>() {
-            @Override
-            public void onChanged(UserEntity retrievedUser) {
-                if (retrievedUser == null) {
-                    // Benutzer nicht gefunden, erstellen Sie einen neuen Benutzer und fügen Sie ihn hinzu
-                    user = new UserEntity(username, 0, 0, 0, 0, 0, 0);
-                    dataViewModel.insertAll(user);
-                } else {
-                    user = retrievedUser;
+            dataViewModel.findByName(username).observe(this, new Observer<UserEntity>() {
+                @Override
+                public void onChanged(UserEntity retrievedUser) {
+                    if (retrievedUser == null) {
+                        // Benutzer nicht gefunden, erstellen Sie einen neuen Benutzer und fügen Sie ihn hinzu
+                        user = new UserEntity(username, 0, 0, 0, 0, 0, 0);
+                        dataViewModel.insertAll(user);
+                    } else {
+                        user = retrievedUser;
+                    }
+
+                    bundle.putSerializable("user", user);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
                 }
-
-                bundle.putSerializable("user", user);
-                intent.putExtras(bundle);
-                startActivity(intent);
-            }
-        });
+            });
+        }
     }
 }

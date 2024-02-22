@@ -12,8 +12,9 @@
         android:contentDescription="@string/background_numbers"
         android:scaleType="centerCrop"
         android:src="@drawable/splash_numbers" />
+
     <Button
-        android:id="@+id/buttonBack"
+        android:id="@+id/buttonLogout"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_alignEnd="@+id/background"
@@ -83,17 +84,7 @@
         </RelativeLayout>
 
         <Button
-            android:id="@+id/buttonHint"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@drawable/btn_primary"
-            android:fontFamily="@font/alfa_slab_one_regular"
-            android:text="@string/statistik" />
-
-        <!-- Button für den Modus -->
-        <Button
-            android:id="@+id/buttonMode"
+            android:id="@+id/buttonNewGame"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"

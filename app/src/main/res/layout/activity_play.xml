@@ -12,220 +12,253 @@
         android:scaleType="centerCrop"
         android:src="@drawable/splash_numbers" />
 
-    <RelativeLayout
-        android:id="@+id/topbar"
+    <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        >
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="@string/spiel_wird_geladen"
+        android:visibility="visible"
+        android:fontFamily="@font/alfa_slab_one_regular"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        />
+
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/loadedGameView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_marginHorizontal="16dp"
         android:layout_marginVertical="16dp"
-        android:orientation="horizontal">
+        android:visibility="invisible"
+        >
 
-        <LinearLayout
-            android:id="@+id/timer"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:id="@+id/topbar"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/textViewTimer_old"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/alfa_slab_one_regular"
-                android:paddingHorizontal="2dp"
-                android:shadowColor="#000000"
-                android:shadowDx="1.5"
-                android:shadowDy="1.3"
-                android:shadowRadius="1.6"
-                android:text="@string/time"
-                android:textColor="@color/green"
-                android:textSize="18sp" />
+            android:orientation="horizontal">
 
             <LinearLayout
-                android:id="@+id/timerandpause"
+                android:id="@+id/timer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_centerInParent="true"
                 android:gravity="center"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/textViewTimer"
+                    android:id="@+id/textViewTimer_old"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/alfa_slab_one_regular"
                     android:paddingHorizontal="2dp"
-                    android:text="@string/time"
-                    android:textColor="@color/black"
-                    android:shadowColor="@color/white"
-                    android:shadowDx="3"
-                    android:shadowDy="3"
+                    android:shadowColor="#000000"
+                    android:shadowDx="1.5"
+                    android:shadowDy="1.3"
                     android:shadowRadius="1.6"
-                    android:textSize="22sp" />
+                    android:text="@string/time"
+                    android:textColor="@color/green"
+                    android:textSize="18sp" />
 
-                <ToggleButton
-                    android:id="@+id/btnPause"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginStart="5dp"
-                    android:background="@drawable/icon_pause"
-                    android:textOff=""
-                    android:textOn="" />
+                <LinearLayout
+                    android:id="@+id/timerandpause"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textViewTimer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/alfa_slab_one_regular"
+                        android:paddingHorizontal="2dp"
+                        android:shadowColor="@color/white"
+                        android:shadowDx="3"
+                        android:shadowDy="3"
+                        android:shadowRadius="1.6"
+                        android:text="@string/time"
+                        android:textColor="@color/black"
+                        android:textSize="22sp" />
+
+                    <ToggleButton
+                        android:id="@+id/btnPause"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginStart="5dp"
+                        android:background="@drawable/icon_pause"
+                        android:textOff=""
+                        android:textOn="" />
+                </LinearLayout>
             </LinearLayout>
+
+            <Button
+                android:id="@+id/buttonBack"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentEnd="true"
+                android:background="@drawable/ic_close"
+                android:onClick="navigateBack" />
+        </RelativeLayout>
+
+
+        <!-- Spielfeld -->
+        <GridLayout
+            android:id="@+id/gridLayoutSudoku"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/topbar"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:columnCount="9"
+            android:rowCount="9">
+
+        </GridLayout>
+
+        <GridLayout
+            android:id="@+id/gridLayoutMask"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/topbar"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:columnCount="9"
+            android:rowCount="9"></GridLayout>
+
+        <LinearLayout
+            android:id="@+id/buttonLine"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/gridLayoutSudoku"
+            android:orientation="vertical">
         </LinearLayout>
 
-        <Button
-            android:id="@+id/buttonBack"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_alignParentEnd="true"
-            android:background="@drawable/ic_close"
-            android:onClick="navigateBack"
-            />
+        <GridLayout
+            android:id="@+id/gridLayoutNumbers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/buttonLine"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:columnCount="3"
+            android:rowCount="4">
+
+            <Button
+                android:id="@+id/numbOne"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_secondary"
+                android:fontFamily="@font/alfa_slab_one_regular"
+                android:text="@string/_1" />
+
+            <Button
+                android:id="@+id/numbTwo"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_secondary"
+                android:fontFamily="@font/alfa_slab_one_regular"
+                android:text="@string/_2" />
+
+            <Button
+                android:id="@+id/numbThree"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_secondary"
+                android:fontFamily="@font/alfa_slab_one_regular"
+                android:text="@string/_3" />
+
+            <Button
+                android:id="@+id/numbFour"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_secondary"
+                android:fontFamily="@font/alfa_slab_one_regular"
+                android:text="@string/_4" />
+
+            <Button
+                android:id="@+id/numbFive"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_secondary"
+                android:fontFamily="@font/alfa_slab_one_regular"
+                android:text="@string/_5" />
+
+            <Button
+                android:id="@+id/numbSix"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_secondary"
+                android:fontFamily="@font/alfa_slab_one_regular"
+                android:text="@string/_6" />
+
+            <Button
+                android:id="@+id/numbSeven"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_secondary"
+                android:fontFamily="@font/alfa_slab_one_regular"
+                android:text="@string/_7" />
+
+            <Button
+                android:id="@+id/numbEight"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_secondary"
+                android:fontFamily="@font/alfa_slab_one_regular"
+                android:text="@string/_8" />
+
+            <Button
+                android:id="@+id/numbNine"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_secondary"
+                android:fontFamily="@font/alfa_slab_one_regular"
+                android:text="@string/_9" />
+
+            <Button
+                android:id="@+id/buttonHint"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_primary"
+                android:fontFamily="@font/alfa_slab_one_regular"
+                android:text="@string/hinweis" />
+
+            <ToggleButton
+                android:id="@+id/buttonMode"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_primary"
+                android:fontFamily="@font/alfa_slab_one_regular"
+                android:textOff="@string/ModusOff"
+                android:textOn="@string/ModusOn"
+                />
+
+            <Button
+                android:id="@+id/clearButton"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_backspace"
+                android:fontFamily="@font/alfa_slab_one_regular"/>
+        </GridLayout>
+
     </RelativeLayout>
-
-
-    <!-- Spielfeld -->
-    <GridLayout
-        android:id="@+id/gridLayoutSudoku"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/topbar"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
-        android:columnCount="9"
-        android:rowCount="9">
-
-    </GridLayout>
-
-    <GridLayout
-        android:id="@+id/gridLayoutMask"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/topbar"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
-        android:columnCount="9"
-        android:rowCount="9">
-    </GridLayout>
-
-    <LinearLayout
-        android:id="@+id/buttonLine"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/gridLayoutSudoku"
-        android:layout_marginHorizontal="20dp"
-        android:orientation="horizontal" >
-
-        <Button
-            android:id="@+id/buttonHint"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/btn_primary"
-            android:fontFamily="@font/alfa_slab_one_regular"
-            android:text="@string/hinweis" />
-
-        <Space
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_weight="1"/>
-
-        <!-- Button für den Modus -->
-        <ToggleButton
-            android:id="@+id/buttonMode"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/btn_primary"
-            android:fontFamily="@font/alfa_slab_one_regular"
-            android:textOn="@string/Modus"
-            android:textOff="@string/Modus"
-            android:textSize="14sp" />
-    </LinearLayout>
-
-    <GridLayout
-        android:id="@+id/gridLayoutNumbers"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/buttonLine"
-        android:layout_marginTop="16dp"
-        android:layout_centerHorizontal="true"
-        android:rowCount="3"
-        android:columnCount="3">
-        <Button
-            android:id="@+id/numbOne"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/btn_primary"
-            android:fontFamily="@font/alfa_slab_one_regular"
-            android:text="@string/_1" />
-        <Button
-            android:id="@+id/numbTwo"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/btn_primary"
-            android:fontFamily="@font/alfa_slab_one_regular"
-            android:text="@string/_2" />
-        <Button
-            android:id="@+id/numbThree"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/btn_primary"
-            android:fontFamily="@font/alfa_slab_one_regular"
-            android:text="@string/_3" />
-        <Button
-            android:id="@+id/numbFour"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/btn_primary"
-            android:fontFamily="@font/alfa_slab_one_regular"
-            android:text="@string/_4" />
-        <Button
-            android:id="@+id/numbFive"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/btn_primary"
-            android:fontFamily="@font/alfa_slab_one_regular"
-            android:text="@string/_5" />
-        <Button
-            android:id="@+id/numbSix"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/btn_primary"
-            android:fontFamily="@font/alfa_slab_one_regular"
-            android:text="@string/_6" />
-        <Button
-            android:id="@+id/numbSeven"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/btn_primary"
-            android:fontFamily="@font/alfa_slab_one_regular"
-            android:text="@string/_7" />
-        <Button
-            android:id="@+id/numbEight"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/btn_primary"
-            android:fontFamily="@font/alfa_slab_one_regular"
-            android:text="@string/_8" />
-        <Button
-            android:id="@+id/numbNine"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/btn_primary"
-            android:fontFamily="@font/alfa_slab_one_regular"
-            android:text="@string/_9" />
-    </GridLayout>
-    <Button
-        android:id="@+id/clearButton"
-        android:layout_width="300dp"
-        android:layout_marginHorizontal="45dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/gridLayoutNumbers"
-        android:background="@drawable/btn_primary"
-        android:fontFamily="@font/alfa_slab_one_regular"
-        android:text="@string/clear" />
 
 </RelativeLayout>

@@ -113,13 +113,13 @@ public class SudokuHelper {
         return row * 10 + column;
     }
 
-    public void numberToCoordinate(int number, Play game){
+    public void numberToCoordinate(int number, PlayViewModel playViewModel){
         if(number < 10){
-            game.setRowHint(0);
-            game.setColumnHint(number);
+            playViewModel.setCoordinateRow(0);
+            playViewModel.setCoordinateColumn(number);
         }else{
-            game.setRowHint(number / 10);
-            game.setColumnHint(number % 10);
+            playViewModel.setCoordinateRow(number / 10);
+            playViewModel.setCoordinateColumn(number % 10);
         }
     }
 
@@ -135,15 +135,4 @@ public class SudokuHelper {
         return occupiedCells;
     }
 
-    /*public Map<Integer, Integer> getOccupiedCells(int[][] field){
-        Map<Integer, Integer> occupiedCells = null;
-        for(int i = 0; i <= 8; i++){
-            for(int j = 0; j <= 8; j++){
-                if(field[i][j] != 0){
-                    occupiedCells.put(i, j);
-                }
-            }
-        }
-        return occupiedCells;
-    }*/
 }
