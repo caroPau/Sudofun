@@ -9,7 +9,7 @@ import hsos.prog3.sudofun.model.Login;
 
 public class LoginViewModel extends AndroidViewModel {
 
-    private Login login;
+    private final Login login;
 
     public LoginViewModel(@NonNull Application application) {
         super(application);

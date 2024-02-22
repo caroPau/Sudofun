@@ -10,9 +10,9 @@ import hsos.prog3.sudofun.R;
 import hsos.prog3.sudofun.viewmodel.PlayViewModel;
 
 public class KeyPad {
-    PlayActivity playActivity;
-    PlayGraphic graphic;
-    PlayViewModel playViewModel;
+    private final PlayActivity playActivity;
+    private final PlayGraphic graphic;
+    private final PlayViewModel playViewModel;
 
     public KeyPad(PlayActivity playActivity, PlayGraphic graphic, PlayViewModel playViewModel) {
         this.playActivity = playActivity;

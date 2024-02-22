@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
+import java.util.Locale;
 
 import hsos.prog3.sudofun.R;
 import hsos.prog3.sudofun.model.Level;
@@ -16,8 +17,8 @@ import hsos.prog3.sudofun.model.UserEntity;
 
 public class HighscoreAdapter extends RecyclerView.Adapter<HighscoreAdapter.HighscoreViewHolder> {
 
-    private List<UserEntity> highscoreList;
-    private Level level;
+    private final List<UserEntity> highscoreList;
+    private final Level level;
 
     // Konstruktor, um die Liste von Highscores zu übergeben
     public HighscoreAdapter(List<UserEntity> highscoreList, Level level) {
@@ -47,7 +48,7 @@ public class HighscoreAdapter extends RecyclerView.Adapter<HighscoreAdapter.High
     @Override
     public void onBindViewHolder(@NonNull HighscoreViewHolder holder, int position) {
         UserEntity user = highscoreList.get(position);
-        String formattedText = String.format("%d. %s", position + 1, user.username);
+        String formattedText = String.format(Locale.getDefault(), "%d. %s", position + 1, user.username);
         holder.nameTextView.setText(formattedText);
         long score = 0;
 
@@ -69,10 +70,10 @@ public class HighscoreAdapter extends RecyclerView.Adapter<HighscoreAdapter.High
             int secondsTemp = ((int) (score / 1000));
             int minutes = secondsTemp / 60;
             int seconds = secondsTemp - minutes * 60;
-            String time = String.format("%02d", minutes) + ":" + String.format("%02d", seconds);
-            holder.timeTextView.setText(String.valueOf(time));
+            String time = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
+            holder.timeTextView.setText(time);
         } else {
-            holder.timeTextView.setText("00:00");
+            holder.timeTextView.setText(R.string.time);
         }
     }
 

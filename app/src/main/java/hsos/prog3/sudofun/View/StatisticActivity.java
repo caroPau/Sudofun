@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
+import java.util.Locale;
 
 import hsos.prog3.sudofun.R;
 import hsos.prog3.sudofun.databinding.ActivityStatisticBinding;
@@ -24,7 +25,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 public class StatisticActivity extends AppCompatActivity {
     private StatisticViewModel statisticViewModel;
-    private DataViewModel dataViewModel;
     private ActivityStatisticBinding binding;
 
     private RecyclerView recyclerView;
@@ -43,7 +43,7 @@ public class StatisticActivity extends AppCompatActivity {
         recyclerView = binding.bestListRecycler;
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        dataViewModel = new ViewModelProvider(this).get(DataViewModel.class);
+        DataViewModel dataViewModel = new ViewModelProvider(this).get(DataViewModel.class);
 
         statisticViewModel.setUser(bundle.getSerializable("user", UserEntity.class));
 
@@ -71,7 +71,7 @@ public class StatisticActivity extends AppCompatActivity {
         int secondsTemp = ((int) (time / 1000));
         int minutes = secondsTemp / 60;
         int seconds = secondsTemp - minutes * 60;
-        return String.format("%02d", minutes) + ":" + String.format("%02d", seconds);
+        return String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
     }
     
     public void navigateLogout(View view) {

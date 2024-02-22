@@ -3,8 +3,6 @@ package hsos.prog3.sudofun.viewmodel;
 import java.util.ArrayList;
 import java.util.Random;
 
-import hsos.prog3.sudofun.model.Play;
-
 
 /**
  * Hilfsklasse zum Erstellen und Lösen von Sudokus
@@ -84,10 +82,7 @@ public class SudokuHelper {
      * @return true, wenn die Ziffer gültig ist, andernfalls false.
      */
     public boolean isValid(int row, int column, int digit, int[][] field) {
-        if (!isDigitInRow(row, digit, field) && !isDigitInColumn(column, digit, field) && !isDigitInBlock(row, column, digit, field)) {
-            return true;
-        }
-        return false;
+        return !isDigitInRow(row, digit, field) && !isDigitInColumn(column, digit, field) && !isDigitInBlock(row, column, digit, field);
     }
 
     /**

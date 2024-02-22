@@ -3,6 +3,8 @@ package hsos.prog3.sudofun.viewmodel;
 import android.os.Handler;
 import android.widget.TextView;
 
+import java.util.Locale;
+
 
 /**
  *  Implementiert einen Timer und zeigt die verstrichene Zeit in einer TextView
@@ -10,7 +12,7 @@ import android.widget.TextView;
 public class TimerViewModel{
 
     private Runnable timerRunnable;
-    private Handler handler;
+    private final Handler handler;
     private long start;         // Zeitstempel zum Startzeitpunkt
 
     private long millisSinceStart; //Verstrichene Millisekunden seit Start
@@ -85,7 +87,7 @@ public class TimerViewModel{
      *
      */
     public String stringify(){
-        return String.format("%02d", minutes) + ":" + String.format("%02d", seconds);
+        return String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
     }
 
     /**

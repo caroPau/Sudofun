@@ -27,23 +27,41 @@ import hsos.prog3.sudofun.viewmodel.PlayViewModel;
 
 
 public class PlayGraphic {
+    private static int[] gridBasePos;
+    private static int fieldEdgeSize;
+    private final Context context;
+    private final PlayViewModel playViewModel;
+    private static Drawable[][] noteBackgroundSelector;
+    private final List<EditText> editTexts;
+    private final List<GridLayout> noteGrids;
+    private EditText focusedEditText;
+    private GridLayout focusedNoteGrid;
 
-    PlayActivity playActivity;
-    static int[] gridBasePos;
-    static int fieldEdgeSize;
-    Context context;
-    PlayViewModel playViewModel;
-    static Drawable[][] noteBackgroundSelector;
-    List<EditText> editTexts;
-    List<GridLayout> noteGrids;
-    EditText focusedEditText;
-    GridLayout focusedNoteGrid;
-    KeyPad keyPad;
+    public PlayGraphic(PlayActivity playActivity, Context context, PlayViewModel playViewModel){
+        this.context = context;
+        this.playViewModel = playViewModel;
+        gridBasePos = new int[2];
+        gridBasePos[0] = (int)(getBildschirmBreite()*0.05);  //Hardcoded, da getX und getY von grid nicht die richtige Lage liefern
+        gridBasePos[1] = (int)(getBildschirmHoehe()*0.136);
+        fieldEdgeSize = getBildschirmBreite()/10;
+        gridLineStrength = (int)(getBildschirmBreite()*0.01);
+        noteBackgroundSelector = new Drawable[3][3];
+        noteBackgroundSelector[0][0] = AppCompatResources.getDrawable(context, R.drawable.note_field_border_corner_top_left);
+        noteBackgroundSelector[0][1] = AppCompatResources.getDrawable(context, R.drawable.note_field_border_top);
+        noteBackgroundSelector[0][2] = AppCompatResources.getDrawable(context, R.drawable.note_field_border_corner_top_right);
+        noteBackgroundSelector[1][0] = AppCompatResources.getDrawable(context, R.drawable.note_field_border_left);
+        noteBackgroundSelector[1][2] = AppCompatResources.getDrawable(context, R.drawable.note_field_border_right);
+        noteBackgroundSelector[2][0] = AppCompatResources.getDrawable(context, R.drawable.note_field_border_corner_bottom_left);
+        noteBackgroundSelector[2][1] = AppCompatResources.getDrawable(context, R.drawable.note_field_border_bottom);
+        noteBackgroundSelector[2][2] = AppCompatResources.getDrawable(context, R.drawable.note_field_border_corner_bottom_right);
+        noteGrids = new ArrayList<>();
+        editTexts = new ArrayList<>();
+        new KeyPad(playActivity, this, playViewModel);
+    }
 
     public List<EditText> getEditTexts() {
         return editTexts;
     }
-
 
     public List<GridLayout> getNoteGrids() {
         return noteGrids;
@@ -67,29 +85,6 @@ public class PlayGraphic {
     }
     public static int getBildschirmHoehe() {
         return Resources.getSystem().getDisplayMetrics().heightPixels;
-    }
-
-    public PlayGraphic(PlayActivity playActivity, Context context, PlayViewModel playViewModel){
-        this.context = context;
-        this.playActivity = playActivity;
-        this.playViewModel = playViewModel;
-        gridBasePos = new int[2];
-        gridBasePos[0] = (int)(getBildschirmBreite()*0.05);  //Hardcoded, da getX und getY von grid nicht die richtige Lage liefern
-        gridBasePos[1] = (int)(getBildschirmHoehe()*0.136);
-        fieldEdgeSize = getBildschirmBreite()/10;
-        gridLineStrength = (int)(getBildschirmBreite()*0.01);
-        noteBackgroundSelector = new Drawable[3][3];
-        noteBackgroundSelector[0][0] = AppCompatResources.getDrawable(context, R.drawable.note_field_border_corner_top_left);
-        noteBackgroundSelector[0][1] = AppCompatResources.getDrawable(context, R.drawable.note_field_border_top);
-        noteBackgroundSelector[0][2] = AppCompatResources.getDrawable(context, R.drawable.note_field_border_corner_top_right);
-        noteBackgroundSelector[1][0] = AppCompatResources.getDrawable(context, R.drawable.note_field_border_left);
-        noteBackgroundSelector[1][2] = AppCompatResources.getDrawable(context, R.drawable.note_field_border_right);
-        noteBackgroundSelector[2][0] = AppCompatResources.getDrawable(context, R.drawable.note_field_border_corner_bottom_left);
-        noteBackgroundSelector[2][1] = AppCompatResources.getDrawable(context, R.drawable.note_field_border_bottom);
-        noteBackgroundSelector[2][2] = AppCompatResources.getDrawable(context, R.drawable.note_field_border_corner_bottom_right);
-        noteGrids = new ArrayList<>();
-        editTexts = new ArrayList<>();
-        keyPad = new KeyPad(playActivity,this, playViewModel);
     }
 
     @SuppressLint("ClickableViewAccessibility") //Warnung unterdrücken, dass man performClick nicht überschreibt
@@ -125,7 +120,7 @@ public class PlayGraphic {
                     noteGrids.add(noteGrid);
                 }
                 editTexts.add(editText);
-                View.OnTouchListener editTextTouchListener =  onTouchListener(editText,this);
+                View.OnTouchListener editTextTouchListener =  onTouchListener(editText);
                 editText.setOnTouchListener(editTextTouchListener);
                 hideKeyboardFrom(context,editText);
                 grid.addView(editText);
@@ -199,7 +194,7 @@ public class PlayGraphic {
         gridLine.setY(y);
         playScreen.addView(gridLine);
     }
-    public View.OnTouchListener onTouchListener(EditText editText, PlayGraphic graphic){
+    public View.OnTouchListener onTouchListener(EditText editText){
         return (view, motionEvent) -> {
             switch (motionEvent.getAction()){
                 case MotionEvent.ACTION_DOWN:

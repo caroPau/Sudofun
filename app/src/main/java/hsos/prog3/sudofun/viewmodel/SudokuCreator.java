@@ -2,7 +2,6 @@ package hsos.prog3.sudofun.viewmodel;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
 import hsos.prog3.sudofun.model.Level;
@@ -18,17 +17,14 @@ public class SudokuCreator implements Runnable {
      */
 
     private int[][] solvedField;
-    private Level level;
-    private SudokuHelper helper;
+    private final SudokuHelper helper;
 
     /**
      * Konstruktor
      *
-     * @param level Schwierigkeitsgrad des Sudokus
      */
-    public SudokuCreator(Level level, SudokuHelper helper){
+    public SudokuCreator(SudokuHelper helper){
         solvedField = new int[9][9];
-        this.level = level;
         this.helper = helper;
     }
 
@@ -241,13 +237,9 @@ public class SudokuCreator implements Runnable {
         return solvedField;
     }
 
-    public void setSolvedField(int[][] solvedField) {
-        this.solvedField = solvedField;
-    }
-
     @Override
     public void run() {
-        Thread thread = Thread.currentThread();
+        Thread.currentThread();
     }
 }
 

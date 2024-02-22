@@ -16,8 +16,8 @@ import hsos.prog3.sudofun.model.UserEntity;
 
 public class PlayViewModel extends AndroidViewModel {
 
-    private Play play;
-    private SudokuHelper helper;
+    private final Play play;
+    private final SudokuHelper helper;
 
     public PlayViewModel(@NonNull Application application) {
         super(application);
@@ -25,9 +25,6 @@ public class PlayViewModel extends AndroidViewModel {
         helper = new SudokuHelper();
     }
 
-    public Play getPlay() {
-        return play;
-    }
     public void setUser(UserEntity user){
         play.setUser(user);
     }

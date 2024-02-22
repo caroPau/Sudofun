@@ -7,15 +7,11 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import hsos.prog3.sudofun.R;
-import hsos.prog3.sudofun.model.UserEntity;
 import hsos.prog3.sudofun.databinding.ActivityLoginBinding;
-import hsos.prog3.sudofun.model.Login;
-import hsos.prog3.sudofun.model.Play;
 import hsos.prog3.sudofun.model.UserEntity;
 import hsos.prog3.sudofun.viewmodel.DataViewModel;
 import hsos.prog3.sudofun.viewmodel.LoginViewModel;
@@ -24,19 +20,17 @@ import hsos.prog3.sudofun.viewmodel.LoginViewModel;
  *  Logik für die LoginView
  */
 public class LoginActivity extends AppCompatActivity {
-    private LoginViewModel loginViewModel;
     private DataViewModel dataViewModel;
-    private ActivityLoginBinding binding;
     private EditText input_username;
-    UserEntity user;
+    private UserEntity user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
+        LoginViewModel loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
         input_username = this.findViewById(R.id.inputUsername);
         loginViewModel.setDataViewModel(new ViewModelProvider(this).get(DataViewModel.class));
-        binding = ActivityLoginBinding.inflate(getLayoutInflater());
+        hsos.prog3.sudofun.databinding.ActivityLoginBinding binding = ActivityLoginBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
         input_username = binding.inputUsername;

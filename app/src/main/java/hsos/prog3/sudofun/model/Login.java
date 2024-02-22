@@ -1,7 +1,4 @@
 package hsos.prog3.sudofun.model;
-
-import android.widget.EditText;
-
 import hsos.prog3.sudofun.viewmodel.DataViewModel;
 
 public class Login {

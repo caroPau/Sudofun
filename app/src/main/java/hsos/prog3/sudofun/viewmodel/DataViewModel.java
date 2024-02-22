@@ -11,7 +11,7 @@ import hsos.prog3.sudofun.model.UserEntity;
 import hsos.prog3.sudofun.model.UserRepository;
 
 public class DataViewModel extends AndroidViewModel {
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     public DataViewModel(Application application){
         super(application);
@@ -28,12 +28,7 @@ public class DataViewModel extends AndroidViewModel {
     public void insertAll(UserEntity...user){
         userRepository.insertAll(user);
     }
-    public void delete(UserEntity user){
-        userRepository.delete(user);
-    }
-    public int countByName(String username){
-        return userRepository.countByName(username);
-    }
+
     public LiveData<List<UserEntity>> getHighscoresEasy(){
         return userRepository.getHighscoresEasy();
     }

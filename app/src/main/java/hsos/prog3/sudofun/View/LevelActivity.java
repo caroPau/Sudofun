@@ -20,7 +20,7 @@ import hsos.prog3.sudofun.model.UserEntity;
 public class LevelActivity extends AppCompatActivity {
     private int selectedLevel = -1;
     private ActivityLevelBinding binding;
-    UserEntity user;
+    private UserEntity user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

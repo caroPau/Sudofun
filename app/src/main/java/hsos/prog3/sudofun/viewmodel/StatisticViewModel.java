@@ -1,7 +1,5 @@
 package hsos.prog3.sudofun.viewmodel;
 
-import static hsos.prog3.sudofun.model.Level.EASY;
-
 import android.app.Application;
 
 import androidx.annotation.NonNull;
@@ -15,7 +13,7 @@ import hsos.prog3.sudofun.model.Statistic;
 import hsos.prog3.sudofun.model.UserEntity;
 
 public class StatisticViewModel extends AndroidViewModel {
-    private Statistic statistic;
+    private final Statistic statistic;
 
     public StatisticViewModel(@NonNull Application application) {
         super(application);

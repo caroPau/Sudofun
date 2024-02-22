@@ -14,6 +14,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import java.util.List;
+import java.util.Locale;
 
 import hsos.prog3.sudofun.R;
 import hsos.prog3.sudofun.model.UserEntity;
@@ -24,10 +25,10 @@ import hsos.prog3.sudofun.viewmodel.SudokuCreator;
 import hsos.prog3.sudofun.viewmodel.TimerViewModel;
 
 public class PlayActivity extends AppCompatActivity {
-    PlayViewModel playViewModel;
-    DataViewModel dataViewModel;
-    String username;
-    PlayGraphic graphic;
+    private PlayViewModel playViewModel;
+    private DataViewModel dataViewModel;
+    private String username;
+    private PlayGraphic graphic;
 
     public ActivityPlayBinding getBinding() {
         return binding;
@@ -98,7 +99,7 @@ public class PlayActivity extends AppCompatActivity {
      */
     private void initGame(int level) {
         resetGameVariables();
-        SudokuCreator creator = new SudokuCreator(playViewModel.getSelectedLevel(level, this), playViewModel.getHelper());
+        SudokuCreator creator = new SudokuCreator(playViewModel.getHelper());
         Thread threadCreator = new Thread(creator, "CreatorThread");
         threadCreator.start();
         playViewModel.setField(creator.createSudoku(playViewModel.getSelectedLevel(level, this)));
@@ -135,7 +136,7 @@ public class PlayActivity extends AppCompatActivity {
             int secondsTemp = ((int) (bestTime / 1000));
             int minutes = secondsTemp / 60;
             int seconds = secondsTemp - minutes * 60;
-            String time = String.format("%02d", minutes) + ":" + String.format("%02d", seconds);
+            String time = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
             binding.textViewTimerOld.setText(time);
         }
     }
