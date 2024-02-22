@@ -7,6 +7,7 @@ import hsos.prog3.sudofun.viewmodel.DataViewModel;
 
 public class Statistic {
     private UserEntity user;
+    private Level level;
     private int totalGames;
     private long bestTime;
     private DataViewModel dataViewModel;
@@ -21,6 +22,13 @@ public class Statistic {
         dataViewModel = null;
     }
 
+    public Level getLevel(){
+        return level;
+    }
+
+    public void setLevel(Level level){
+        this.level = level;
+    }
     public int getTotalGames() {
         return totalGames;
     }

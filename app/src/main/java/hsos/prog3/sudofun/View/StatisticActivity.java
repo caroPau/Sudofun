@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,7 +13,6 @@ import java.util.List;
 
 import hsos.prog3.sudofun.R;
 import hsos.prog3.sudofun.databinding.ActivityStatisticBinding;
-import hsos.prog3.sudofun.model.Statistic;
 import hsos.prog3.sudofun.model.UserEntity;
 import hsos.prog3.sudofun.model.Level;
 import hsos.prog3.sudofun.viewmodel.DataViewModel;
@@ -29,8 +27,6 @@ public class StatisticActivity extends AppCompatActivity {
     private DataViewModel dataViewModel;
     private ActivityStatisticBinding binding;
 
-
-
     private RecyclerView recyclerView;
     private HighscoreAdapter adapter;
 
@@ -40,7 +36,7 @@ public class StatisticActivity extends AppCompatActivity {
         setContentView(R.layout.activity_statistic);
         statisticViewModel = new ViewModelProvider(this).get(StatisticViewModel.class);
         Bundle bundle = getIntent().getExtras();
-        Level level = Level.valueOf(bundle.getString("level"));
+        statisticViewModel.setLevel(Level.valueOf(bundle.getString("level")));
         binding = ActivityStatisticBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
@@ -51,34 +47,17 @@ public class StatisticActivity extends AppCompatActivity {
 
         statisticViewModel.setUser(bundle.getSerializable("user", UserEntity.class));
 
-        getStatistics(level).observe(this, new Observer<List<UserEntity>>() {
+        statisticViewModel.getStatistics(dataViewModel).observe(this, new Observer<List<UserEntity>>() {
             @Override
             public void onChanged(List<UserEntity> retrievedUsers) {
                 statisticViewModel.setBestUsers(retrievedUsers);
-                adapter = new HighscoreAdapter(statisticViewModel.getBestUsers(), level);
+                adapter = new HighscoreAdapter(statisticViewModel.getBestUsers(), statisticViewModel.getLevel());
                 recyclerView.setAdapter(adapter);
                 binding.textViewTimer.setText(formatTime(bundle.getLong("time")));
             }
         });
     }
 
-    private LiveData<List<UserEntity>> getStatistics(Level level) {
-        LiveData<List<UserEntity>> users ;
-        switch (level) {
-            case EASY:
-                users = dataViewModel.getHighscoresEasy();
-                break;
-            case MEDIUM:
-                users = dataViewModel.getHighscoresMedium();
-                break;
-            case HARD:
-                users = dataViewModel.getHighscoresHard();
-                break;
-            default:
-                users = null;
-        }
-        return users;
-    }
     
     public void startLevelActivity(View view) {
         Intent intent = new Intent(StatisticActivity.this, LevelActivity.class);
