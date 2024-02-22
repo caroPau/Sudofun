@@ -25,7 +25,9 @@ import java.util.List;
 import hsos.prog3.sudofun.R;
 import hsos.prog3.sudofun.viewmodel.PlayViewModel;
 
-
+/**
+ * Klasse für die Generierung und Anzeige des Spielfeldes.
+ */
 public class PlayGraphic {
     private static int[] gridBasePos;
     private static int fieldEdgeSize;

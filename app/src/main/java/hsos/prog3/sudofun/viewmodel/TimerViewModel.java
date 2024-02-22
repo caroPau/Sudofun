@@ -7,7 +7,7 @@ import java.util.Locale;
 
 
 /**
- *  Implementiert einen Timer und zeigt die verstrichene Zeit in einer TextView
+ *  Implementiert einen Timer und zeigt die verstrichene Zeit in einer TextView.
  */
 public class TimerViewModel{
 

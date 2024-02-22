@@ -9,6 +9,9 @@ import android.widget.GridLayout;
 import hsos.prog3.sudofun.R;
 import hsos.prog3.sudofun.viewmodel.PlayViewModel;
 
+/**
+ * Klasse für die Darstellung des KeyPads während eines laufenden Spiels.
+ */
 public class KeyPad {
     private final PlayActivity playActivity;
     private final PlayGraphic graphic;
@@ -66,13 +69,14 @@ public class KeyPad {
             GridLayout focusedNoteGrid = graphic.getFocusedNoteGrid();
             View note;
 
-            if (focusedEditText == null) {
-                return;
-            }
+
             /*
              * Behandlung des Falls, bei dem der Notizmodus aktiviert ist
              */
             if (playViewModel.isNoteMode()) {
+                if (focusedNoteGrid==null) {
+                    return;
+                }
                 /*
                  * löschen aller Notizen wenn es sich um den clear Button handelt
                  */
@@ -107,6 +111,9 @@ public class KeyPad {
                 /*
                  * Behandlung des Falls, bei dem der Notizmodus deaktiviert ist
                  */
+                if (focusedEditText==null) {
+                    return;
+                }
                 if (button.getId()==R.id.buttonClear) {
                     if (!focusedEditText.getText().toString().equals("")) {
                         playViewModel.getHelper().numberToCoordinate(focusedEditText.getId(), playViewModel);

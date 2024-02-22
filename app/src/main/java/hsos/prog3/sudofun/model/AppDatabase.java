@@ -12,6 +12,10 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 // Quelle: https://developer.android.com/codelabs/android-room-with-a-view#7
+
+/**
+ * Klasse stellt die Datenbank dar und initialisiert Datenbankverbindung.
+ */
 @Database(entities = {UserEntity.class}, version = 1, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract UserDAO userDAO();

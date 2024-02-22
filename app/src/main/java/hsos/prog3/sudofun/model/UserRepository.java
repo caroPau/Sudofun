@@ -6,11 +6,13 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
+/**
+ * Repository für Kapselung von Datenzugriffen der UserEntity.
+ */
 public class UserRepository {
-    private final UserDAO userDAO;
-    private List<UserEntity> highscoresEasy;
-    private List<UserEntity> highscoresMedium;
-    private List<UserEntity> highscoresHard;
+    private UserDAO userDAO;
+    private LiveData<UserEntity> user;
+    private int count;
 
     public UserRepository(Application application){
         AppDatabase db = AppDatabase.getDatabase(application);

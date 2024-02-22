@@ -10,30 +10,67 @@ import androidx.room.Update;
 
 import java.util.List;
 
+/**
+ * DAO der Entität UserEntity mit Methoden für Datenbankanfragen.
+ */
 @Dao
 public interface UserDAO {
+    /**
+     * Findet den Benutzer anhand der ID.
+     *
+     * @param username Benutzername
+     * @return Benutzer
+     */
     @Query("SELECT * FROM userentity WHERE username = :username")
     LiveData<UserEntity> findByName(String username);
 
     @Query("SELECT COUNT(*) FROM userentity WHERE username LIKE :username")
     int countByName(String username);
 
+    /**
+     * Liest die 5 besten Spieler auf Level Easy aus.
+     *
+     * @return Liste der Spieler
+     */
     @Query("SELECT * FROM userentity WHERE highscore_easy > 0 ORDER BY highscore_easy ASC LIMIT 5")
     LiveData<List<UserEntity>> getEasyHighscores();
 
+    /**
+     * Liest die 5 besten Spieler auf Level Medium aus.
+     *
+     * @return Liste der Spieler
+     */
     @Query("SELECT * FROM userentity WHERE highscore_medium > 0 ORDER BY highscore_medium ASC LIMIT 5")
     LiveData<List<UserEntity>> getMediumHighscores();
 
+    /**
+     * Liest die 5 besten Spieler auf Level Hard aus.
+     *
+     * @return Liste der Spieler
+     */
     @Query("SELECT * FROM userentity WHERE highscore_hard > 0 ORDER BY highscore_hard ASC LIMIT 5")
     LiveData<List<UserEntity>> getHardHighscores();
 
-
+    /**
+     * Liest die 5 besten Spieler auf Level Easy aus.
+     *
+     */
     @Update
     void updateUser(UserEntity user);
 
+    /**
+     * Schreibt neue Benutzer in die Datenbank.
+     *
+     * @param users List mit neuen Benutzers
+     */
     @Insert(onConflict = OnConflictStrategy.NONE)
     void insertAll(UserEntity... users);
 
+    /**
+     * Löscht einen einzelnen Nutzer.
+     *
+     * @param user Zu löschender Benutzer.
+     */
     @Delete
     void delete(UserEntity user);
 }

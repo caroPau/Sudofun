@@ -24,6 +24,9 @@ import hsos.prog3.sudofun.viewmodel.PlayViewModel;
 import hsos.prog3.sudofun.viewmodel.SudokuCreator;
 import hsos.prog3.sudofun.viewmodel.TimerViewModel;
 
+/**
+ * Activity für das Spiel mit Spielfeld.
+ */
 public class PlayActivity extends AppCompatActivity {
     private PlayViewModel playViewModel;
     private DataViewModel dataViewModel;
@@ -62,7 +65,9 @@ public class PlayActivity extends AppCompatActivity {
                 if (retrievedUser != null) {
                     // User gefunden, initGame aufrufen
                     playViewModel.setUser(retrievedUser);
-                    initGame(level);
+                    if(playViewModel.getPlayedGames() == 0) {
+                        initGame(level);
+                    }
                 }
             }
         });
@@ -85,7 +90,7 @@ public class PlayActivity extends AppCompatActivity {
         });
     }
 
-    public void startLevelActivity() {
+    public void startLevelActivity(){
         Intent intent = new Intent(PlayActivity.this, LevelActivity.class);
         startActivity(intent);
     }
@@ -95,6 +100,7 @@ public class PlayActivity extends AppCompatActivity {
      * Erstellt ein neues Spiel und initialisiert dessen Variablen, erstellt neues Spielfeld und startet den Timer
      *
      * @param level Der gewünschte Schwierigkeitsgrad
+     *
      * @author C. Paul
      */
     private void initGame(int level) {
@@ -108,7 +114,7 @@ public class PlayActivity extends AppCompatActivity {
         playViewModel.setTimer(new TimerViewModel());
         playViewModel.getTimer().setActualTimerView(binding.textViewTimer);
         showBestTime();
-        if (playViewModel.getHelper().getOccupiedCells(playViewModel.getField()) != null) {
+        if(playViewModel.getHelper().getOccupiedCells(playViewModel.getField()) != null) {
             playViewModel.setOccupiedCells(playViewModel.getHelper().getOccupiedCells(playViewModel.getField()));
             playViewModel.setOpenCells(81 - playViewModel.getOccupiedCells().size());
         }
@@ -119,6 +125,7 @@ public class PlayActivity extends AppCompatActivity {
         threadTimer.start();
         binding.progressBar.setVisibility(View.INVISIBLE);
         binding.relativeLayoutLoadedGameView.setVisibility(View.VISIBLE);
+        playViewModel.setPlayedGames(playViewModel.getPlayedGames() + 1);
     }
 
     private void resetGameVariables() {
@@ -142,12 +149,14 @@ public class PlayActivity extends AppCompatActivity {
     }
 
 
+
+
     /**
      * Ruft die Methode @updateUser auf, erstellt das Bundle und den Intent für die nächste Activity und startet diese
      *
      * @author C. Paul
      */
-    public void endGame() {
+    public void endGame(){
         playViewModel.updateUser();
         dataViewModel.updateUserDB(playViewModel.getUser());
         Bundle bundle = new Bundle();

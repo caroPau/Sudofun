@@ -10,6 +10,9 @@ import java.util.List;
 import hsos.prog3.sudofun.model.UserEntity;
 import hsos.prog3.sudofun.model.UserRepository;
 
+/**
+ * ViewModel für Benutzerdaten (UserEntity). Hält Referenz auf ein UserRepository.
+ */
 public class DataViewModel extends AndroidViewModel {
     private final UserRepository userRepository;
 

@@ -7,8 +7,11 @@ import java.util.ArrayList;
 
 import hsos.prog3.sudofun.viewmodel.TimerViewModel;
 
+/**
+ * Klasse Play hält alle Parameter eines laufenden Spiels.
+ */
 public class Play {
-    private Level level;
+    private LevelEnum levelEnum;
     private UserEntity user;
     private TimerViewModel timer;
     private ArrayList<Integer> occupiedCells;
@@ -21,11 +24,13 @@ public class Play {
     private int freeCells;
     private EditText lastFocusedCell;
     private GridLayout lastFocusedGrid;
+    private int playedGames;
 
     //  Konstruktor
     public Play() {
         occupiedCells = new ArrayList<>();
         freeCellsArray = new boolean[9][9];
+        playedGames = 0;
     }
 
     //Getter
@@ -38,8 +43,8 @@ public class Play {
         return noteMode;
     }
 
-    public Level getLevel() {
-        return level;
+    public LevelEnum getLevel() {
+        return levelEnum;
     }
 
     public int[][] getField() {
@@ -84,6 +89,9 @@ public class Play {
 
     //  Setter
 
+    public void setPlayedGames(int playedGames){
+        this.playedGames = playedGames;
+    }
 
     public void setUser(UserEntity user) {
         this.user = user;
@@ -94,44 +102,36 @@ public class Play {
     }
 
 
-    public void setLevel(Level level) {
-        this.level = level;
+    public void setLevel(LevelEnum levelEnum) {
+        this.levelEnum = levelEnum;
     }
-
 
     public void setField(int[][] field) {
         this.field = field;
     }
 
-
     public void setTimer(TimerViewModel timer) {
         this.timer = timer;
     }
-
 
     public void setSolvedField(int[][] solvedField) {
         this.solvedField = solvedField;
     }
 
-
     public void setOccupiedCells(ArrayList<Integer> occupiedCells) {
         this.occupiedCells = occupiedCells;
     }
 
-
     public void setOpenCells(int openCells){
     }
-
 
     public void setRowHint(int rowHint) {
         this.rowHint = rowHint;
     }
 
-
     public void setColumnHint(int columnHint) {
         this.columnHint = columnHint;
     }
-
 
     public void setFreeCells(int freeCells) {
         this.freeCells = freeCells;
@@ -141,9 +141,11 @@ public class Play {
         this.lastFocusedCell = lastFocusedCell;
     }
 
-
-
     public void setLastFocusedGrid(GridLayout lastFocusedGrid) {
         this.lastFocusedGrid = lastFocusedGrid;
+    }
+
+    public int getPlayedGames(){
+        return playedGames;
     }
 }

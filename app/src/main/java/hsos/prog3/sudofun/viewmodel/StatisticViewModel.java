@@ -8,10 +8,13 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
-import hsos.prog3.sudofun.model.Level;
+import hsos.prog3.sudofun.model.LevelEnum;
 import hsos.prog3.sudofun.model.Statistic;
 import hsos.prog3.sudofun.model.UserEntity;
 
+/**
+ * ViewModel für die Ansicht der Statistik.
+ */
 public class StatisticViewModel extends AndroidViewModel {
     private final Statistic statistic;
 
@@ -28,11 +31,11 @@ public class StatisticViewModel extends AndroidViewModel {
         return statistic.getUser();
     }
 
-    public void setLevel(Level level){
-        statistic.setLevel(level);
+    public void setLevel(LevelEnum levelEnum){
+        statistic.setLevel(levelEnum);
     }
 
-    public Level getLevel(){
+    public LevelEnum getLevel(){
         return statistic.getLevel();
     }
     public List<UserEntity> getBestUsers(){

@@ -6,6 +6,7 @@ import java.util.Random;
 
 /**
  * Hilfsklasse zum Erstellen und Lösen von Sudokus
+ * 
  * Author: C. Paul
  */
 public class SudokuHelper {

@@ -1,29 +1,26 @@
 package hsos.prog3.sudofun.model;
 import hsos.prog3.sudofun.viewmodel.DataViewModel;
 
+/**
+ * Klasse repräsentiert die notwendigen Informationen für den Login.
+ */
 public class Login {
 
-    private String username;
-    private DataViewModel dataViewModel;
+    private UserEntity userEntity;
 
     /**
      *  Getter
      */
-    public String getUsername() {
-        return username;
-    }
-    public DataViewModel getDataViewModel() {
-        return dataViewModel;
+
+    public UserEntity getUserEntity(){
+        return userEntity;
     }
 
     /**
      *  Setter
      */
-    public void setUsername(String username) {
-        this.username = username;
-    }
-    public void setDataViewModel(DataViewModel dataViewModel) {
-        this.dataViewModel = dataViewModel;
+    public void setUserEntity(UserEntity userEntity) {
+        this.userEntity = userEntity;
     }
 
 }

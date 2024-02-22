@@ -6,7 +6,11 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 
 import hsos.prog3.sudofun.model.Login;
+import hsos.prog3.sudofun.model.UserEntity;
 
+/**
+ * ViewModel für Login-Ansicht.
+ */
 public class LoginViewModel extends AndroidViewModel {
 
     private final Login login;
@@ -16,8 +20,11 @@ public class LoginViewModel extends AndroidViewModel {
         login = new Login();
     }
 
-    public void setDataViewModel(DataViewModel dataViewModel){
-        login.setDataViewModel(dataViewModel);
+    public UserEntity getUserEntity(){
+        return login.getUserEntity();
     }
 
+    public void setUserEntity(UserEntity userEntity){
+        login.setUserEntity(userEntity);
+    }
 }

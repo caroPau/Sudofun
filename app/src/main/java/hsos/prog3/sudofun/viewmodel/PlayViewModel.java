@@ -10,10 +10,13 @@ import androidx.lifecycle.AndroidViewModel;
 import java.util.ArrayList;
 
 import hsos.prog3.sudofun.View.PlayActivity;
-import hsos.prog3.sudofun.model.Level;
+import hsos.prog3.sudofun.model.LevelEnum;
 import hsos.prog3.sudofun.model.Play;
 import hsos.prog3.sudofun.model.UserEntity;
 
+/**
+ * ViewModel für die Spielansicht.
+ */
 public class PlayViewModel extends AndroidViewModel {
 
     private final Play play;
@@ -25,10 +28,16 @@ public class PlayViewModel extends AndroidViewModel {
         helper = new SudokuHelper();
     }
 
+    public Play getPlay() {
+        return play;
+    }
+    public int getPlayedGames(){
+        return play.getPlayedGames();
+    }
     public void setUser(UserEntity user){
         play.setUser(user);
     }
-    public Level getLevel(){
+    public LevelEnum getLevel(){
         return play.getLevel();
     }
     public int getCoordinateRow(){
@@ -38,6 +47,9 @@ public class PlayViewModel extends AndroidViewModel {
         return play.getColumnHint();
     }
 
+    public void setPlayedGames(int playedGames){
+        play.setPlayedGames(playedGames);
+    }
     public void setCoordinateRow(int row){
         play.setRowHint(row);
     }
@@ -52,8 +64,8 @@ public class PlayViewModel extends AndroidViewModel {
     public void setLastFocusedGrid(GridLayout grid){
         play.setLastFocusedGrid(grid);
     }
-    public void setLevel(Level level){
-        play.setLevel(level);
+    public void setLevel(LevelEnum levelEnum){
+        play.setLevel(levelEnum);
     }
     public void setField(int[][] field){
         play.setField(field);
@@ -172,16 +184,16 @@ public class PlayViewModel extends AndroidViewModel {
         setLastFocusedGrid(null);
     }
 
-    public Level getSelectedLevel(int lvl, PlayActivity playActivity) {
+    public LevelEnum getSelectedLevel(int lvl, PlayActivity playActivity) {
         switch (lvl) {
             case 0:
-                setLevel(Level.EASY);
+                setLevel(LevelEnum.EASY);
                 break;
             case 1:
-                setLevel(Level.MEDIUM);
+                setLevel(LevelEnum.MEDIUM);
                 break;
             case 2:
-                setLevel(Level.HARD);
+                setLevel(LevelEnum.HARD);
                 break;
             default:
                 playActivity.startLevelActivity();
