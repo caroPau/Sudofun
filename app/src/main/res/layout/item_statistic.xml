@@ -27,10 +27,6 @@
             android:fontFamily="@font/alfa_slab_one_regular"
             android:gravity="end"
             android:padding="5dp"
-            android:shadowColor="#000000"
-            android:shadowDx="1.5"
-            android:shadowDy="1.5"
-            android:shadowRadius="1.6"
             android:text="@string/best_score"
             android:textColor="@color/black"
             android:textSize="22sp" />
