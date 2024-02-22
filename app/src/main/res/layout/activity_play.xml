@@ -5,6 +5,7 @@
     android:layout_height="match_parent">
 
     <ImageView
+        android:id="@+id/imageBackground"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:alpha="0.5"
@@ -16,45 +17,42 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:gravity="center"
-        >
+        android:gravity="center">
+
     <TextView
+        android:id="@+id/textViewProgress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/spiel_wird_geladen"
         android:visibility="visible"
         android:fontFamily="@font/alfa_slab_one_regular"
         android:textColor="@color/black"
-        android:textSize="20sp"
-        />
+        android:textSize="20sp" />
 
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        />
+        android:layout_gravity="center" />
 
     </LinearLayout>
 
-
     <RelativeLayout
-        android:id="@+id/loadedGameView"
+        android:id="@+id/relativeLayoutLoadedGameView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginHorizontal="16dp"
         android:layout_marginVertical="16dp"
-        android:visibility="invisible"
-        >
+        android:visibility="invisible">
 
         <RelativeLayout
-            android:id="@+id/topbar"
+            android:id="@+id/realtiveLayoutTopbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <LinearLayout
-                android:id="@+id/timer"
+                android:id="@+id/linearLayoutTimer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
@@ -62,7 +60,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/textViewTimer_old"
+                    android:id="@+id/textViewTimerOld"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/alfa_slab_one_regular"
@@ -76,7 +74,7 @@
                     android:textSize="18sp" />
 
                 <LinearLayout
-                    android:id="@+id/timerandpause"
+                    android:id="@+id/linearLayloutTimerAndPause"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -98,14 +96,15 @@
                         android:textSize="22sp" />
 
                     <ToggleButton
-                        android:id="@+id/btnPause"
+                        android:id="@+id/buttonPause"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:layout_marginStart="5dp"
-                        android:background="@drawable/icon_pause"
+                        android:background="@drawable/ic_pause"
                         android:textOff=""
                         android:textOn="" />
                 </LinearLayout>
+
             </LinearLayout>
 
             <Button
@@ -115,15 +114,15 @@
                 android:layout_alignParentEnd="true"
                 android:background="@drawable/ic_close"
                 android:onClick="navigateBack" />
+
         </RelativeLayout>
 
-
-        <!-- Spielfeld -->
+        <!-- Spielfeld wird dynamisch/programmatisch erzeugt in PlayGraphic.java -->
         <GridLayout
             android:id="@+id/gridLayoutSudoku"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/topbar"
+            android:layout_below="@id/realtiveLayoutTopbar"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
@@ -136,7 +135,7 @@
             android:id="@+id/gridLayoutMask"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/topbar"
+            android:layout_below="@id/realtiveLayoutTopbar"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
@@ -252,7 +251,7 @@
                 />
 
             <Button
-                android:id="@+id/clearButton"
+                android:id="@+id/buttonClear"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/btn_backspace"

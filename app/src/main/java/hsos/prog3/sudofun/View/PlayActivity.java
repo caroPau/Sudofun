@@ -53,7 +53,7 @@ public class PlayActivity extends AppCompatActivity {
         binding = ActivityPlayBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         binding.buttonHint.setOnClickListener(this::buttonHintClickEvent);
-        binding.btnPause.setChecked(false);
+        binding.buttonPause.setChecked(false);
         setContentView(view);
         dataViewModel = new ViewModelProvider(this).get(DataViewModel.class);
         playViewModel = new ViewModelProvider(this).get(PlayViewModel.class);
@@ -73,8 +73,8 @@ public class PlayActivity extends AppCompatActivity {
 
 
         binding.buttonHint.setOnClickListener(this::buttonHintClickEvent);
-        binding.btnPause.setChecked(false);
-        binding.btnPause.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        binding.buttonPause.setChecked(false);
+        binding.buttonPause.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 togglePauseButton(isChecked, buttonView);
@@ -136,7 +136,7 @@ public class PlayActivity extends AppCompatActivity {
         Thread threadTimer = new Thread(playViewModel.getTimer().getTimerRunnable());
         threadTimer.start();
         binding.progressBar.setVisibility(View.INVISIBLE);
-        binding.loadedGameView.setVisibility(View.VISIBLE);
+        binding.relativeLayoutLoadedGameView.setVisibility(View.VISIBLE);
     }
 
 
@@ -239,7 +239,7 @@ public class PlayActivity extends AppCompatActivity {
             List<GridLayout>  noteGrids = graphic.getNoteGrids();
             List<EditText> editTexts = graphic.getEditTexts();
             if (isChecked) {
-                binding.buttonMode.setBackgroundResource(R.drawable.btn_primary_toggled);
+                binding.buttonMode.setBackgroundResource(R.drawable.btn_primary);
                 if(playViewModel.getLastFocusedCell() != null){
                     playViewModel.getLastFocusedCell().setBackgroundResource(R.drawable.edit_text_field_border_black);
                 }
@@ -279,7 +279,7 @@ public class PlayActivity extends AppCompatActivity {
         List<EditText> editTexts = graphic.getEditTexts();
         List<GridLayout>  noteGrids = graphic.getNoteGrids();
         if (isChecked) {
-            buttonView.setBackgroundResource(R.drawable.icon_play);
+            buttonView.setBackgroundResource(R.drawable.ic_play);
             playViewModel.getTimer().pause();
             for(EditText editText : editTexts){
                 editText.setEnabled(false);
@@ -291,7 +291,7 @@ public class PlayActivity extends AppCompatActivity {
             }
 
         } else {
-            buttonView.setBackgroundResource(R.drawable.icon_pause);
+            buttonView.setBackgroundResource(R.drawable.ic_pause);
             playViewModel.getTimer().startAfterPause();
             for(EditText editText : editTexts){
                 editText.setEnabled(true);

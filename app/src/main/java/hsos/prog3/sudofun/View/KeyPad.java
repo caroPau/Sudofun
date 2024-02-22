@@ -42,7 +42,7 @@ public class KeyPad {
         registerListener(playActivity.getBinding().numbSeven);
         registerListener(playActivity.getBinding().numbEight);
         registerListener(playActivity.getBinding().numbNine);
-        registerListener(playActivity.getBinding().clearButton);
+        registerListener(playActivity.getBinding().buttonClear);
     }
 
     /**
@@ -64,7 +64,7 @@ public class KeyPad {
             CharSequence buttonText = button.getText();
             EditText focusedEditText = graphic.getFocusedEditText();
             GridLayout focusedNoteGrid = graphic.getFocusedNoteGrid();
-            View note = null;
+            View note;
 
             if (focusedEditText == null) {
                 return;
@@ -76,7 +76,7 @@ public class KeyPad {
                 /*
                  * löschen aller Notizen wenn es sich um den clear Button handelt
                  */
-                if (button.getId()== R.id.clearButton) {
+                if (button.getId()== R.id.buttonClear) {
                     for (int i = 1; i <= 9; i++) {
                         note = getNote(i, focusedNoteGrid);
                         note.setVisibility(View.INVISIBLE);
@@ -107,7 +107,7 @@ public class KeyPad {
                 /*
                  * Behandlung des Falls, bei dem der Notizmodus deaktiviert ist
                  */
-                if (button.getId()==R.id.clearButton) {
+                if (button.getId()==R.id.buttonClear) {
                     if (!focusedEditText.getText().toString().equals("")) {
                         playViewModel.getHelper().numberToCoordinate(focusedEditText.getId(), playViewModel);
                         playViewModel.reactToClear();

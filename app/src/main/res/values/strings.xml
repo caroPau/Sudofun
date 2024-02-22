@@ -33,5 +33,5 @@
     <string name="statistik">Statistik</string>
     <string name="neues_spiel">Neues Spiel</string>
     <string name="spiel_wird_geladen">Spiel wird geladen..</string>
-
+    <string name="icon_timer">icon_timer</string>
 </resources>
