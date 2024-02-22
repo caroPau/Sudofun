@@ -11,7 +11,7 @@ import hsos.prog3.sudofun.viewmodel.TimerViewModel;
  * Klasse Play hält alle Parameter eines laufenden Spiels.
  */
 public class Play {
-    private Level level;
+    private LevelEnum levelEnum;
     private UserEntity user;
     private TimerViewModel timer;
     private ArrayList<Integer> occupiedCells;
@@ -24,11 +24,16 @@ public class Play {
     private int freeCells;
     private EditText lastFocusedCell;
     private GridLayout lastFocusedGrid;
+    private int playedGames;
 
+    //  Konstruktor
     public Play() {
         occupiedCells = new ArrayList<>();
         freeCellsArray = new boolean[9][9];
+        playedGames = 0;
     }
+
+    //Getter
 
     public UserEntity getUser() {
         return user;
@@ -38,8 +43,8 @@ public class Play {
         return noteMode;
     }
 
-    public Level getLevel() {
-        return level;
+    public LevelEnum getLevel() {
+        return levelEnum;
     }
 
     public int[][] getField() {
@@ -82,6 +87,12 @@ public class Play {
         return lastFocusedGrid;
     }
 
+    //  Setter
+
+    public void setPlayedGames(int playedGames){
+        this.playedGames = playedGames;
+    }
+
     public void setUser(UserEntity user) {
         this.user = user;
     }
@@ -90,8 +101,9 @@ public class Play {
         this.noteMode = noteMode;
     }
 
-    public void setLevel(Level level) {
-        this.level = level;
+
+    public void setLevel(LevelEnum levelEnum) {
+        this.levelEnum = levelEnum;
     }
 
     public void setField(int[][] field) {
@@ -131,5 +143,9 @@ public class Play {
 
     public void setLastFocusedGrid(GridLayout lastFocusedGrid) {
         this.lastFocusedGrid = lastFocusedGrid;
+    }
+
+    public int getPlayedGames(){
+        return playedGames;
     }
 }

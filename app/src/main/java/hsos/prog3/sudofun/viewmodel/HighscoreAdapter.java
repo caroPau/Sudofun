@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import hsos.prog3.sudofun.R;
-import hsos.prog3.sudofun.model.Level;
+import hsos.prog3.sudofun.model.LevelEnum;
 import hsos.prog3.sudofun.model.UserEntity;
 
 /**
@@ -20,12 +20,12 @@ import hsos.prog3.sudofun.model.UserEntity;
 public class HighscoreAdapter extends RecyclerView.Adapter<HighscoreAdapter.HighscoreViewHolder> {
 
     private List<UserEntity> highscoreList;
-    private Level level;
+    private LevelEnum levelEnum;
 
     // Konstruktor, um die Liste von Highscores zu übergeben
-    public HighscoreAdapter(List<UserEntity> highscoreList, Level level) {
+    public HighscoreAdapter(List<UserEntity> highscoreList, LevelEnum levelEnum) {
         this.highscoreList = highscoreList;
-        this.level = level;
+        this.levelEnum = levelEnum;
     }
     // ViewHolder-Klasse für jedes Listenelement
     public static class HighscoreViewHolder extends RecyclerView.ViewHolder {
@@ -54,7 +54,7 @@ public class HighscoreAdapter extends RecyclerView.Adapter<HighscoreAdapter.High
         holder.nameTextView.setText(formattedText);
         long score = 0;
 
-        switch (level) {
+        switch (levelEnum) {
             case EASY:
                 score = user.highscoreEasy;
                 break;

@@ -7,35 +7,36 @@ package hsos.prog3.sudofun.View;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import hsos.prog3.sudofun.R;
 import hsos.prog3.sudofun.databinding.ActivityLevelBinding;
 import hsos.prog3.sudofun.model.UserEntity;
+import hsos.prog3.sudofun.viewmodel.LevelViewModel;
 
 /**
  * Activity der Ansicht für Auswahl des Schwierigkeitsgrades.
  */
 public class LevelActivity extends AppCompatActivity {
-    private int selectedLevel = -1;
     private ActivityLevelBinding binding;
-    UserEntity user;
+    private LevelViewModel levelViewModel;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_level);
+        levelViewModel = new ViewModelProvider(this).get(LevelViewModel.class);
         binding = ActivityLevelBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            user = bundle.getSerializable("user", UserEntity.class);
-            Log.w("INFOTAG", "LevelActivity: username" + user.getUsername());
+            levelViewModel.setUser(bundle.getSerializable("user", UserEntity.class));
         }
     }
 
@@ -47,21 +48,21 @@ public class LevelActivity extends AppCompatActivity {
         view.setBackgroundResource(R.drawable.btn_primary);
 
         if (buttonId == R.id.buttonEasy) {
-            selectedLevel = 0;
+            levelViewModel.setSelectedLevel(0);
         } else if (buttonId == R.id.buttonMedium) {
-            selectedLevel = 1;
+            levelViewModel.setSelectedLevel(1);
         } else if (buttonId == R.id.buttonHard) {
-           selectedLevel = 2;
+           levelViewModel.setSelectedLevel(2);
         }
     }
 
 
     public void startNextActivity(View view) {
-        if(selectedLevel != -1) {
+        if(levelViewModel.getSelectedLevel() != -1) {
             Intent intent = new Intent(LevelActivity.this, PlayActivity.class);
             Bundle bundle = new Bundle();
-            bundle.putInt("selectedLevel", selectedLevel);
-            bundle.putSerializable("user", user);
+            bundle.putInt("selectedLevel", levelViewModel.getSelectedLevel());
+            bundle.putSerializable("user", levelViewModel.getUser());
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.putExtras(bundle);
             startActivity(intent);

@@ -14,7 +14,7 @@ import java.util.List;
 import hsos.prog3.sudofun.R;
 import hsos.prog3.sudofun.databinding.ActivityStatisticBinding;
 import hsos.prog3.sudofun.model.UserEntity;
-import hsos.prog3.sudofun.model.Level;
+import hsos.prog3.sudofun.model.LevelEnum;
 import hsos.prog3.sudofun.viewmodel.DataViewModel;
 import hsos.prog3.sudofun.viewmodel.HighscoreAdapter;
 import hsos.prog3.sudofun.viewmodel.StatisticViewModel;
@@ -38,7 +38,7 @@ public class StatisticActivity extends AppCompatActivity {
         setContentView(R.layout.activity_statistic);
         statisticViewModel = new ViewModelProvider(this).get(StatisticViewModel.class);
         Bundle bundle = getIntent().getExtras();
-        statisticViewModel.setLevel(Level.valueOf(bundle.getString("level")));
+        statisticViewModel.setLevel(LevelEnum.valueOf(bundle.getString("level")));
         binding = ActivityStatisticBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);

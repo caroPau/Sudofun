@@ -24,14 +24,13 @@ public class LoginActivity extends AppCompatActivity {
     private DataViewModel dataViewModel;
     private ActivityLoginBinding binding;
     private EditText input_username;
-    UserEntity user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
         input_username = this.findViewById(R.id.inputUsername);
-        loginViewModel.setDataViewModel(new ViewModelProvider(this).get(DataViewModel.class));
+        dataViewModel = new ViewModelProvider(this).get(DataViewModel.class);
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
@@ -63,13 +62,13 @@ public class LoginActivity extends AppCompatActivity {
                 public void onChanged(UserEntity retrievedUser) {
                     if (retrievedUser == null) {
                         // Benutzer nicht gefunden, erstellen Sie einen neuen Benutzer und fügen Sie ihn hinzu
-                        user = new UserEntity(username, 0, 0, 0, 0, 0, 0);
-                        dataViewModel.insertAll(user);
+                        loginViewModel.setUserEntity(new UserEntity(username, 0, 0, 0, 0, 0, 0));
+                        dataViewModel.insertAll(loginViewModel.getUserEntity());
                     } else {
-                        user = retrievedUser;
+                        loginViewModel.setUserEntity(retrievedUser);
                     }
 
-                    bundle.putSerializable("user", user);
+                    bundle.putSerializable("user", loginViewModel.getUserEntity());
                     intent.putExtras(bundle);
                     startActivity(intent);
                 }

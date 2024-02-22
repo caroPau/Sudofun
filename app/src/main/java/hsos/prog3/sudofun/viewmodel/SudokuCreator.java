@@ -2,10 +2,9 @@ package hsos.prog3.sudofun.viewmodel;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
-import hsos.prog3.sudofun.model.Level;
+import hsos.prog3.sudofun.model.LevelEnum;
 
 /**
  * Implementiert die Spiellogik.
@@ -18,17 +17,17 @@ public class SudokuCreator implements Runnable {
      */
 
     private int[][] solvedField;
-    private Level level;
+    private LevelEnum levelEnum;
     private SudokuHelper helper;
 
     /**
      * Konstruktor
      *
-     * @param level Schwierigkeitsgrad des Sudokus
+     * @param levelEnum Schwierigkeitsgrad des Sudokus
      */
-    public SudokuCreator(Level level, SudokuHelper helper){
+    public SudokuCreator(LevelEnum levelEnum, SudokuHelper helper){
         solvedField = new int[9][9];
-        this.level = level;
+        this.levelEnum = levelEnum;
         this.helper = helper;
     }
 
@@ -172,7 +171,7 @@ public class SudokuCreator implements Runnable {
      * @param lvl Der Schwierigkeitsgrad des zu generierenden Sudoku-Felds.
      * @return Ein spielbares Sudoku-Feld als 2D-Array.
      */
-    private int[][] generatePlayableField(Level lvl) {
+    private int[][] generatePlayableField(LevelEnum lvl) {
         int[][] field = generateSolvableField();
         this.solvedField = copySudoku(field);
         Random rand = new Random();
@@ -227,9 +226,9 @@ public class SudokuCreator implements Runnable {
      * @param lvl Der Schwierigkeitsgrad des Sudokus
      * @return Ein spielbares Sudoku-Feld als 2D-Array
      */
-    public int[][] createSudoku(Level lvl){
+    public int[][] createSudoku(LevelEnum lvl){
         int[][] sudoku = generatePlayableField(lvl);
-        if(lvl == Level.EASY){
+        if(lvl == LevelEnum.EASY){
             while(!solveEasySudoku(sudoku)){
                 sudoku = generatePlayableField(lvl);
             }

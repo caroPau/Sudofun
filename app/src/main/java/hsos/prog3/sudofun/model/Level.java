@@ -1,22 +1,22 @@
 package hsos.prog3.sudofun.model;
 
-/**
- * Enum für Schwierigkeitsgrade des Spiels.
- */
-public enum Level {
-    EASY(45),
-    MEDIUM(35),
-    HARD(28);
+public class Level {
+    private UserEntity user;
+    private int selectedLevel;
 
-    private final int openCells;
-
-    Level(int openCells) {
-        this.openCells = openCells;
+    public UserEntity getUser() {
+        return user;
     }
 
-    public int getOpenCells() {
-        return openCells;
+    public void setUser(UserEntity user) {
+        this.user = user;
     }
 
+    public int getSelectedLevel() {
+        return selectedLevel;
+    }
 
+    public void setSelectedLevel(int selectedLevel) {
+        this.selectedLevel = selectedLevel;
+    }
 }
