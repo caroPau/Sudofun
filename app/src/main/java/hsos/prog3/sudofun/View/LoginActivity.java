@@ -40,7 +40,7 @@ public class LoginActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
         input_username = binding.inputUsername;
-        binding.btnLogin.setOnClickListener(this::loginButtonClickEvent);
+        binding.buttonLogin.setOnClickListener(this::loginButtonClickEvent);
 
         dataViewModel = new ViewModelProvider(this).get(DataViewModel.class);
     }

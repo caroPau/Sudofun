@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-   >
+    android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/background"
+        android:id="@+id/imageBackground"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:alpha="0.5"
@@ -17,65 +16,69 @@
         android:id="@+id/buttonLogout"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_alignEnd="@+id/background"
-        android:layout_marginEnd="16dp"
+        android:layout_alignEnd="@+id/imageBackground"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:background="@drawable/ic_logout"
-        android:onClick="navigateLogout" />
+        android:onClick="navigateLogout"
+
+        />
 
     <LinearLayout
-        android:id="@+id/statisticTable"
+        android:id="@+id/linearLayoutTableStatistic"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:gravity="center"
-        >
+        android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/timer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:gravity="center"
-        android:orientation="horizontal">
-
-        <ImageView
+        <LinearLayout
+            android:id="@+id/linearLayoutTimer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/icon_timer"
-            />
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/icon_timer"
+                android:src="@drawable/ic_timer" />
+
+            <TextView
+                android:id="@+id/textViewTimer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/alfa_slab_one_regular"
+                android:paddingHorizontal="2dp"
+                android:text="@string/time"
+                android:textColor="@color/black"
+                android:shadowColor="@color/white"
+                android:shadowDx="3"
+                android:shadowDy="3"
+                android:shadowRadius="1.6"
+                android:textSize="30sp" />
+
+
+        </LinearLayout>
+
 
         <TextView
-            android:id="@+id/textViewTimer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="2dp"
             android:fontFamily="@font/alfa_slab_one_regular"
-            android:text="@string/time"
-            android:textColor="@color/black"
+            android:shadowColor="#000000"
+            android:shadowDx="3"
+            android:shadowDy="3"
+            android:shadowRadius="1.6"
+            android:text="@string/gewonnen"
+            android:textColor="@color/rose"
             android:textSize="25sp" />
-
-
-    </LinearLayout>
-
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/gewonnen"
-        android:fontFamily="@font/alfa_slab_one_regular"
-        android:textColor="@color/rose"
-        android:textSize="25sp"
-        android:shadowColor="#000000"
-        android:shadowDx="3"
-        android:shadowDy="3"
-        android:shadowRadius="1.6"
-        />
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
+            android:layout_height="wrap_content">
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/best_list_recycler"
                 android:layout_width="match_parent"
@@ -87,13 +90,16 @@
             android:id="@+id/buttonNewGame"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_marginTop="60dp"
+            android:layout_marginHorizontal="60dp"
+
             android:background="@drawable/btn_primary"
             android:fontFamily="@font/alfa_slab_one_regular"
-            android:text="@string/neues_spiel"
-            android:textSize="14sp"
             android:onClick="startLevelActivity"
-            />
+            android:text="@string/neues_spiel"
+            android:paddingHorizontal="30dp"
+            android:paddingVertical="10dp"
+            android:textSize="25sp" />
 
     </LinearLayout>
 

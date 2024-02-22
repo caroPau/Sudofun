@@ -15,7 +15,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import hsos.prog3.sudofun.R;
 import hsos.prog3.sudofun.databinding.ActivityLevelBinding;
-import hsos.prog3.sudofun.model.Level;
 import hsos.prog3.sudofun.model.UserEntity;
 
 /**
@@ -25,7 +24,6 @@ public class LevelActivity extends AppCompatActivity {
     private int selectedLevel = -1;
     private ActivityLevelBinding binding;
     UserEntity user;
-    String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,16 +41,16 @@ public class LevelActivity extends AppCompatActivity {
 
     public void selectLevel(View view) {
         int buttonId = view.getId();
-        binding.btnEasy.setBackgroundResource(R.drawable.btn_secondary);
-        binding.btnMedium.setBackgroundResource(R.drawable.btn_secondary);
-        binding.btnHard.setBackgroundResource(R.drawable.btn_secondary);
+        binding.buttonEasy.setBackgroundResource(R.drawable.btn_secondary);
+        binding.buttonMedium.setBackgroundResource(R.drawable.btn_secondary);
+        binding.buttonHard.setBackgroundResource(R.drawable.btn_secondary);
         view.setBackgroundResource(R.drawable.btn_primary);
 
-        if (buttonId == R.id.btnEasy) {
+        if (buttonId == R.id.buttonEasy) {
             selectedLevel = 0;
-        } else if (buttonId == R.id.btnMedium) {
+        } else if (buttonId == R.id.buttonMedium) {
             selectedLevel = 1;
-        } else if (buttonId == R.id.btnHard) {
+        } else if (buttonId == R.id.buttonHard) {
            selectedLevel = 2;
         }
     }

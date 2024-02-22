@@ -37,6 +37,7 @@ public class PlayActivity extends AppCompatActivity {
     }
 
     private ActivityPlayBinding binding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +54,7 @@ public class PlayActivity extends AppCompatActivity {
         binding = ActivityPlayBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         binding.buttonHint.setOnClickListener(this::buttonHintClickEvent);
-        binding.btnPause.setChecked(false);
+        binding.buttonPause.setChecked(false);
         setContentView(view);
         dataViewModel = new ViewModelProvider(this).get(DataViewModel.class);
 
@@ -70,8 +71,8 @@ public class PlayActivity extends AppCompatActivity {
 
 
         binding.buttonHint.setOnClickListener(this::buttonHintClickEvent);
-        binding.btnPause.setChecked(false);
-        binding.btnPause.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        binding.buttonPause.setChecked(false);
+        binding.buttonPause.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 togglePauseButton(isChecked, buttonView);
@@ -86,17 +87,16 @@ public class PlayActivity extends AppCompatActivity {
         });
     }
 
-    public void startLevelActivity(){
+    public void startLevelActivity() {
         Intent intent = new Intent(PlayActivity.this, LevelActivity.class);
         startActivity(intent);
     }
 
 
-
     /**
      * Erstellt ein neues Spiel und initialisiert dessen Variablen, erstellt neues Spielfeld und startet den Timer
-     * @param level Der gewünschte Schwierigkeitsgrad
      *
+     * @param level Der gewünschte Schwierigkeitsgrad
      * @author C. Paul
      */
     private void initGame(int level) {
@@ -110,17 +110,17 @@ public class PlayActivity extends AppCompatActivity {
         playViewModel.setTimer(new TimerViewModel());
         playViewModel.getTimer().setActualTimerView(binding.textViewTimer);
         showBestTime();
-        if(playViewModel.getHelper().getOccupiedCells(playViewModel.getField()) != null) {
+        if (playViewModel.getHelper().getOccupiedCells(playViewModel.getField()) != null) {
             playViewModel.setOccupiedCells(playViewModel.getHelper().getOccupiedCells(playViewModel.getField()));
             playViewModel.setOpenCells(81 - playViewModel.getOccupiedCells().size());
         }
-        graphic = new PlayGraphic(this,this, playViewModel);
-        graphic.generateGrid(binding.gridLayoutSudoku,binding.gridLayoutMask ,binding.playScreen);
+        graphic = new PlayGraphic(this, this, playViewModel);
+        graphic.generateGrid(binding.gridLayoutSudoku, binding.gridLayoutMask, binding.playScreen);
         playViewModel.getTimer().start();
-        Thread threadTimer = new Thread(playViewModel.getTimer().getTimerRunnable(),"TimerThread");
+        Thread threadTimer = new Thread(playViewModel.getTimer().getTimerRunnable(), "TimerThread");
         threadTimer.start();
         binding.progressBar.setVisibility(View.INVISIBLE);
-        binding.loadedGameView.setVisibility(View.VISIBLE);
+        binding.relativeLayoutLoadedGameView.setVisibility(View.VISIBLE);
     }
 
     private void resetGameVariables() {
@@ -144,29 +144,24 @@ public class PlayActivity extends AppCompatActivity {
     }
 
 
-
-
     /**
      * Ruft die Methode @updateUser auf, erstellt das Bundle und den Intent für die nächste Activity und startet diese
      *
      * @author C. Paul
      */
-    public void endGame(){
+    public void endGame() {
         playViewModel.updateUser();
         dataViewModel.updateUserDB(playViewModel.getUser());
         Bundle bundle = new Bundle();
         bundle.putString("level", playViewModel.getLevel().name());
         bundle.putLong("time", playViewModel.getTimer().getMillisSinceStart());
         bundle.putSerializable("user", playViewModel.getUser());
-
         Intent intent = new Intent(PlayActivity.this, StatisticActivity.class);
         intent.putExtras(bundle);
-
-        finish();
         startActivity(intent);
     }
 
-    private void buttonHintClickEvent(View view){
+    private void buttonHintClickEvent(View view) {
         int id = playViewModel.getHelper().getRandomFreeCell(playViewModel.getField(), playViewModel.getSolvedField());
         EditText editText = findViewById(id);
         playViewModel.getHelper().numberToCoordinate(id, playViewModel);
@@ -174,7 +169,7 @@ public class PlayActivity extends AppCompatActivity {
         editText.setTextColor(Color.BLACK);
         editText.setText(String.valueOf(value));
         playViewModel.setFreeCells(playViewModel.getFreeCells() - 1);
-        if(playViewModel.getFreeCells() == 0){
+        if (playViewModel.getFreeCells() == 0) {
             endGame();
         }
     }
@@ -186,38 +181,38 @@ public class PlayActivity extends AppCompatActivity {
      * @author M. Paul
      */
     private void toggleModeButton(boolean isChecked) {
-            List<GridLayout>  noteGrids = graphic.getNoteGrids();
-            List<EditText> editTexts = graphic.getEditTexts();
-            if (isChecked) {
-                binding.buttonMode.setBackgroundResource(R.drawable.btn_primary_toggled);
-                if(playViewModel.getLastFocusedCell() != null){
-                    playViewModel.getLastFocusedCell().setBackgroundResource(R.drawable.edit_text_field_border_black);
-                }
-                if(playViewModel.getTimer().isRunning()) {
-
-                    for (GridLayout grid : noteGrids) {
-                        grid.setEnabled(true);
-                        grid.setVisibility(View.VISIBLE);
-                    }
-                    for (EditText editText : editTexts) {
-                        editText.setEnabled(false);
-                    }
-                }
-                playViewModel.setNoteMode(true);
-            } else {
-                binding.buttonMode.setBackgroundResource(R.drawable.btn_primary);
-                if(playViewModel.getLastFocusedGrid() != null){
-                    playViewModel.getLastFocusedGrid().setBackgroundResource(R.drawable.edit_text_field_border_black);
-                }
-                for (GridLayout grid : noteGrids) {
-                    grid.setEnabled(false);
-                    grid.setVisibility(View.INVISIBLE);
-                }
-                for(EditText editText : editTexts){
-                    editText.setEnabled(true);
-                }
-                playViewModel.setNoteMode(false);
+        List<GridLayout> noteGrids = graphic.getNoteGrids();
+        List<EditText> editTexts = graphic.getEditTexts();
+        if (isChecked) {
+            binding.buttonMode.setBackgroundResource(R.drawable.btn_primary);
+            if (playViewModel.getLastFocusedCell() != null) {
+                playViewModel.getLastFocusedCell().setBackgroundResource(R.drawable.edit_text_field_border_black);
             }
+            if (playViewModel.getTimer().isRunning()) {
+
+                for (GridLayout grid : noteGrids) {
+                    grid.setEnabled(true);
+                    grid.setVisibility(View.VISIBLE);
+                }
+                for (EditText editText : editTexts) {
+                    editText.setEnabled(false);
+                }
+            }
+            playViewModel.setNoteMode(true);
+        } else {
+            binding.buttonMode.setBackgroundResource(R.drawable.btn_primary);
+            if (playViewModel.getLastFocusedGrid() != null) {
+                playViewModel.getLastFocusedGrid().setBackgroundResource(R.drawable.edit_text_field_border_black);
+            }
+            for (GridLayout grid : noteGrids) {
+                grid.setEnabled(false);
+                grid.setVisibility(View.INVISIBLE);
+            }
+            for (EditText editText : editTexts) {
+                editText.setEnabled(true);
+            }
+            playViewModel.setNoteMode(false);
+        }
     }
 
     /**
@@ -227,11 +222,11 @@ public class PlayActivity extends AppCompatActivity {
      */
     private void togglePauseButton(boolean isChecked, CompoundButton buttonView) {
         List<EditText> editTexts = graphic.getEditTexts();
-        List<GridLayout>  noteGrids = graphic.getNoteGrids();
+        List<GridLayout> noteGrids = graphic.getNoteGrids();
         if (isChecked) {
-            buttonView.setBackgroundResource(R.drawable.icon_play);
+            buttonView.setBackgroundResource(R.drawable.ic_play);
             playViewModel.getTimer().pause();
-            for(EditText editText : editTexts){
+            for (EditText editText : editTexts) {
                 editText.setEnabled(false);
                 binding.gridLayoutMask.setVisibility(View.VISIBLE);
             }
@@ -241,9 +236,9 @@ public class PlayActivity extends AppCompatActivity {
             }
 
         } else {
-            buttonView.setBackgroundResource(R.drawable.icon_pause);
+            buttonView.setBackgroundResource(R.drawable.ic_pause);
             playViewModel.getTimer().startAfterPause();
-            for(EditText editText : editTexts){
+            for (EditText editText : editTexts) {
                 editText.setEnabled(true);
                 binding.gridLayoutMask.setVisibility(View.INVISIBLE);
             }
