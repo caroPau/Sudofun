@@ -1,7 +1,6 @@
 package hsos.prog3.sudofun.View;
 
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -10,7 +9,6 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.GridLayout;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,26 +16,21 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import java.util.List;
-import java.util.Objects;
 
 import hsos.prog3.sudofun.R;
 import hsos.prog3.sudofun.model.UserEntity;
 import hsos.prog3.sudofun.databinding.ActivityPlayBinding;
 import hsos.prog3.sudofun.model.Level;
-import hsos.prog3.sudofun.model.Play;
-import hsos.prog3.sudofun.model.UserEntity;
 import hsos.prog3.sudofun.viewmodel.DataViewModel;
 import hsos.prog3.sudofun.viewmodel.PlayViewModel;
 import hsos.prog3.sudofun.viewmodel.SudokuCreator;
 import hsos.prog3.sudofun.viewmodel.TimerViewModel;
 
 public class PlayActivity extends AppCompatActivity {
-    Play game;
     UserEntity user;
     PlayViewModel playViewModel;
     DataViewModel dataViewModel;
     String username;
-
     PlayGraphic graphic;
 
     public ActivityPlayBinding getBinding() {
@@ -96,23 +89,23 @@ public class PlayActivity extends AppCompatActivity {
         });
     }
 
-    private Level getSelectedLevel(Play game, int lvl) {
+    private Level getSelectedLevel(int lvl) {
         switch (lvl) {
             case 0:
-                game.setLevel(Level.EASY);
+                playViewModel.setLevel(Level.EASY);
                 break;
             case 1:
-                game.setLevel(Level.MEDIUM);
+                playViewModel.setLevel(Level.MEDIUM);
                 break;
             case 2:
-                game.setLevel(Level.HARD);
+                playViewModel.setLevel(Level.HARD);
                 break;
             default:
                 Intent intent = new Intent(PlayActivity.this, LevelActivity.class);
                 startActivity(intent);
                 break;
         }
-        return game.getLevel();
+        return playViewModel.getLevel();
     }
 
     /**
@@ -122,27 +115,25 @@ public class PlayActivity extends AppCompatActivity {
      * @author C. Paul
      */
     private void initGame(int level) {
-
-        game = new Play();
         resetGameVariables();
-        SudokuCreator creator = new SudokuCreator(getSelectedLevel(game, level));
+        SudokuCreator creator = new SudokuCreator(getSelectedLevel(level));
         Thread threadCreator = new Thread(creator, "CreatorThread");
         threadCreator.start();
-        game.setField(creator.createSudoku(getSelectedLevel(game, level)));
-        game.setFreeCells(81 - game.getLevel().getOpenCells());
-        game.setSolvedField(creator.getSolvedField());
-        game.setTimer(new TimerViewModel());
-        game.getTimer().setActualTimerView(binding.textViewTimer);
+        playViewModel.setField(creator.createSudoku(getSelectedLevel(level)));
+        playViewModel.setFreeCells(81 - playViewModel.getLevel().getOpenCells());
+        playViewModel.setSolvedField(creator.getSolvedField());
+        playViewModel.setTimer(new TimerViewModel());
+        playViewModel.getTimer().setActualTimerView(binding.textViewTimer);
         showBestTime();
-        if(game.getHelper().getOccupiedCells(game.getField()) != null) {
-            game.setOccupiedCells(game.getHelper().getOccupiedCells(game.getField()));
-            game.setOpenCells(81 - game.getOccupiedCells().size());
+        if(playViewModel.getHelper().getOccupiedCells(playViewModel.getField()) != null) {
+            playViewModel.setOccupiedCells(playViewModel.getHelper().getOccupiedCells(playViewModel.getField()));
+            playViewModel.setOpenCells(81 - playViewModel.getOccupiedCells().size());
         }
-        graphic = new PlayGraphic(this,this, game, playViewModel);
+        graphic = new PlayGraphic(this,this, playViewModel);
         //graphic.setFocusedEditText(findFreeCell());
         graphic.generateGrid(binding.gridLayoutSudoku,binding.gridLayoutMask ,binding.playScreen);
-        game.getTimer().start();
-        Thread threadTimer = new Thread(game.getTimer().getTimerRunnable());
+        playViewModel.getTimer().start();
+        Thread threadTimer = new Thread(playViewModel.getTimer().getTimerRunnable());
         threadTimer.start();
         binding.progressBar.setVisibility(View.INVISIBLE);
         binding.loadedGameView.setVisibility(View.VISIBLE);
@@ -150,7 +141,7 @@ public class PlayActivity extends AppCompatActivity {
 
 
     private void resetGameVariables() {
-        game.reset();
+        playViewModel.reset();
     }
 
     /**
@@ -160,7 +151,7 @@ public class PlayActivity extends AppCompatActivity {
      */
     private void showBestTime() {
         long bestTime = 0;
-        switch (game.getLevel()) {
+        switch (playViewModel.getLevel()) {
             case EASY:
                 bestTime = user.highscoreEasy;
                 break;
@@ -185,20 +176,20 @@ public class PlayActivity extends AppCompatActivity {
     private void updateUser(@NonNull Level level){
         switch (level){
             case EASY:
-                if(user.highscoreEasy == 0 || game.getTimer().getMillisSinceStart() < user.highscoreEasy) {
-                    user.highscoreEasy = game.getTimer().getMillisSinceStart();
+                if(user.highscoreEasy == 0 || playViewModel.getTimer().getMillisSinceStart() < user.highscoreEasy) {
+                    user.highscoreEasy = playViewModel.getTimer().getMillisSinceStart();
                 }
                 user.gamesEasy++;
                 break;
             case MEDIUM:
-                if(user.highscoreMedium == 0 || game.getTimer().getMillisSinceStart() < user.highscoreMedium) {
-                    user.highscoreMedium = game.getTimer().getMillisSinceStart();
+                if(user.highscoreMedium == 0 || playViewModel.getTimer().getMillisSinceStart() < user.highscoreMedium) {
+                    user.highscoreMedium = playViewModel.getTimer().getMillisSinceStart();
                 }
                 user.gamesMedium++;
                 break;
             case HARD:
-                if(user.highscoreHard == 0 || game.getTimer().getMillisSinceStart() < user.highscoreHard) {
-                    user.highscoreHard = game.getTimer().getMillisSinceStart();
+                if(user.highscoreHard == 0 || playViewModel.getTimer().getMillisSinceStart() < user.highscoreHard) {
+                    user.highscoreHard = playViewModel.getTimer().getMillisSinceStart();
                 }
                 user.gamesHard++;
                 break;
@@ -214,12 +205,11 @@ public class PlayActivity extends AppCompatActivity {
      * @author C. Paul
      */
     public void endGame(){
-        updateUser(game.getLevel());
-        Log.w("INFOTAG", "Model is: " + game.dataViewModel);
+        updateUser(playViewModel.getLevel());
         dataViewModel.updateUserDB(user);
         Bundle bundle = new Bundle();
-        bundle.putString("level", game.getLevel().name());
-        bundle.putLong("time", game.getTimer().getMillisSinceStart());
+        bundle.putString("level", playViewModel.getLevel().name());
+        bundle.putLong("time", playViewModel.getTimer().getMillisSinceStart());
         bundle.putSerializable("user", user);
 
         Intent intent = new Intent(PlayActivity.this, StatisticActivity.class);
@@ -230,14 +220,14 @@ public class PlayActivity extends AppCompatActivity {
     }
 
     private void buttonHintClickEvent(View view){
-        int id = game.getHelper().getRandomFreeCell(game.getField(), game.getSolvedField());
+        int id = playViewModel.getHelper().getRandomFreeCell(playViewModel.getField(), playViewModel.getSolvedField());
         EditText editText = findViewById(id);
-        game.getHelper().numberToCoordinate(id, game);
-        int value = game.getSolvedField()[game.getRowHint()][game.getColumnHint()];
+        playViewModel.getHelper().numberToCoordinate(id, playViewModel);
+        int value = playViewModel.getSolvedField()[playViewModel.getCoordinateRow()][playViewModel.getCoordinateColumn()];
         editText.setTextColor(Color.BLACK);
         editText.setText(String.valueOf(value));
-        game.setFreeCells(game.getFreeCells() - 1);
-        if(game.getFreeCells() == 0){
+        playViewModel.setFreeCells(playViewModel.getFreeCells() - 1);
+        if(playViewModel.getFreeCells() == 0){
             endGame();
         }
     }
@@ -256,7 +246,7 @@ public class PlayActivity extends AppCompatActivity {
                 if(playViewModel.getLastFocusedCell() != null){
                     playViewModel.getLastFocusedCell().setBackgroundResource(R.drawable.edit_text_field_border_black);
                 }
-                if(game.getTimer().isRunning()) {
+                if(playViewModel.getTimer().isRunning()) {
 
                     for (GridLayout grid : noteGrids) {
                         grid.setEnabled(true);
@@ -266,7 +256,7 @@ public class PlayActivity extends AppCompatActivity {
                         editText.setEnabled(false);
                     }
                 }
-                game.setNoteMode(true);
+                playViewModel.setNoteMode(true);
             } else {
                 binding.buttonMode.setBackgroundResource(R.drawable.btn_primary);
                 if(playViewModel.getLastFocusedGrid() != null){
@@ -279,7 +269,7 @@ public class PlayActivity extends AppCompatActivity {
                 for(EditText editText : editTexts){
                     editText.setEnabled(true);
                 }
-                game.setNoteMode(false);
+                playViewModel.setNoteMode(false);
             }
     }
 
@@ -293,7 +283,7 @@ public class PlayActivity extends AppCompatActivity {
         List<GridLayout>  noteGrids = graphic.getNoteGrids();
         if (isChecked) {
             buttonView.setBackgroundResource(R.drawable.icon_play);
-            game.getTimer().pause();
+            playViewModel.getTimer().pause();
             for(EditText editText : editTexts){
                 editText.setEnabled(false);
                 binding.gridLayoutMask.setVisibility(View.VISIBLE);
@@ -305,7 +295,7 @@ public class PlayActivity extends AppCompatActivity {
 
         } else {
             buttonView.setBackgroundResource(R.drawable.icon_pause);
-            game.getTimer().startAfterPause();
+            playViewModel.getTimer().startAfterPause();
             for(EditText editText : editTexts){
                 editText.setEnabled(true);
                 binding.gridLayoutMask.setVisibility(View.INVISIBLE);

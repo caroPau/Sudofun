@@ -11,8 +11,8 @@ import hsos.prog3.sudofun.viewmodel.TimerViewModel;
 
 public class Play {
     private Level level;
+    private UserEntity user;
     private TimerViewModel timer;
-    private SudokuHelper helper;
     private ArrayList<Integer> occupiedCells;
     public DataViewModel dataViewModel;
     private int[][] field;
@@ -27,12 +27,16 @@ public class Play {
 
     //  Konstruktor
     public Play() {
-        helper = new SudokuHelper();
         occupiedCells = new ArrayList<>();
         freeCellsArray = new boolean[9][9];
     }
 
     //Getter
+
+    public UserEntity getUser() {
+        return user;
+    }
+
     public boolean isNoteMode() {
         return noteMode;
     }
@@ -56,11 +60,6 @@ public class Play {
     public boolean[][] getFreeCellsArray(){
         return freeCellsArray;
     }
-
-    public SudokuHelper getHelper() {
-        return helper;
-    }
-
 
     public ArrayList<Integer> getOccupiedCells() {
         return occupiedCells;
@@ -88,6 +87,10 @@ public class Play {
 
     //  Setter
 
+
+    public void setUser(UserEntity user) {
+        this.user = user;
+    }
 
     public void setNoteMode(boolean noteMode) {
         this.noteMode = noteMode;
@@ -141,16 +144,7 @@ public class Play {
         this.lastFocusedCell = lastFocusedCell;
     }
 
-    public void reset() {
-        if (timer != null) {
-            timer.reset();
-        }
-        field = null;
-        solvedField = null;
-        occupiedCells.clear();
-        noteMode = false;
-        lastFocusedCell = null;
-    }
+
 
     public void setLastFocusedGrid(GridLayout lastFocusedGrid) {
         this.lastFocusedGrid = lastFocusedGrid;

@@ -1,27 +1,20 @@
 package hsos.prog3.sudofun.View;
 
 import android.graphics.Color;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridLayout;
 
-import androidx.appcompat.content.res.AppCompatResources;
-
-import hsos.prog3.sudofun.R;
-import hsos.prog3.sudofun.model.Play;
 import hsos.prog3.sudofun.viewmodel.PlayViewModel;
 
 public class KeyPad {
     PlayActivity playActivity;
-    Play game;
     PlayGraphic graphic;
     PlayViewModel playViewModel;
 
-    public KeyPad(PlayActivity playActivity, Play game, PlayGraphic graphic, PlayViewModel playViewModel) {
+    public KeyPad(PlayActivity playActivity, PlayGraphic graphic, PlayViewModel playViewModel) {
         this.playActivity = playActivity;
-        this.game = game;
         this.graphic = graphic;
         this.playViewModel = playViewModel;
         registerAllListeners();
@@ -31,7 +24,7 @@ public class KeyPad {
      * Funktion für das Registrieren des onClickListeners auf einen Button
      */
     private void registerListener(Button button) {
-        View.OnClickListener numbClickListener = onClickListener(button, graphic, game);
+        View.OnClickListener numbClickListener = onClickListener(button, graphic);
         button.setOnClickListener(numbClickListener);
     }
 
@@ -65,7 +58,7 @@ public class KeyPad {
      *
      */
 
-    public View.OnClickListener onClickListener(Button button, PlayGraphic graphic, Play game) {
+    public View.OnClickListener onClickListener(Button button, PlayGraphic graphic) {
         return view -> {
             CharSequence buttonText = button.getText();
             EditText focusedEditText = graphic.getFocusedEditText();
@@ -74,7 +67,7 @@ public class KeyPad {
             /*
              * Behandlung des Falls, bei dem der Notizmodus aktiviert ist
              */
-            if (game.isNoteMode()) {
+            if (playViewModel.isNoteMode()) {
                 /*
                  * löschen aller Notizen bei "clear" als Eingabe
                  */
@@ -95,8 +88,8 @@ public class KeyPad {
                  * Toggeln der jeweiligen Notiz
                  */
                 if (note != null) {
-                    game.getHelper().numberToCoordinate(focusedNoteGrid.getId(), game);
-                    boolean temp = game.getFreeCellsArray()[game.getRowHint()][game.getColumnHint()];
+                    playViewModel.getHelper().numberToCoordinate(focusedNoteGrid.getId(), playViewModel);
+                    boolean temp = playViewModel.getFreeCellsArray()[playViewModel.getCoordinateRow()][playViewModel.getCoordinateColumn()];
                     if (temp) {
                         if (note.getVisibility() == View.INVISIBLE) {
                             note.setVisibility(View.VISIBLE);
@@ -111,26 +104,25 @@ public class KeyPad {
                  */
                 if (buttonText.toString().equals("clear")) {
                     if (!focusedEditText.getText().toString().equals("")) {
-                        game.getHelper().numberToCoordinate(focusedEditText.getId(), game);
-                        playViewModel.reactToClear(game);
-                        System.out.println(game.getFreeCells());
+                        playViewModel.getHelper().numberToCoordinate(focusedEditText.getId(), playViewModel);
+                        playViewModel.reactToClear();
                         focusedEditText.setText("");
-                        game.getHelper().numberToCoordinate(focusedEditText.getId(), game);
-                        game.getFreeCellsArray()[game.getRowHint()][game.getColumnHint()] = true;
+                        playViewModel.getHelper().numberToCoordinate(focusedEditText.getId(), playViewModel);
+                        playViewModel.getFreeCellsArray()[playViewModel.getCoordinateRow()][playViewModel.getCoordinateColumn()] = true;
                     }
                 } else {
-                    game.getHelper().numberToCoordinate(focusedEditText.getId(), game);
+                    playViewModel.getHelper().numberToCoordinate(focusedEditText.getId(), playViewModel);
 
                     focusedEditText.setText(buttonText);
-                    if(playViewModel.reactToNewNumber(game, game.getRowHint(), game.getColumnHint(), Integer.parseInt(buttonText.toString()))) {
+                    if(playViewModel.reactToNewNumber(playViewModel.getCoordinateRow(), playViewModel.getCoordinateColumn(), Integer.parseInt(buttonText.toString()))) {
                         focusedEditText.setTextColor(Color.BLACK);
-                        game.getFreeCellsArray()[game.getRowHint()][game.getColumnHint()] = false;
+                        playViewModel.getFreeCellsArray()[playViewModel.getCoordinateRow()][playViewModel.getCoordinateColumn()] = false;
                     }else{
                         focusedEditText.setTextColor(Color.RED);
                     }
 
                 }
-                if (game.getFreeCells() == 0) {
+                if (playViewModel.getFreeCells() == 0) {
                     playActivity.endGame();
                 }
             }
