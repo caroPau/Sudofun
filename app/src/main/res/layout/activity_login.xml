@@ -62,19 +62,25 @@
             android:singleLine="true"
             android:textAlignment="center" />
 
-        <Button
-            android:id="@+id/buttonLogin"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="200dp"
-            android:background="@drawable/btn_primary"
-            android:fontFamily="@font/alfa_slab_one_regular"
-            android:paddingHorizontal="30dp"
-            android:paddingVertical="10dp"
-            android:text="@string/login"
-            android:textColor="@color/black"
-            android:textSize="25sp" />
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/buttonLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="50dp"
+                android:background="@drawable/btn_primary"
+                android:fontFamily="@font/alfa_slab_one_regular"
+                android:paddingHorizontal="30dp"
+                android:paddingVertical="10dp"
+                android:text="@string/login"
+                android:textColor="@color/black"
+                android:textSize="25sp" />
+
+        </RelativeLayout>
 
     </LinearLayout>
 

@@ -28,14 +28,16 @@
         android:id="@+id/linearLayoutTableStatistic"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingTop="100dp"
         android:gravity="center"
         android:orientation="vertical">
+
 
         <LinearLayout
             android:id="@+id/linearLayoutTimer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="50dp"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -77,8 +79,8 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
+            android:layout_height="wrap_content"
+            >
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/best_list_recycler"
                 android:layout_width="match_parent"
@@ -86,13 +88,16 @@
                 android:layout_marginHorizontal="40dp" />
         </RelativeLayout>
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
         <Button
             android:id="@+id/buttonNewGame"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="60dp"
             android:layout_marginHorizontal="60dp"
-
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="50dp"
             android:background="@drawable/btn_primary"
             android:fontFamily="@font/alfa_slab_one_regular"
             android:onClick="startLevelActivity"
@@ -100,6 +105,7 @@
             android:paddingHorizontal="30dp"
             android:paddingVertical="10dp"
             android:textSize="25sp" />
+        </RelativeLayout>
 
     </LinearLayout>
 

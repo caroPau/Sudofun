@@ -46,7 +46,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginHorizontal="60dp"
             android:gravity="center"
             android:orientation="vertical">
@@ -98,12 +98,16 @@
                 android:textColor="@color/black"
                 android:textSize="25sp" />
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
             <Button
                 android:id="@+id/buttonPlay"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="60dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="50dp"
                 android:background="@drawable/btn_primary"
                 android:fontFamily="@font/alfa_slab_one_regular"
                 android:onClick="startNextActivity"
@@ -112,6 +116,7 @@
                 android:text="@string/play"
                 android:textColor="@color/black"
                 android:textSize="25sp" />
+            </RelativeLayout>
 
         </LinearLayout>
 
