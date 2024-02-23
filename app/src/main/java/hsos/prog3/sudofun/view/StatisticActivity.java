@@ -35,7 +35,6 @@ public class StatisticActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_statistic);
         statisticViewModel = new ViewModelProvider(this).get(StatisticViewModel.class);
         Bundle bundle = getIntent().getExtras();
         statisticViewModel.setLevel(LevelEnum.valueOf(bundle.getString("level")));

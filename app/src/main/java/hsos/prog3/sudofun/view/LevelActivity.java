@@ -29,7 +29,6 @@ public class LevelActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_level);
         levelViewModel = new ViewModelProvider(this).get(LevelViewModel.class);
         binding = ActivityLevelBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();

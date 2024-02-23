@@ -42,7 +42,6 @@ public class PlayActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_play);
         playViewModel = new ViewModelProvider(this).get(PlayViewModel.class);
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
@@ -147,26 +146,6 @@ public class PlayActivity extends AppCompatActivity {
         }
     }
 
-
-
-
-    /**
-     * Ruft die Methode @updateUser auf, erstellt das Bundle und den Intent für die nächste Activity und startet diese
-     *
-     * @author C. Paul
-     */
-    public void endGame(){
-        playViewModel.updateUser();
-        dataViewModel.updateUserDB(playViewModel.getUser());
-        Bundle bundle = new Bundle();
-        bundle.putString("level", playViewModel.getLevel().name());
-        bundle.putLong("time", playViewModel.getTimer().getMillisSinceStart());
-        bundle.putSerializable("user", playViewModel.getUser());
-        Intent intent = new Intent(PlayActivity.this, StatisticActivity.class);
-        intent.putExtras(bundle);
-        startActivity(intent);
-    }
-
     private void buttonHintClickEvent(View view) {
         int id = playViewModel.getHelper().getRandomFreeCell(playViewModel.getField(), playViewModel.getSolvedField());
         EditText editText = findViewById(id);
@@ -256,7 +235,24 @@ public class PlayActivity extends AppCompatActivity {
     }
 
     /**
-     * Ermöglicht das navigieren zum Menü.
+     * Ruft die Methode @updateUser auf, erstellt das Bundle und den Intent für die nächste Activity und startet diese
+     *
+     * @author C. Paul
+     */
+    public void endGame(){
+        playViewModel.updateUser();
+        dataViewModel.updateUserDB(playViewModel.getUser());
+        Bundle bundle = new Bundle();
+        bundle.putString("level", playViewModel.getLevel().name());
+        bundle.putLong("time", playViewModel.getTimer().getMillisSinceStart());
+        bundle.putSerializable("user", playViewModel.getUser());
+        Intent intent = new Intent(PlayActivity.this, StatisticActivity.class);
+        intent.putExtras(bundle);
+        startActivity(intent);
+    }
+
+    /**
+     * Bricht das aktuelle Spiel ab und navigiert zum Level Menü, um ein neues Spiel zu starten.
      *
      * @author M. Paul
      */
