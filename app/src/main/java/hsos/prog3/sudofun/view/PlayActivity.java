@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider;
 import java.util.List;
 import java.util.Locale;
 
+
 import hsos.prog3.sudofun.R;
 import hsos.prog3.sudofun.model.UserEntity;
 import hsos.prog3.sudofun.databinding.ActivityPlayBinding;
@@ -117,7 +118,7 @@ public class PlayActivity extends AppCompatActivity {
             playViewModel.setOccupiedCells(playViewModel.getHelper().getOccupiedCells(playViewModel.getField()));
         }
         graphic = new PlayGraphic(this, this, playViewModel);
-        graphic.generateGrid(binding.gridLayoutSudoku, binding.gridLayoutMask, binding.playScreen);
+        graphic.generateGrid(binding.gridLayoutSudoku, binding.gridLayoutMask, binding.relativeLayoutLoadedGameView);
         playViewModel.getTimer().start();
         Thread threadTimer = new Thread(playViewModel.getTimer().getTimerRunnable(), "TimerThread");
         threadTimer.start();

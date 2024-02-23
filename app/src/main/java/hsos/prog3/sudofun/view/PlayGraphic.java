@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.GridLayout;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -78,8 +79,9 @@ public class PlayGraphic {
         return Resources.getSystem().getDisplayMetrics().heightPixels;
     }
 
-    public void generateGrid(GridLayout grid,GridLayout gridMask, RelativeLayout playScreen){
-
+    public void generateGrid(GridLayout grid,GridLayout gridMask, RelativeLayout loadedGameView){
+        gridBasePos[0]=(int)(grid.getX()-4.5*fieldEdgeSize);
+        gridBasePos[1]=(int)grid.getY();
         for(int row = 0; row <= 8; row++){
             for(int column = 0; column <= 8; column++){
                 View maskView = new View(context);
@@ -103,11 +105,10 @@ public class PlayGraphic {
                             noteGrid.addView(note);
                         }
                     }
-                    playScreen.addView(noteGrid);
+                    loadedGameView.addView(noteGrid);
                     noteGrids.add(noteGrid);
                 }
                 editTexts.add(editText);
-                hideKeyboardFrom(context,editText);
                 grid.addView(editText);
                 gridMask.addView(maskView);
             }
@@ -116,16 +117,16 @@ public class PlayGraphic {
         gridMask.setVisibility(View.INVISIBLE);
 
         //horizontal gridLine1
-        generateGridLine(playScreen,9*fieldEdgeSize,gridLineStrength
+        generateGridLine(loadedGameView,9*fieldEdgeSize,gridLineStrength
                 ,gridBasePos[0],gridBasePos[1]+3*fieldEdgeSize-gridLineStrength/2);
         //horizontal gridLine2
-        generateGridLine(playScreen, 9*fieldEdgeSize,gridLineStrength
+        generateGridLine(loadedGameView, 9*fieldEdgeSize,gridLineStrength
                 ,gridBasePos[0],gridBasePos[1]+6*fieldEdgeSize-gridLineStrength/2);
         //vertical gridLine1
-        generateGridLine(playScreen,gridLineStrength,9*fieldEdgeSize
+        generateGridLine(loadedGameView,gridLineStrength,9*fieldEdgeSize
                 ,gridBasePos[0]+3*fieldEdgeSize-gridLineStrength/2,gridBasePos[1]);
         //vertical gridLine2
-        generateGridLine(playScreen, gridLineStrength,9*fieldEdgeSize
+        generateGridLine(loadedGameView, gridLineStrength,9*fieldEdgeSize
                 ,gridBasePos[0]+6*fieldEdgeSize-gridLineStrength/2,gridBasePos[1]);
     }
 
@@ -218,11 +219,5 @@ public class PlayGraphic {
             }
             return false;
         };
-    }
-
-    public static void hideKeyboardFrom(Context context, View view) {
-        view.requestFocus();
-        InputMethodManager imm = (InputMethodManager) context.getSystemService(AppCompatActivity.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }
