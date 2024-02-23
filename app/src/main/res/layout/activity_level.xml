@@ -101,21 +101,22 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-            <Button
-                android:id="@+id/buttonPlay"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_alignParentBottom="true"
-                android:layout_marginBottom="50dp"
-                android:background="@drawable/btn_primary"
-                android:fontFamily="@font/alfa_slab_one_regular"
-                android:onClick="startNextActivity"
-                android:paddingHorizontal="30dp"
-                android:paddingVertical="10dp"
-                android:text="@string/play"
-                android:textColor="@color/black"
-                android:textSize="25sp" />
+
+                <Button
+                    android:id="@+id/buttonPlay"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="50dp"
+                    android:background="@drawable/btn_primary"
+                    android:fontFamily="@font/alfa_slab_one_regular"
+                    android:onClick="startNextActivity"
+                    android:paddingHorizontal="30dp"
+                    android:paddingVertical="10dp"
+                    android:text="@string/play"
+                    android:textColor="@color/black"
+                    android:textSize="25sp" />
             </RelativeLayout>
 
         </LinearLayout>

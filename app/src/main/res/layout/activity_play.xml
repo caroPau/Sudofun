@@ -16,28 +16,28 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/textViewProgress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/spiel_wird_geladen"
-        android:visibility="visible"
-        android:fontFamily="@font/alfa_slab_one_regular"
-        android:textColor="@color/black"
-        android:shadowColor="@color/white"
-        android:shadowDx="3"
-        android:shadowDy="3"
-        android:shadowRadius="1.6"
-        android:textSize="20sp" />
+        <TextView
+            android:id="@+id/textViewProgress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/alfa_slab_one_regular"
+            android:shadowColor="@color/white"
+            android:shadowDx="3"
+            android:shadowDy="3"
+            android:shadowRadius="1.6"
+            android:text="@string/spiel_wird_geladen"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:visibility="visible" />
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center" />
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
 
     </LinearLayout>
 
@@ -128,8 +128,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/realtiveLayoutTopbar"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
             android:columnCount="9"
             android:rowCount="9">
 
@@ -141,8 +141,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/realtiveLayoutTopbar"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
             android:columnCount="9"
             android:rowCount="9">
 
@@ -153,8 +153,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/gridLayoutSudoku"
-            android:orientation="vertical">
-        </LinearLayout>
+            android:orientation="vertical"></LinearLayout>
 
         <GridLayout
             android:id="@+id/gridLayoutNumbers"
@@ -253,15 +252,14 @@
                 android:background="@drawable/btn_primary"
                 android:fontFamily="@font/alfa_slab_one_regular"
                 android:textOff="@string/ModusOff"
-                android:textOn="@string/ModusOn"
-                />
+                android:textOn="@string/ModusOn" />
 
             <Button
                 android:id="@+id/buttonClear"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/btn_backspace"
-                android:fontFamily="@font/alfa_slab_one_regular"/>
+                android:fontFamily="@font/alfa_slab_one_regular" />
         </GridLayout>
 
     </RelativeLayout>

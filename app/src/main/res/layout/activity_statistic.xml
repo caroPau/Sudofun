@@ -20,16 +20,15 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:background="@drawable/ic_logout"
-        android:onClick="navigateLogout"
-        />
+        android:onClick="navigateLogout" />
 
     <LinearLayout
         android:id="@+id/linearLayoutTableStatistic"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="100dp"
         android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingTop="100dp">
 
 
         <LinearLayout
@@ -52,12 +51,12 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/alfa_slab_one_regular"
                 android:paddingHorizontal="2dp"
-                android:text="@string/time"
-                android:textColor="@color/black"
                 android:shadowColor="@color/white"
                 android:shadowDx="3"
                 android:shadowDy="3"
                 android:shadowRadius="1.6"
+                android:text="@string/time"
+                android:textColor="@color/black"
                 android:textSize="30sp" />
 
 
@@ -78,8 +77,8 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
+            android:layout_height="wrap_content">
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/best_list_recycler"
                 android:layout_width="match_parent"
@@ -90,20 +89,21 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-        <Button
-            android:id="@+id/buttonNewGame"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="60dp"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="50dp"
-            android:background="@drawable/btn_primary"
-            android:fontFamily="@font/alfa_slab_one_regular"
-            android:onClick="startLevelActivity"
-            android:text="@string/neues_spiel"
-            android:paddingHorizontal="30dp"
-            android:paddingVertical="10dp"
-            android:textSize="25sp" />
+
+            <Button
+                android:id="@+id/buttonNewGame"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginHorizontal="60dp"
+                android:layout_marginBottom="50dp"
+                android:background="@drawable/btn_primary"
+                android:fontFamily="@font/alfa_slab_one_regular"
+                android:onClick="startLevelActivity"
+                android:paddingHorizontal="30dp"
+                android:paddingVertical="10dp"
+                android:text="@string/neues_spiel"
+                android:textSize="25sp" />
         </RelativeLayout>
 
     </LinearLayout>
