@@ -1,5 +1,9 @@
 package hsos.prog3.sudofun.model;
 
+/**
+ * @author C.Paul
+ */
+
 public class Level {
     private UserEntity user;
     private int selectedLevel;

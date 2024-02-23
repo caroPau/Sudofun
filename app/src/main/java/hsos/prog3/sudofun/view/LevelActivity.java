@@ -1,8 +1,4 @@
-/**
- *
- * @author M.Paul
- *
- */
+
 package hsos.prog3.sudofun.view;
 
 import android.content.Intent;
@@ -25,7 +21,9 @@ public class LevelActivity extends AppCompatActivity {
     private ActivityLevelBinding binding;
     private LevelViewModel levelViewModel;
 
-
+    /**
+     * @author M.Paul
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +37,10 @@ public class LevelActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     *
+     * @author M.Paul
+     */
     public void selectLevel(View view) {
         int buttonId = view.getId();
         binding.buttonEasy.setBackgroundResource(R.drawable.btn_secondary);
@@ -51,13 +53,16 @@ public class LevelActivity extends AppCompatActivity {
         } else if (buttonId == R.id.buttonMedium) {
             levelViewModel.setSelectedLevel(1);
         } else if (buttonId == R.id.buttonHard) {
-           levelViewModel.setSelectedLevel(2);
+            levelViewModel.setSelectedLevel(2);
         }
     }
 
-
+    /**
+     *
+     * @author C.Paul
+     */
     public void startNextActivity(View view) {
-        if(levelViewModel.getSelectedLevel() != -1) {
+        if (levelViewModel.getSelectedLevel() != -1) {
             Intent intent = new Intent(LevelActivity.this, PlayActivity.class);
             Bundle bundle = new Bundle();
             bundle.putInt("selectedLevel", levelViewModel.getSelectedLevel());
@@ -70,6 +75,9 @@ public class LevelActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * @author M.Paul
+     */
     public void navigateLogout(View view) {
         Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); //FLAG entfernt alle Activities im Task BackStack, sodass nach dem Logout nicht zurück navigiert werden kann

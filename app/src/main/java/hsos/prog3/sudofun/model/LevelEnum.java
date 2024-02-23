@@ -2,6 +2,8 @@ package hsos.prog3.sudofun.model;
 
 /**
  * Enum für Schwierigkeitsgrade des Spiels.
+ *
+ * @author C.Paul
  */
 public enum LevelEnum {
     EASY(45),

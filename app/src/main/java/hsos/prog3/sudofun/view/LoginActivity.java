@@ -17,12 +17,16 @@ import hsos.prog3.sudofun.viewmodel.DataViewModel;
 import hsos.prog3.sudofun.viewmodel.LoginViewModel;
 
 /**
- *  Logik für die LoginView
+ * Logik für die LoginView
  */
 public class LoginActivity extends AppCompatActivity {
     private DataViewModel dataViewModel;
     private EditText input_username;
     private LoginViewModel loginViewModel;
+
+    /**
+     * @author M.Paul
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,7 +47,6 @@ public class LoginActivity extends AppCompatActivity {
      * Erstellt den Intent für die nächste Activity und startet diese
      *
      * @param view Die aktuelle View auf der auch der Button ist
-     *
      * @author C. Paul
      */
     private void loginButtonClickEvent(View view) {

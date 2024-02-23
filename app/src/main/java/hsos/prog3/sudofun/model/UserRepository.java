@@ -11,58 +11,42 @@ import hsos.prog3.sudofun.database.UserDAO;
 
 /**
  * Repository für Kapselung von Datenzugriffen der UserEntity.
+ *
+ * @author C.Paul
  */
 public class UserRepository {
     private final UserDAO userDAO;
-    private LiveData<UserEntity> user;
-    private int count;
 
-    public UserRepository(Application application){
+    public UserRepository(Application application) {
         AppDatabase db = AppDatabase.getDatabase(application);
         userDAO = db.userDAO();
     }
 
-    public LiveData<UserEntity> findByName(String username){
-/*        AppDatabase.databaseWriter.execute(() ->{
-             user = userDAO.findByName(username);
-             Log.w("INFOTAG", "User " + user);
-        });*/
+    public LiveData<UserEntity> findByName(String username) {
         return userDAO.findByName(username);
     }
 
-    public void updateUser(UserEntity user){
-        AppDatabase.databaseWriter.execute(() ->{
+    public void updateUser(UserEntity user) {
+        AppDatabase.databaseWriter.execute(() -> {
             userDAO.updateUser(user);
         });
     }
 
-    public void insertAll(UserEntity...user){
-        AppDatabase.databaseWriter.execute(() ->{
+    public void insertAll(UserEntity... user) {
+        AppDatabase.databaseWriter.execute(() -> {
             userDAO.insertAll(user);
         });
     }
 
-    public LiveData<List<UserEntity>> getHighscoresEasy(){
-        /*AppDatabase.databaseWriter.execute(() ->{
-            highscoresEasy = userDAO.getEasyHighscores();
-        });
-        return highscoresEasy;*/
+    public LiveData<List<UserEntity>> getHighscoresEasy() {
         return userDAO.getEasyHighscores();
     }
 
-    public LiveData<List<UserEntity>> getHighscoresMedium(){
-        /*AppDatabase.databaseWriter.execute(() ->{
-            highscoresMedium = userDAO.getMediumHighscores();
-        });
-        return highscoresMedium;*/
+    public LiveData<List<UserEntity>> getHighscoresMedium() {
         return userDAO.getMediumHighscores();
     }
 
-    public LiveData<List<UserEntity>> getHighscoresHard(){
-        /*AppDatabase.databaseWriter.execute(() ->{
-            highscoresHard = userDAO.getHardHighscores();
-        });
-        return highscoresHard;*/
+    public LiveData<List<UserEntity>> getHighscoresHard() {
         return userDAO.getHardHighscores();
     }
 }

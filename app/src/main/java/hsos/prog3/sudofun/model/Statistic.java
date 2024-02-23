@@ -1,10 +1,10 @@
 package hsos.prog3.sudofun.model;
 
 import java.util.List;
-import java.util.Map;
 
-import hsos.prog3.sudofun.viewmodel.DataViewModel;
-
+/**
+ * @author M.Paul
+ */
 public class Statistic {
     private UserEntity user;
     private LevelEnum levelEnum;

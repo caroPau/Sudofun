@@ -2,6 +2,8 @@ package hsos.prog3.sudofun.model;
 
 /**
  * Klasse repräsentiert die notwendigen Informationen für den Login.
+ *
+ * @author M.Paul
  */
 public class Login {
 

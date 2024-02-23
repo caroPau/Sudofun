@@ -8,6 +8,9 @@ import androidx.lifecycle.AndroidViewModel;
 import hsos.prog3.sudofun.model.Level;
 import hsos.prog3.sudofun.model.UserEntity;
 
+/**
+ * @author M.Paul
+ */
 public class LevelViewModel extends AndroidViewModel {
 
     private final Level level;
@@ -17,19 +20,19 @@ public class LevelViewModel extends AndroidViewModel {
         level = new Level();
     }
 
-    public void setUser(UserEntity user){
+    public void setUser(UserEntity user) {
         level.setUser(user);
     }
 
-    public void setSelectedLevel(int selectedLevel){
+    public void setSelectedLevel(int selectedLevel) {
         level.setSelectedLevel(selectedLevel);
     }
 
-    public UserEntity getUser(){
+    public UserEntity getUser() {
         return level.getUser();
     }
 
-    public int getSelectedLevel(){
+    public int getSelectedLevel() {
         return level.getSelectedLevel();
     }
 }

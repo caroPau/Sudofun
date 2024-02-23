@@ -28,75 +28,89 @@ public class PlayViewModel extends AndroidViewModel {
         helper = new SudokuHelper();
     }
 
-    public int getPlayedGames(){
+    public int getPlayedGames() {
         return play.getPlayedGames();
     }
-    public void setUser(UserEntity user){
+
+    public void setUser(UserEntity user) {
         play.setUser(user);
     }
-    public LevelEnum getLevel(){
+
+    public LevelEnum getLevel() {
         return play.getLevel();
     }
-    public int getCoordinateRow(){
+
+    public int getCoordinateRow() {
         return play.getRowHint();
     }
-    public int getCoordinateColumn(){
+
+    public int getCoordinateColumn() {
         return play.getColumnHint();
     }
 
-    public void setPlayedGames(int playedGames){
+    public void setPlayedGames(int playedGames) {
         play.setPlayedGames(playedGames);
     }
-    public void setCoordinateRow(int row){
+
+    public void setCoordinateRow(int row) {
         play.setRowHint(row);
     }
 
-    public void setCoordinateColumn(int column){
+    public void setCoordinateColumn(int column) {
         play.setColumnHint(column);
     }
-    public void setLastFocusedCell(EditText lastFocusedCell){
+
+    public void setLastFocusedCell(EditText lastFocusedCell) {
         play.setLastFocusedCell(lastFocusedCell);
     }
 
-    public void setLastFocusedGrid(GridLayout grid){
+    public void setLastFocusedGrid(GridLayout grid) {
         play.setLastFocusedGrid(grid);
     }
-    public void setLevel(LevelEnum levelEnum){
+
+    public void setLevel(LevelEnum levelEnum) {
         play.setLevel(levelEnum);
     }
-    public void setField(int[][] field){
+
+    public void setField(int[][] field) {
         play.setField(field);
     }
-    public GridLayout getLastFocusedGrid(){
+
+    public GridLayout getLastFocusedGrid() {
         return play.getLastFocusedGrid();
     }
-    public EditText getLastFocusedCell(){
+
+    public EditText getLastFocusedCell() {
         return play.getLastFocusedCell();
     }
-    public UserEntity getUser(){
+
+    public UserEntity getUser() {
         return play.getUser();
     }
-    public SudokuHelper getHelper(){
+
+    public SudokuHelper getHelper() {
         return helper;
     }
 
 
-    public int[][] getField(){
+    public int[][] getField() {
         return play.getField();
     }
 
+    /**
+     * @author C.Paul
+     */
     public boolean reactToNewNumber(int row, int column, int number) {
-        if(getField()[row][column] == 0) {
+        if (getField()[row][column] == 0) {
             if (getHelper().isValid(row, column, number, getField())) {
                 setFreeCells(getFreeCells() - 1);
                 getField()[row][column] = number;
                 return true;
-            }else{
+            } else {
                 return false;
             }
-        }
-        else {
-            if(number == getField()[row][column]){
+        } else {
+            if (number == getField()[row][column]) {
                 return true;
             }
             if (getHelper().isValid(row, column, number, getField())) {
@@ -104,19 +118,21 @@ public class PlayViewModel extends AndroidViewModel {
                 getField()[row][column] = number;
                 return true;
             } else if (getHelper().isValid(row, column, getField()[row][column], getField())) {
-                    getField()[row][column] = 0;
-                    setFreeCells(getFreeCells() + 1);
-                    return false;
-            }
-            else {
+                getField()[row][column] = 0;
+                setFreeCells(getFreeCells() + 1);
+                return false;
+            } else {
                 getField()[row][column] = 0;
                 return false;
             }
         }
     }
 
-    public void reactToClear(){
-        if(getField()[getCoordinateRow()][getCoordinateColumn()] != 0){
+    /**
+     * @author C.Paul
+     */
+    public void reactToClear() {
+        if (getField()[getCoordinateRow()][getCoordinateColumn()] != 0) {
             getField()[getCoordinateRow()][getCoordinateColumn()] = 0;
             setFreeCells(getFreeCells() + 1);
         }
@@ -157,7 +173,8 @@ public class PlayViewModel extends AndroidViewModel {
     public int[][] getSolvedField() {
         return play.getSolvedField();
     }
-    public ArrayList<Integer> getOccupiedCells(){
+
+    public ArrayList<Integer> getOccupiedCells() {
         return play.getOccupiedCells();
     }
 
@@ -165,6 +182,9 @@ public class PlayViewModel extends AndroidViewModel {
         play.setNoteMode(noteMode);
     }
 
+    /**
+     * @author M.Paul
+     */
     public void reset() {
         if (getTimer() != null) {
             getTimer().reset();
@@ -177,6 +197,9 @@ public class PlayViewModel extends AndroidViewModel {
         setLastFocusedGrid(null);
     }
 
+    /**
+     * @author M.Paul
+     */
     public LevelEnum getSelectedLevel(int lvl, PlayActivity playActivity) {
         switch (lvl) {
             case 0:
@@ -195,7 +218,10 @@ public class PlayViewModel extends AndroidViewModel {
         return getLevel();
     }
 
-    public long getBestTime(){
+    /**
+     * @author M.Paul
+     */
+    public long getBestTime() {
         long bestTime;
         switch (getLevel()) {
             case EASY:
@@ -214,22 +240,25 @@ public class PlayViewModel extends AndroidViewModel {
         return bestTime;
     }
 
-    public void updateUser(){
-        switch (getLevel()){
+    /**
+     * @author C.Paul
+     */
+    public void updateUser() {
+        switch (getLevel()) {
             case EASY:
-                if(getUser().highscoreEasy == 0 || getTimer().getMillisSinceStart() < getUser().highscoreEasy) {
+                if (getUser().highscoreEasy == 0 || getTimer().getMillisSinceStart() < getUser().highscoreEasy) {
                     getUser().highscoreEasy = getTimer().getMillisSinceStart();
                 }
                 getUser().gamesEasy++;
                 break;
             case MEDIUM:
-                if(getUser().highscoreMedium == 0 || getTimer().getMillisSinceStart() < getUser().highscoreMedium) {
+                if (getUser().highscoreMedium == 0 || getTimer().getMillisSinceStart() < getUser().highscoreMedium) {
                     getUser().highscoreMedium = getTimer().getMillisSinceStart();
                 }
                 getUser().gamesMedium++;
                 break;
             case HARD:
-                if(getUser().highscoreHard == 0 || getTimer().getMillisSinceStart() < getUser().highscoreHard) {
+                if (getUser().highscoreHard == 0 || getTimer().getMillisSinceStart() < getUser().highscoreHard) {
                     getUser().highscoreHard = getTimer().getMillisSinceStart();
                 }
                 getUser().gamesHard++;

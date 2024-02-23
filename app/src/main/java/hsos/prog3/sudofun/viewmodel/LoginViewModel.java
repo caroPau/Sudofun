@@ -10,6 +10,8 @@ import hsos.prog3.sudofun.model.UserEntity;
 
 /**
  * ViewModel für Login-Ansicht.
+ *
+ * @author C.Paul
  */
 public class LoginViewModel extends AndroidViewModel {
 

@@ -6,13 +6,14 @@ import java.util.Random;
 
 /**
  * Hilfsklasse zum Erstellen und Lösen von Sudokus
- * 
+ * <p>
  * Author: C. Paul
  */
 public class SudokuHelper {
 
     public SudokuHelper() {
     }
+
     /**
      * Überprüft, ob die angegebene Ziffer in der angegebenen Zeile des Sudoku-Felds vorhanden ist.
      *
@@ -88,42 +89,44 @@ public class SudokuHelper {
 
     /**
      * Füllt ein zufällig ausgewähltes leeres Feld in einem übergebenen Sudoku-Feld
-     * @param field Das Sudoku-Feld als 2D-Array
+     *
+     * @param field       Das Sudoku-Feld als 2D-Array
      * @param solvedField Die Lösung des Sudoku-Feldes
      */
-    public int getRandomFreeCell(int[][] field, int[][] solvedField){
+    public int getRandomFreeCell(int[][] field, int[][] solvedField) {
         Random rand = new Random();
         int row;
         int column;
 
-        while(true){
+        while (true) {
             row = rand.nextInt(9);
             column = rand.nextInt(9);
-            if(field[row][column] == 0){
+            if (field[row][column] == 0) {
                 field[row][column] = solvedField[row][column];
                 return coordinateAsOneNumber(row, column);
             }
         }
     }
-    public int coordinateAsOneNumber(int row, int column){
+
+    public int coordinateAsOneNumber(int row, int column) {
         return row * 10 + column;
     }
 
-    public void numberToCoordinate(int number, PlayViewModel playViewModel){
-        if(number < 10){
+    public void numberToCoordinate(int number, PlayViewModel playViewModel) {
+        if (number < 10) {
             playViewModel.setCoordinateRow(0);
             playViewModel.setCoordinateColumn(number);
-        }else{
+        } else {
             playViewModel.setCoordinateRow(number / 10);
             playViewModel.setCoordinateColumn(number % 10);
         }
     }
 
-    public ArrayList<Integer> getOccupiedCells(int[][] field){
+    public ArrayList<Integer> getOccupiedCells(int[][] field) {
         ArrayList<Integer> occupiedCells = new ArrayList<>();
-        for(int i = 0; i < field.length; i++){
-            for(int j = 0; j < field.length; j++){
-                if(field[i][j] != 0){
+        for (int i = 0; i < field.length; i++) {
+            for (int j = 0; j < field.length; j++) {
+                if (field[i][j] != 0) {
                     occupiedCells.add(coordinateAsOneNumber(i, j));
                 }
             }

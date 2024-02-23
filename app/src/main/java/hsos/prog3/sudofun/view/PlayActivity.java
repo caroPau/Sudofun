@@ -40,6 +40,9 @@ public class PlayActivity extends AppCompatActivity {
 
     private ActivityPlayBinding binding;
 
+    /**
+     * @author C.Paul, M.Paul
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,7 +68,7 @@ public class PlayActivity extends AppCompatActivity {
                 if (retrievedUser != null) {
                     // User gefunden, initGame aufrufen
                     playViewModel.setUser(retrievedUser);
-                    if(playViewModel.getPlayedGames() == 0) {
+                    if (playViewModel.getPlayedGames() == 0) {
                         initGame(level);
                     }
                 }
@@ -90,7 +93,10 @@ public class PlayActivity extends AppCompatActivity {
         });
     }
 
-    public void startLevelActivity(){
+    /**
+     * @author C.Paul
+     */
+    public void startLevelActivity() {
         Intent intent = new Intent(PlayActivity.this, LevelActivity.class);
         startActivity(intent);
     }
@@ -100,12 +106,11 @@ public class PlayActivity extends AppCompatActivity {
      * Erstellt ein neues Spiel und initialisiert dessen Variablen, erstellt neues Spielfeld und startet den Timer
      *
      * @param level Der gewünschte Schwierigkeitsgrad
-     *
      * @author C. Paul
      */
     private void initGame(int level) {
         resetGameVariables();
-        SudokuCreator creator = new SudokuCreator(playViewModel.getSelectedLevel(level, this), playViewModel.getHelper());
+        SudokuCreator creator = new SudokuCreator(playViewModel.getHelper());
         Thread threadCreator = new Thread(creator, "CreatorThread");
         threadCreator.start();
         playViewModel.setField(creator.createSudoku(playViewModel.getSelectedLevel(level, this)));
@@ -114,7 +119,7 @@ public class PlayActivity extends AppCompatActivity {
         playViewModel.setTimer(new TimerViewModel());
         playViewModel.getTimer().setActualTimerView(binding.textViewTimer);
         showBestTime();
-        if(playViewModel.getHelper().getOccupiedCells(playViewModel.getField()) != null) {
+        if (playViewModel.getHelper().getOccupiedCells(playViewModel.getField()) != null) {
             playViewModel.setOccupiedCells(playViewModel.getHelper().getOccupiedCells(playViewModel.getField()));
         }
         graphic = new PlayGraphic(this, this, playViewModel);
@@ -147,7 +152,9 @@ public class PlayActivity extends AppCompatActivity {
         }
     }
 
-
+    /**
+     * @author: C.Paul
+     */
     private void buttonHintClickEvent(View view) {
         int id = playViewModel.getHelper().getRandomFreeCell(playViewModel.getField(), playViewModel.getSolvedField());
         EditText editText = findViewById(id);
@@ -241,7 +248,7 @@ public class PlayActivity extends AppCompatActivity {
      *
      * @author C. Paul
      */
-    public void endGame(){
+    public void endGame() {
         playViewModel.updateUser();
         dataViewModel.updateUserDB(playViewModel.getUser());
         Bundle bundle = new Bundle();

@@ -9,6 +9,8 @@ import java.io.Serializable;
 
 /**
  * Entität eines Benutzers. Wird als Room Entität annotiert.
+ *
+ * @author C.Paul
  */
 @Entity
 public class UserEntity implements Serializable {
@@ -35,7 +37,7 @@ public class UserEntity implements Serializable {
     @ColumnInfo(name = "highscore_hard")
     public long highscoreHard;
 
-    public UserEntity(@NonNull String username, int gamesEasy, int gamesMedium, int gamesHard, long highscoreEasy, long highscoreMedium, long highscoreHard){
+    public UserEntity(@NonNull String username, int gamesEasy, int gamesMedium, int gamesHard, long highscoreEasy, long highscoreMedium, long highscoreHard) {
         this.username = username;
         this.gamesEasy = gamesEasy;
         this.gamesMedium = gamesMedium;

@@ -21,14 +21,11 @@ public class SudokuCreator implements Runnable {
 
     /**
      * Konstruktor
-     *
-     * @param levelEnum Schwierigkeitsgrad des Sudokus
      */
-    public SudokuCreator(LevelEnum levelEnum, SudokuHelper helper){
+    public SudokuCreator(SudokuHelper helper) {
         solvedField = new int[9][9];
         this.helper = helper;
     }
-
 
 
     /**
@@ -72,6 +69,8 @@ public class SudokuCreator implements Runnable {
 
     /**
      * Löst das Sudoku-Feld rekursiv mit dem Backtracking-Algorithmus.
+     * <p>
+     * Quelle: https://www.codepile.net/pile/Mn4kDKwW
      *
      * @param field Das Sudoku-Feld als 2D-Array.
      * @return true, wenn eine Lösung gefunden wurde, andernfalls false.
@@ -100,34 +99,35 @@ public class SudokuCreator implements Runnable {
     /**
      * Füllt eine bestimmte Zelle eines übergebenen Sudoku-Feldes mit der passenden Ziffer, wenn dies eindeutig ist
      *
-     * @param field Sudoku-Feld als 2D-Array
-     * @param row Reihennummer der Zelle
+     * @param field  Sudoku-Feld als 2D-Array
+     * @param row    Reihennummer der Zelle
      * @param column Zeilennummer der Zelle
      */
-    private void fillEasyCells(int[][] field, int row, int column){
+    private void fillEasyCells(int[][] field, int row, int column) {
         int counter = 0;
         int numberInQuestion = 0;
-        for(int i = 1; i <= 9; i++){
-            if(helper.isValid(row, column, i, field)){
+        for (int i = 1; i <= 9; i++) {
+            if (helper.isValid(row, column, i, field)) {
                 counter++;
                 numberInQuestion = i;
             }
         }
-        if(counter == 1){
+        if (counter == 1) {
             field[row][column] = numberInQuestion;
         }
     }
 
     /**
      * Prüft ob ein übergebenes Sudoku-Feld lösbar ist, durch das Ausfüllen eindeutiger Felder
+     *
      * @param field Das Sudoku-Feld als 2D-Array
      * @return true, wenn das Sudoku ohne Raten lösbar ist, andernfalls false
      */
-    private boolean solveEasySudoku(int[][] field){
+    private boolean solveEasySudoku(int[][] field) {
         int[][] tempSudoku = copySudoku(field);
         int counter = 0;
         int lastCounter = 0;
-        while(true) {
+        while (true) {
             for (int row = 0; row < 9; row++) {
                 for (int column = 0; column < 9; column++) {
                     if (tempSudoku[row][column] == 0) {
@@ -136,10 +136,10 @@ public class SudokuCreator implements Runnable {
                     }
                 }
             }
-            if(counter == lastCounter && counter > 0){
+            if (counter == lastCounter && counter > 0) {
                 return false;
             }
-            if(counter == 0){
+            if (counter == 0) {
                 return true;
             }
             lastCounter = counter;
@@ -157,7 +157,7 @@ public class SudokuCreator implements Runnable {
 
         fillDiagonalBoxes(field);
         if (!solveSudoku(field)) {
-          generateSolvableField();
+            generateSolvableField();
         }
         this.solvedField = copySudoku(field);
         return field;
@@ -174,7 +174,7 @@ public class SudokuCreator implements Runnable {
         this.solvedField = copySudoku(field);
         Random rand = new Random();
         int freeCells = 81 - lvl.getOpenCells();
-        for (int i = freeCells; i != 0; i--){
+        for (int i = freeCells; i != 0; i--) {
             int randomRow = rand.nextInt(9);
             int randomColumn = rand.nextInt(9);
             if (field[randomRow][randomColumn] == 0) {
@@ -186,34 +186,19 @@ public class SudokuCreator implements Runnable {
         return field;
     }
 
-    /* Zu Debugging-Zwecken */
-    private static void printSudoku(int[][] field) {
-        for (int i = 0; i < 9; i++) {
-            for (int j = 0; j < 9; j++) {
-                System.out.print(field[i][j] + " ");
-                if ((j + 1) % 3 == 0 && j < 8) {
-                    System.out.print("| ");
-                }
-            }
-            System.out.println();
-            if ((i + 1) % 3 == 0 && i < 8) {
-                System.out.println("------+-------+------");
-            }
-        }
-    }
-
     /**
      * Erstellt eine tiefe Kopie eines übergebenen 9x9-Arrays
+     *
      * @param original Das zu kopierende Sudokufeld als 2D-Array
      * @return Eine Kopie von @original
      */
-    private static int[][] copySudoku(int[][] original){
-        if(original == null){
+    private static int[][] copySudoku(int[][] original) {
+        if (original == null) {
             return null;
         }
         int[][] copy = new int[9][9];
 
-        for(int i = 0; i <= 8; i++){
+        for (int i = 0; i <= 8; i++) {
             System.arraycopy(original[i], 0, copy[i], 0, 9);
         }
         return copy;
@@ -221,20 +206,21 @@ public class SudokuCreator implements Runnable {
 
     /**
      * Generiert ein Sudoku basierend auf dem gewünschten Level
+     *
      * @param lvl Der Schwierigkeitsgrad des Sudokus
      * @return Ein spielbares Sudoku-Feld als 2D-Array
      */
-    public int[][] createSudoku(LevelEnum lvl){
+    public int[][] createSudoku(LevelEnum lvl) {
         int[][] sudoku = generatePlayableField(lvl);
-        if(lvl == LevelEnum.EASY){
-            while(!solveEasySudoku(sudoku)){
+        if (lvl == LevelEnum.EASY) {
+            while (!solveEasySudoku(sudoku)) {
                 sudoku = generatePlayableField(lvl);
             }
         }
         return sudoku;
     }
 
-    public int[][] getSolvedField(){
+    public int[][] getSolvedField() {
         return solvedField;
     }
 

@@ -14,6 +14,8 @@ import hsos.prog3.sudofun.model.UserEntity;
 
 /**
  * DAO der Entität UserEntity mit Methoden für Datenbankanfragen.
+ *
+ * @author C.Paul
  */
 @Dao
 public interface UserDAO {
@@ -25,9 +27,6 @@ public interface UserDAO {
      */
     @Query("SELECT * FROM userentity WHERE username = :username")
     LiveData<UserEntity> findByName(String username);
-
-    @Query("SELECT COUNT(*) FROM userentity WHERE username LIKE :username")
-    int countByName(String username);
 
     /**
      * Liest die 5 besten Spieler auf Level Easy aus.
@@ -55,7 +54,6 @@ public interface UserDAO {
 
     /**
      * Liest die 5 besten Spieler auf Level Easy aus.
-     *
      */
     @Update
     void updateUser(UserEntity user);
@@ -68,11 +66,4 @@ public interface UserDAO {
     @Insert(onConflict = OnConflictStrategy.NONE)
     void insertAll(UserEntity... users);
 
-    /**
-     * Löscht einen einzelnen Nutzer.
-     *
-     * @param user Zu löschender Benutzer.
-     */
-    @Delete
-    void delete(UserEntity user);
 }

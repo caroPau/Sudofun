@@ -7,9 +7,11 @@ import java.util.Locale;
 
 
 /**
- *  Implementiert einen Timer und zeigt die verstrichene Zeit in einer TextView.
+ * Implementiert einen Timer und zeigt die verstrichene Zeit in einer TextView.
+ *
+ * @author M.Paul
  */
-public class TimerViewModel{
+public class TimerViewModel {
 
     private Runnable timerRunnable;
     private final Handler handler;
@@ -30,7 +32,7 @@ public class TimerViewModel{
     /**
      * Konstruktor
      */
-    public TimerViewModel(){
+    public TimerViewModel() {
         handler = new Handler();
         isRunning = false;
     }
@@ -38,7 +40,7 @@ public class TimerViewModel{
     /**
      * Startet den Timer
      */
-    public void start(){
+    public void start() {
         isRunning = true;
         start = System.currentTimeMillis();
         timerRunnable = new Runnable() {
@@ -47,7 +49,7 @@ public class TimerViewModel{
                 millisSinceStart = System.currentTimeMillis() - start;
                 actualTimerView.setText(stringify());
                 millisToSecondsAndMinutes();
-                if(isRunning) {
+                if (isRunning) {
                     handler.postDelayed(this, 1000);
                 }
             }
@@ -58,7 +60,7 @@ public class TimerViewModel{
     /**
      * Pausiert den Timer
      */
-    public void pause(){
+    public void pause() {
         isRunning = false;
         pause = System.currentTimeMillis();
 
@@ -67,31 +69,30 @@ public class TimerViewModel{
     /**
      * Startet den Timer nach dem Pausieren
      */
-    public void startAfterPause(){
+    public void startAfterPause() {
         isRunning = true;
-        start -= (pause-System.currentTimeMillis());
-        handler.postDelayed(timerRunnable,1000);
+        start -= (pause - System.currentTimeMillis());
+        handler.postDelayed(timerRunnable, 1000);
     }
 
     /**
      * Rechnet die verstrichene Zeit (in Millisekunden) in Minuten und Sekunden um und speichert diese in den entsprechenden Variablen des Timers
      */
-    public void millisToSecondsAndMinutes(){
+    public void millisToSecondsAndMinutes() {
         int secondsTemp = ((int) (millisSinceStart / 1000));
         minutes = secondsTemp / 60;
         seconds = secondsTemp - minutes * 60;
     }
 
     /**
-     *  Formatiert Timer zu einem String
-     *
+     * Formatiert Timer zu einem String
      */
-    public String stringify(){
+    public String stringify() {
         return String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
     }
 
     /**
-     *  Getter
+     * Getter
      */
 
     public long getMillisSinceStart() {
@@ -101,15 +102,16 @@ public class TimerViewModel{
     public Runnable getTimerRunnable() {
         return timerRunnable;
     }
-    public boolean isRunning(){
+
+    public boolean isRunning() {
         return this.isRunning;
     }
 
     /**
-     *  Setter
+     * Setter
      */
 
-    public void setActualTimerView(TextView txtview){
+    public void setActualTimerView(TextView txtview) {
         actualTimerView = txtview;
     }
 

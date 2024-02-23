@@ -9,6 +9,8 @@ import hsos.prog3.sudofun.viewmodel.TimerViewModel;
 
 /**
  * Klasse Play hält alle Parameter eines laufenden Spiels.
+ *
+ * @author C.Paul
  */
 public class Play {
     private LevelEnum levelEnum;
@@ -59,7 +61,7 @@ public class Play {
         return solvedField;
     }
 
-    public boolean[][] getFreeCellsArray(){
+    public boolean[][] getFreeCellsArray() {
         return freeCellsArray;
     }
 
@@ -79,17 +81,17 @@ public class Play {
         return freeCells;
     }
 
-    public EditText getLastFocusedCell(){
+    public EditText getLastFocusedCell() {
         return lastFocusedCell;
     }
 
-    public GridLayout getLastFocusedGrid(){
+    public GridLayout getLastFocusedGrid() {
         return lastFocusedGrid;
     }
 
     //  Setter
 
-    public void setPlayedGames(int playedGames){
+    public void setPlayedGames(int playedGames) {
         this.playedGames = playedGames;
     }
 
@@ -134,7 +136,7 @@ public class Play {
         this.freeCells = freeCells;
     }
 
-    public void setLastFocusedCell(EditText lastFocusedCell){
+    public void setLastFocusedCell(EditText lastFocusedCell) {
         this.lastFocusedCell = lastFocusedCell;
     }
 
@@ -142,7 +144,7 @@ public class Play {
         this.lastFocusedGrid = lastFocusedGrid;
     }
 
-    public int getPlayedGames(){
+    public int getPlayedGames() {
         return playedGames;
     }
 }

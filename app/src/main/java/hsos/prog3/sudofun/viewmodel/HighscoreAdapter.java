@@ -17,6 +17,8 @@ import hsos.prog3.sudofun.model.UserEntity;
 
 /**
  * Adapter für dynamische Erzeugung einer Liste für Ansicht der besten Spieler.
+ *
+ * @author M.Paul
  */
 public class HighscoreAdapter extends RecyclerView.Adapter<HighscoreAdapter.HighscoreViewHolder> {
     private final LevelEnum levelEnum;
@@ -28,6 +30,7 @@ public class HighscoreAdapter extends RecyclerView.Adapter<HighscoreAdapter.High
         this.highscoreList = highscoreList;
         this.levelEnum = levelEnum;
     }
+
     // ViewHolder-Klasse für jedes Listenelement
     public static class HighscoreViewHolder extends RecyclerView.ViewHolder {
         public final TextView nameTextView;

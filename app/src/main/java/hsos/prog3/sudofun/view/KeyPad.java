@@ -26,6 +26,8 @@ public class KeyPad {
 
     /**
      * Funktion für das Registrieren des onClickListeners auf einen Button
+     *
+     * @author M.Paul
      */
     private void registerListener(Button button) {
         View.OnClickListener numbClickListener = onClickListener(button, graphic);
@@ -34,6 +36,8 @@ public class KeyPad {
 
     /**
      * Funktion für das Registrieren der onClickListener für alle Buttons
+     *
+     * @author M.Paul
      */
     private void registerAllListeners() {
         registerListener(playActivity.getBinding().numbOne);
@@ -50,6 +54,8 @@ public class KeyPad {
 
     /**
      * Funktion für die Rückgabe der indizierten Notiz im GridLayout
+     *
+     * @author: M.Paul
      */
     private View getNote(int index, GridLayout noteGrid) {
         return noteGrid.getChildAt(index - 1);
@@ -60,6 +66,7 @@ public class KeyPad {
      * je nach Modus wird der Inhalt des zuletzt fokussierten Views mit dem jeweiligen Zahlenwert überschrieben
      * bzw. gelöscht
      *
+     * @author C.Paul
      */
 
     public View.OnClickListener onClickListener(Button button, PlayGraphic graphic) {
@@ -74,13 +81,13 @@ public class KeyPad {
              * Behandlung des Falls, bei dem der Notizmodus aktiviert ist
              */
             if (playViewModel.isNoteMode()) {
-                if (focusedNoteGrid==null) {
+                if (focusedNoteGrid == null) {
                     return;
                 }
                 /*
                  * löschen aller Notizen wenn es sich um den clear Button handelt
                  */
-                if (button.getId()== R.id.buttonClear) {
+                if (button.getId() == R.id.buttonClear) {
                     for (int i = 1; i <= 9; i++) {
                         note = getNote(i, focusedNoteGrid);
                         note.setVisibility(View.INVISIBLE);
@@ -111,10 +118,10 @@ public class KeyPad {
                 /*
                  * Behandlung des Falls, bei dem der Notizmodus deaktiviert ist
                  */
-                if (focusedEditText==null) {
+                if (focusedEditText == null) {
                     return;
                 }
-                if (button.getId()==R.id.buttonClear) {
+                if (button.getId() == R.id.buttonClear) {
                     if (!focusedEditText.getText().toString().equals("")) {
                         playViewModel.getHelper().numberToCoordinate(focusedEditText.getId(), playViewModel);
                         playViewModel.reactToClear();
@@ -126,10 +133,10 @@ public class KeyPad {
                     playViewModel.getHelper().numberToCoordinate(focusedEditText.getId(), playViewModel);
 
                     focusedEditText.setText(buttonText);
-                    if(playViewModel.reactToNewNumber(playViewModel.getCoordinateRow(), playViewModel.getCoordinateColumn(), Integer.parseInt(buttonText.toString()))) {
+                    if (playViewModel.reactToNewNumber(playViewModel.getCoordinateRow(), playViewModel.getCoordinateColumn(), Integer.parseInt(buttonText.toString()))) {
                         focusedEditText.setTextColor(Color.BLACK);
                         playViewModel.getFreeCellsArray()[playViewModel.getCoordinateRow()][playViewModel.getCoordinateColumn()] = false;
-                    }else{
+                    } else {
                         focusedEditText.setTextColor(Color.RED);
                     }
                 }

@@ -14,6 +14,8 @@ import hsos.prog3.sudofun.model.UserEntity;
 
 /**
  * ViewModel für die Ansicht der Statistik.
+ *
+ * @author M.Paul
  */
 public class StatisticViewModel extends AndroidViewModel {
     private final Statistic statistic;
@@ -31,23 +33,24 @@ public class StatisticViewModel extends AndroidViewModel {
         return statistic.getUser();
     }
 
-    public void setLevel(LevelEnum levelEnum){
+    public void setLevel(LevelEnum levelEnum) {
         statistic.setLevel(levelEnum);
     }
 
-    public LevelEnum getLevel(){
+    public LevelEnum getLevel() {
         return statistic.getLevel();
     }
-    public List<UserEntity> getBestUsers(){
+
+    public List<UserEntity> getBestUsers() {
         return statistic.getBestUsers();
     }
 
-    public void setBestUsers(List<UserEntity> bestUsers){
+    public void setBestUsers(List<UserEntity> bestUsers) {
         statistic.setBestUsers(bestUsers);
     }
 
     public LiveData<List<UserEntity>> getStatistics(DataViewModel dataViewModel) {
-        LiveData<List<UserEntity>> users ;
+        LiveData<List<UserEntity>> users;
         switch (getLevel()) {
             case EASY:
                 users = dataViewModel.getHighscoresEasy();
