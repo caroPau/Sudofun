@@ -146,6 +146,7 @@ public class PlayActivity extends AppCompatActivity {
         }
     }
 
+
     private void buttonHintClickEvent(View view) {
         int id = playViewModel.getHelper().getRandomFreeCell(playViewModel.getField(), playViewModel.getSolvedField());
         EditText editText = findViewById(id);
@@ -169,7 +170,7 @@ public class PlayActivity extends AppCompatActivity {
         List<GridLayout> noteGrids = graphic.getNoteGrids();
         List<EditText> editTexts = graphic.getEditTexts();
         if (isChecked) {
-            binding.buttonMode.setBackgroundResource(R.drawable.btn_primary);
+            binding.buttonMode.setBackgroundResource(R.drawable.btn_primary_toggled);
             if (playViewModel.getLastFocusedCell() != null) {
                 playViewModel.getLastFocusedCell().setBackgroundResource(R.drawable.edit_text_field_border_black);
             }

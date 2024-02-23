@@ -1,4 +1,4 @@
-package hsos.prog3.sudofun.model;
+package hsos.prog3.sudofun.database;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
@@ -9,6 +9,8 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Update;
 
 import java.util.List;
+
+import hsos.prog3.sudofun.model.UserEntity;
 
 /**
  * DAO der Entität UserEntity mit Methoden für Datenbankanfragen.

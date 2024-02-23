@@ -27,7 +27,6 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
         loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
         input_username = this.findViewById(R.id.inputUsername);
         dataViewModel = new ViewModelProvider(this).get(DataViewModel.class);
@@ -36,8 +35,6 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(view);
         input_username = binding.inputUsername;
         binding.buttonLogin.setOnClickListener(this::loginButtonClickEvent);
-
-        dataViewModel = new ViewModelProvider(this).get(DataViewModel.class);
     }
 
     /**

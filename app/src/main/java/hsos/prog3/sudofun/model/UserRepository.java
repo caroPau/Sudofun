@@ -6,6 +6,9 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
+import hsos.prog3.sudofun.database.AppDatabase;
+import hsos.prog3.sudofun.database.UserDAO;
+
 /**
  * Repository für Kapselung von Datenzugriffen der UserEntity.
  */

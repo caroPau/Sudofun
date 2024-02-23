@@ -8,18 +8,11 @@ import hsos.prog3.sudofun.viewmodel.DataViewModel;
 public class Statistic {
     private UserEntity user;
     private LevelEnum levelEnum;
-    private int totalGames;
-    private long bestTime;
-    private DataViewModel dataViewModel;
-    private Map<UserEntity, Long> highscores;
     private List<UserEntity> bestUsers;
 
 
     public Statistic(){
         this.user = null;
-        totalGames = 0;
-        bestTime = 0;
-        dataViewModel = null;
     }
 
     public LevelEnum getLevel(){
@@ -46,9 +39,6 @@ public class Statistic {
         this.user = user;
     }
 
-    public void setHighscores(Map<UserEntity, Long> highscores) {
-        this.highscores = highscores;
-    }
 }
 
 

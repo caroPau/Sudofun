@@ -1,4 +1,4 @@
-package hsos.prog3.sudofun.model;
+package hsos.prog3.sudofun.database;
 
 import android.content.Context;
 
@@ -10,6 +10,8 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import hsos.prog3.sudofun.model.UserEntity;
 
 // Quelle: https://developer.android.com/codelabs/android-room-with-a-view#7
 
