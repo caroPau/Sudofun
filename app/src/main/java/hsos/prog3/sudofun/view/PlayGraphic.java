@@ -131,7 +131,7 @@ public class PlayGraphic {
 
     private void initMaskView(View maskView) {
         maskView.setBackground(AppCompatResources.getDrawable(context, R.drawable.edit_text_field_border_black));
-        ViewGroup.LayoutParams maskParams = new ViewGroup.LayoutParams(getBildschirmBreite()/10,getBildschirmBreite()/10);
+        ViewGroup.LayoutParams maskParams = new ViewGroup.LayoutParams(fieldEdgeSize,fieldEdgeSize);
         maskView.setLayoutParams(maskParams);
     }
     @SuppressLint("ClickableViewAccessibility") //Warnung unterdrücken, dass man im Listener performClick nicht überschreibt
@@ -164,7 +164,7 @@ public class PlayGraphic {
     }
 
     private void noteInit(TextView note, int noteNum){
-        ViewGroup.LayoutParams noteParams = new ViewGroup.LayoutParams(getBildschirmBreite()/30,getBildschirmBreite()/30);
+        ViewGroup.LayoutParams noteParams = new ViewGroup.LayoutParams(fieldEdgeSize/3,fieldEdgeSize/3);
         note.setLayoutParams(noteParams);
         note.setVisibility(View.INVISIBLE);
         note.setText(String.valueOf(noteNum));
