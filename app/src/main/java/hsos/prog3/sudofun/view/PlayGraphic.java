@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.text.InputType;
+import android.text.Layout;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -42,8 +43,6 @@ public class PlayGraphic {
         this.context = context;
         this.playViewModel = playViewModel;
         gridBasePos = new int[2];
-        gridBasePos[0] = (int)(getBildschirmBreite()*0.05);  //Hardcoded, da getX und getY von grid nicht die richtige Lage liefern
-        gridBasePos[1] = (int)(getBildschirmHoehe()*0.136);
         fieldEdgeSize = getBildschirmBreite()/10;
         gridLineStrength = (int)(getBildschirmBreite()*0.01);
         noteGrids = new ArrayList<>();
@@ -138,13 +137,15 @@ public class PlayGraphic {
     @SuppressLint("ClickableViewAccessibility") //Warnung unterdrücken, dass man im Listener performClick nicht überschreibt
     private void editTextInit(EditText editText,int row, int column){
         editText.setId(playViewModel.getHelper().coordinateAsOneNumber(row,column));
-        editText.setGravity(Gravity.CENTER);
+        editText.setForegroundGravity(Gravity.CENTER);
         editText.setInputType(InputType.TYPE_CLASS_NUMBER);
         editText.setTextColor(Color.BLACK);
         editText.setText("");
+        editText.setTextSize(15);
         editText.setBackground(AppCompatResources.getDrawable(context, R.drawable.edit_text_field_border_black));
-        ViewGroup.LayoutParams editTextParams = new ViewGroup.LayoutParams(getBildschirmBreite()/10,getBildschirmBreite()/10);
+        ViewGroup.LayoutParams editTextParams = new ViewGroup.LayoutParams(fieldEdgeSize,fieldEdgeSize);
         editText.setLayoutParams(editTextParams);
+        editText.setGravity(Gravity.CENTER);
         editText.setCursorVisible(false);
         View.OnTouchListener editTextTouchListener =  onTouchListener(editText);
         editText.setOnTouchListener(editTextTouchListener);
