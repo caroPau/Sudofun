@@ -1,4 +1,4 @@
-package hsos.prog3.sudofun.View;
+package hsos.prog3.sudofun.view;
 
 
 import android.content.Intent;
@@ -116,7 +116,6 @@ public class PlayActivity extends AppCompatActivity {
         showBestTime();
         if(playViewModel.getHelper().getOccupiedCells(playViewModel.getField()) != null) {
             playViewModel.setOccupiedCells(playViewModel.getHelper().getOccupiedCells(playViewModel.getField()));
-            playViewModel.setOpenCells(81 - playViewModel.getOccupiedCells().size());
         }
         graphic = new PlayGraphic(this, this, playViewModel);
         graphic.generateGrid(binding.gridLayoutSudoku, binding.gridLayoutMask, binding.playScreen);

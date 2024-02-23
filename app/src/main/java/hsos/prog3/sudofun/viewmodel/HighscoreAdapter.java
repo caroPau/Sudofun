@@ -30,8 +30,8 @@ public class HighscoreAdapter extends RecyclerView.Adapter<HighscoreAdapter.High
     }
     // ViewHolder-Klasse für jedes Listenelement
     public static class HighscoreViewHolder extends RecyclerView.ViewHolder {
-        public TextView nameTextView;
-        public TextView timeTextView;
+        public final TextView nameTextView;
+        public final TextView timeTextView;
 
         public HighscoreViewHolder(View view) {
             super(view);

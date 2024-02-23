@@ -10,7 +10,7 @@ import hsos.prog3.sudofun.model.UserEntity;
 
 public class LevelViewModel extends AndroidViewModel {
 
-    private Level level;
+    private final Level level;
 
     public LevelViewModel(@NonNull Application application) {
         super(application);

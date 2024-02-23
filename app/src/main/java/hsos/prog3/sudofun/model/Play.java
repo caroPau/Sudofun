@@ -17,7 +17,7 @@ public class Play {
     private ArrayList<Integer> occupiedCells;
     private int[][] field;
     private int[][] solvedField;
-    private boolean[][] freeCellsArray;
+    private final boolean[][] freeCellsArray;
     private boolean noteMode;
     private int rowHint;
     private int columnHint;
@@ -120,9 +120,6 @@ public class Play {
 
     public void setOccupiedCells(ArrayList<Integer> occupiedCells) {
         this.occupiedCells = occupiedCells;
-    }
-
-    public void setOpenCells(int openCells){
     }
 
     public void setRowHint(int rowHint) {

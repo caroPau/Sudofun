@@ -1,4 +1,4 @@
-package hsos.prog3.sudofun.View;
+package hsos.prog3.sudofun.view;
 
 import android.graphics.Color;
 import android.view.View;

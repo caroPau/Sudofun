@@ -9,7 +9,7 @@ import androidx.lifecycle.AndroidViewModel;
 
 import java.util.ArrayList;
 
-import hsos.prog3.sudofun.View.PlayActivity;
+import hsos.prog3.sudofun.view.PlayActivity;
 import hsos.prog3.sudofun.model.LevelEnum;
 import hsos.prog3.sudofun.model.Play;
 import hsos.prog3.sudofun.model.UserEntity;
@@ -28,9 +28,6 @@ public class PlayViewModel extends AndroidViewModel {
         helper = new SudokuHelper();
     }
 
-    public Play getPlay() {
-        return play;
-    }
     public int getPlayedGames(){
         return play.getPlayedGames();
     }
@@ -143,10 +140,6 @@ public class PlayViewModel extends AndroidViewModel {
 
     public void setOccupiedCells(ArrayList<Integer> occupiedCells) {
         play.setOccupiedCells(occupiedCells);
-    }
-
-    public void setOpenCells(int openCells) {
-        play.setOpenCells(openCells);
     }
 
     public boolean[][] getFreeCellsArray() {

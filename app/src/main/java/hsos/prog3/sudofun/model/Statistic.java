@@ -29,21 +29,6 @@ public class Statistic {
     public void setLevel(LevelEnum levelEnum){
         this.levelEnum = levelEnum;
     }
-    public int getTotalGames() {
-        return totalGames;
-    }
-
-    public void setTotalGames(int totalGames) {
-        this.totalGames = totalGames;
-    }
-
-    public long getBestTime() {
-        return bestTime;
-    }
-
-    public void setBestTime(long bestTime) {
-        this.bestTime = bestTime;
-    }
 
     public List<UserEntity> getBestUsers() {
         return bestUsers;
@@ -59,18 +44,6 @@ public class Statistic {
 
     public void setUser(UserEntity user) {
         this.user = user;
-    }
-
-    public DataViewModel getDataViewModel(){
-        return this.dataViewModel;
-    }
-
-    public void setDataViewModel(DataViewModel dataViewModel){
-        this.dataViewModel = dataViewModel;
-    }
-
-    public Map<UserEntity, Long> getHighscores() {
-        return highscores;
     }
 
     public void setHighscores(Map<UserEntity, Long> highscores) {

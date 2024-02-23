@@ -15,7 +15,7 @@ public class UserEntity implements Serializable {
     @PrimaryKey
     @NonNull
     @ColumnInfo(name = "username")
-    public String username;
+    public final String username;
 
     @ColumnInfo(name = "games_easy")
     public int gamesEasy;

@@ -17,8 +17,7 @@ public class SudokuCreator implements Runnable {
      */
 
     private int[][] solvedField;
-    private LevelEnum levelEnum;
-    private SudokuHelper helper;
+    private final SudokuHelper helper;
 
     /**
      * Konstruktor
@@ -27,7 +26,6 @@ public class SudokuCreator implements Runnable {
      */
     public SudokuCreator(LevelEnum levelEnum, SudokuHelper helper){
         solvedField = new int[9][9];
-        this.levelEnum = levelEnum;
         this.helper = helper;
     }
 

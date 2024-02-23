@@ -1,5 +1,4 @@
 package hsos.prog3.sudofun.model;
-import hsos.prog3.sudofun.viewmodel.DataViewModel;
 
 /**
  * Klasse repräsentiert die notwendigen Informationen für den Login.

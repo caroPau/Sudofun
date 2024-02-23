@@ -1,10 +1,9 @@
-package hsos.prog3.sudofun.View;
+package hsos.prog3.sudofun.view;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.text.InputType;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -99,7 +98,7 @@ public class PlayGraphic {
                     for(int noteRow = 0; noteRow <= 2; noteRow++){
                         for(int noteColumn = 0; noteColumn <= 2; noteColumn++) {
                             TextView note = new TextView(context);
-                            noteInit(note,noteRow,noteColumn,noteNum);
+                            noteInit(note, noteNum);
                             noteNum++;
                             noteGrid.addView(note);
                         }
@@ -162,7 +161,7 @@ public class PlayGraphic {
         noteGrid.setOnTouchListener(noteGridTouchListener);
     }
 
-    private void noteInit(TextView note,int noteRow, int noteColumn, int noteNum){
+    private void noteInit(TextView note, int noteNum){
         ViewGroup.LayoutParams noteParams = new ViewGroup.LayoutParams(getBildschirmBreite()/30,getBildschirmBreite()/30);
         note.setLayoutParams(noteParams);
         note.setVisibility(View.INVISIBLE);

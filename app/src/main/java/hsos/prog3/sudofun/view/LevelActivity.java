@@ -3,7 +3,7 @@
  * @author M.Paul
  *
  */
-package hsos.prog3.sudofun.View;
+package hsos.prog3.sudofun.view;
 
 import android.content.Intent;
 import android.os.Bundle;
