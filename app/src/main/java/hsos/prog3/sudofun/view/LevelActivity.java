@@ -38,7 +38,7 @@ public class LevelActivity extends AppCompatActivity {
     }
 
     /**
-     *
+     *  Speichert in der Variable selectedLevel die zum ausgewählten Button/Level passende Zahl
      * @author M.Paul
      */
     public void selectLevel(View view) {
@@ -58,6 +58,7 @@ public class LevelActivity extends AppCompatActivity {
     }
 
     /**
+     *  Erstellt das Bundel und den Intent für die nächste Activity und startet diese
      *
      * @author C.Paul
      */
@@ -76,6 +77,7 @@ public class LevelActivity extends AppCompatActivity {
     }
 
     /**
+     * Regelt das Logout-Verhalten, erstellt den entsprechenden Intent für die LoginActivity und startet diese
      * @author M.Paul
      */
     public void navigateLogout(View view) {

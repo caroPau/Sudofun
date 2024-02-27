@@ -115,6 +115,9 @@ public class TimerViewModel {
         actualTimerView = txtview;
     }
 
+    /**
+     * Setzt den Timer zurück
+     */
     public void reset() {
         isRunning = false;
         handler.removeCallbacks(timerRunnable);

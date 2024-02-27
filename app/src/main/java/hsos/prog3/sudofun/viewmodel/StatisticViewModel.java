@@ -49,6 +49,12 @@ public class StatisticViewModel extends AndroidViewModel {
         statistic.setBestUsers(bestUsers);
     }
 
+    /**
+     * Wählt den zum Level passenden Highscore des Spielers
+     *
+     * @param dataViewModel
+     * @return den zum Level passenden Highscore
+     */
     public LiveData<List<UserEntity>> getStatistics(DataViewModel dataViewModel) {
         LiveData<List<UserEntity>> users;
         switch (getLevel()) {

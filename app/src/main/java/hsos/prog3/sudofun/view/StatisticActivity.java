@@ -59,7 +59,11 @@ public class StatisticActivity extends AppCompatActivity {
         });
     }
 
-    
+    /**
+     * Startet die LevelActivity, um ein neues Spiel zu beginnen.
+     *
+     * @param view Die angeklickte Ansicht.
+     */
     public void startLevelActivity(View view) {
         Intent intent = new Intent(StatisticActivity.this, LevelActivity.class);
         Bundle bundle = new Bundle();
@@ -68,13 +72,24 @@ public class StatisticActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    /**
+     * Formatieren der Zeit in das Format "MM:SS".
+     *
+     * @param time Die Zeit in Millisekunden.
+     * @return Die formatierte Zeit als String.
+     */
     private String formatTime(Long time) {
         int secondsTemp = ((int) (time / 1000));
         int minutes = secondsTemp / 60;
         int seconds = secondsTemp - minutes * 60;
         return String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
     }
-    
+
+    /**
+     * Navigiert zur LoginActivity, um sich auszuloggen.
+     *
+     * @param view Die angeklickte Ansicht.
+     */
     public void navigateLogout(View view) {
         Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); //FLAG entfernt alle Activities im Task BackStack, sodass nach dem Logout nicht zurück navigiert werden kann

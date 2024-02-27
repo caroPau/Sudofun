@@ -43,6 +43,13 @@ public class HighscoreAdapter extends RecyclerView.Adapter<HighscoreAdapter.High
         }
     }
 
+    /**
+     * Erstellt einen neuen ViewHolder, der die Ansichten für jedes Listenelement enthält.
+     *
+     * @param parent   Die übergeordnete ViewGroup, in die der neue ViewHolder eingefügt werden soll.
+     * @param viewType Der Ansichtstyp des neuen ViewHolders.
+     * @return Der erstellte ViewHolder, der die Ansichten für jedes Listenelement enthält.
+     */
     @NonNull
     @Override
     public HighscoreViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -50,6 +57,13 @@ public class HighscoreAdapter extends RecyclerView.Adapter<HighscoreAdapter.High
                 .inflate(R.layout.item_statistic, parent, false);
         return new HighscoreViewHolder(itemView);
     }
+
+    /**
+     * Bindet die Daten an die einzelnen Listenelemente
+     *
+     * @param holder   Der ViewHolder, der die Ansichten für das Listenelement enthält.
+     * @param position Die Position des Listenelements in der Liste.
+     */
 
     @Override
     public void onBindViewHolder(@NonNull HighscoreViewHolder holder, int position) {

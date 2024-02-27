@@ -22,18 +22,23 @@ public class PlayViewModel extends AndroidViewModel {
     private final Play play;
     private final SudokuHelper helper;
 
+
+    /**
+     * Konstruktor
+     *
+     * @param application Die Anwendung, auf die das Viewmodel zugreift
+     */
     public PlayViewModel(@NonNull Application application) {
         super(application);
         play = new Play();
         helper = new SudokuHelper();
     }
 
+    /**
+     * Getter für die Membervariablen von Play
+     */
     public int getPlayedGames() {
         return play.getPlayedGames();
-    }
-
-    public void setUser(UserEntity user) {
-        play.setUser(user);
     }
 
     public LevelEnum getLevel() {
@@ -46,6 +51,57 @@ public class PlayViewModel extends AndroidViewModel {
 
     public int getCoordinateColumn() {
         return play.getColumnHint();
+    }
+
+    public GridLayout getLastFocusedGrid() {
+        return play.getLastFocusedGrid();
+    }
+
+    public EditText getLastFocusedCell() {
+        return play.getLastFocusedCell();
+    }
+
+    public UserEntity getUser() {
+        return play.getUser();
+    }
+
+    public SudokuHelper getHelper() {
+        return helper;
+    }
+
+    public int[][] getField() {
+        return play.getField();
+    }
+
+    public TimerViewModel getTimer() {
+        return play.getTimer();
+    }
+
+    public boolean[][] getFreeCellsArray() {
+        return play.getFreeCellsArray();
+    }
+
+    public boolean isNoteMode() {
+        return play.isNoteMode();
+    }
+
+    public int getFreeCells() {
+        return play.getFreeCells();
+    }
+
+    public int[][] getSolvedField() {
+        return play.getSolvedField();
+    }
+
+    public ArrayList<Integer> getOccupiedCells() {
+        return play.getOccupiedCells();
+    }
+
+    /**
+     * Setter für die Membervariablen von Play
+     */
+    public void setUser(UserEntity user) {
+        play.setUser(user);
     }
 
     public void setPlayedGames(int playedGames) {
@@ -76,68 +132,6 @@ public class PlayViewModel extends AndroidViewModel {
         play.setField(field);
     }
 
-    public GridLayout getLastFocusedGrid() {
-        return play.getLastFocusedGrid();
-    }
-
-    public EditText getLastFocusedCell() {
-        return play.getLastFocusedCell();
-    }
-
-    public UserEntity getUser() {
-        return play.getUser();
-    }
-
-    public SudokuHelper getHelper() {
-        return helper;
-    }
-
-
-    public int[][] getField() {
-        return play.getField();
-    }
-
-    /**
-     * @author C.Paul
-     */
-    public boolean reactToNewNumber(int row, int column, int number) {
-        if (getField()[row][column] == 0) {
-            if (getHelper().isValid(row, column, number, getField())) {
-                setFreeCells(getFreeCells() - 1);
-                getField()[row][column] = number;
-                return true;
-            } else {
-                return false;
-            }
-        } else {
-            if (number == getField()[row][column]) {
-                return true;
-            }
-            if (getHelper().isValid(row, column, number, getField())) {
-                setFreeCells(getFreeCells() - 1);
-                getField()[row][column] = number;
-                return true;
-            } else if (getHelper().isValid(row, column, getField()[row][column], getField())) {
-                getField()[row][column] = 0;
-                setFreeCells(getFreeCells() + 1);
-                return false;
-            } else {
-                getField()[row][column] = 0;
-                return false;
-            }
-        }
-    }
-
-    /**
-     * @author C.Paul
-     */
-    public void reactToClear() {
-        if (getField()[getCoordinateRow()][getCoordinateColumn()] != 0) {
-            getField()[getCoordinateRow()][getCoordinateColumn()] = 0;
-            setFreeCells(getFreeCells() + 1);
-        }
-    }
-
     public void setFreeCells(int freeCells) {
         play.setFreeCells(freeCells);
     }
@@ -150,32 +144,8 @@ public class PlayViewModel extends AndroidViewModel {
         play.setTimer(timerViewModel);
     }
 
-    public TimerViewModel getTimer() {
-        return play.getTimer();
-    }
-
     public void setOccupiedCells(ArrayList<Integer> occupiedCells) {
         play.setOccupiedCells(occupiedCells);
-    }
-
-    public boolean[][] getFreeCellsArray() {
-        return play.getFreeCellsArray();
-    }
-
-    public boolean isNoteMode() {
-        return play.isNoteMode();
-    }
-
-    public int getFreeCells() {
-        return play.getFreeCells();
-    }
-
-    public int[][] getSolvedField() {
-        return play.getSolvedField();
-    }
-
-    public ArrayList<Integer> getOccupiedCells() {
-        return play.getOccupiedCells();
     }
 
     public void setNoteMode(boolean noteMode) {
@@ -183,6 +153,65 @@ public class PlayViewModel extends AndroidViewModel {
     }
 
     /**
+     * Reagiert auf eine neue eingegebene Zahl im Sudoku-Feld.
+     *
+     * @param row    Die Zeilenposition der eingegebenen Zahl
+     * @param column Die Spaltenposition der eingegebenen Zahl
+     * @param number Die eingegebene Zahl
+     * @return True, wenn die Zahl an dieser Position gültig oder die gleiche Zahl schon eingetragen ist, false wenn nicht
+     * @author C.Paul
+     */
+    public boolean reactToNewNumber(int row, int column, int number) {
+        // Wenn das Feld im Sudoku noch leer ist
+        if (getField()[row][column] == 0) {
+            // ist die Zahl an der Stelle valide
+            if (getHelper().isValid(row, column, number, getField())) {
+                setFreeCells(getFreeCells() - 1);   // decrementieren der freien Zellen
+                getField()[row][column] = number;   // die Zahl wird an der Stelle ins Sudoku-Array eingetragen
+                return true;
+            } else {
+                return false;
+            }
+            // Wenn im Feld an dieser Stelle bereits eine Zahl eingetragen ist
+        } else {
+            // Wenn die eingetragene Zahl dieselbe Zahl
+            if (number == getField()[row][column]) {
+                return true;
+            }
+            // wenn es nicht die gleiche Zahl ist, aber sie an dieser Stelle valide ist
+            if (getHelper().isValid(row, column, number, getField())) {
+                setFreeCells(getFreeCells() - 1);
+                getField()[row][column] = number;
+                return true;
+                // wenn die neue Zahl an dieser Stelle nicht valide ist (die vorherige zahl war valide)
+            } else if (getHelper().isValid(row, column, getField()[row][column], getField())) {
+                getField()[row][column] = 0;    // Setze das Feld zurück auf 0 (leer)
+                setFreeCells(getFreeCells() + 1);   //inkrementiere die freien Zellen
+                return false;
+            } else {
+                // Sowohl die vorherige Zahl als auch die eingegebene Zahl sind ungültig
+                getField()[row][column] = 0;
+                return false;
+            }
+        }
+    }
+
+    /**
+     * Implementiert die Funktion des clear-button
+     *
+     * @author C.Paul
+     */
+    public void reactToClear() {
+        if (getField()[getCoordinateRow()][getCoordinateColumn()] != 0) {
+            getField()[getCoordinateRow()][getCoordinateColumn()] = 0;
+            setFreeCells(getFreeCells() + 1);
+        }
+    }
+
+
+    /**
+     * Implementiert das Zurücksetzen des Spiels
+     *
      * @author M.Paul
      */
     public void reset() {
@@ -198,6 +227,8 @@ public class PlayViewModel extends AndroidViewModel {
     }
 
     /**
+     * Setzt das gewünschte Level im Spiel und startet die LevelActivity
+     *
      * @author M.Paul
      */
     public LevelEnum getSelectedLevel(int lvl, PlayActivity playActivity) {
@@ -219,6 +250,9 @@ public class PlayViewModel extends AndroidViewModel {
     }
 
     /**
+     * Wählt die Bestzeit des Spielers im gewählten Schwierigkeitsgrad
+     *
+     * @return die jeweilige Bestzeit
      * @author M.Paul
      */
     public long getBestTime() {
@@ -241,6 +275,8 @@ public class PlayViewModel extends AndroidViewModel {
     }
 
     /**
+     * Vergleicht die Erreichte Spielzeit mit dem Highscore und updatet die gespielten Spiele, sowie bei Bedarf den Highscore
+     *
      * @author C.Paul
      */
     public void updateUser() {

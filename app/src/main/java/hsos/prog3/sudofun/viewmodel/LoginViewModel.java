@@ -22,11 +22,11 @@ public class LoginViewModel extends AndroidViewModel {
         login = new Login();
     }
 
-    public UserEntity getUserEntity(){
+    public UserEntity getUserEntity() {
         return login.getUserEntity();
     }
 
-    public void setUserEntity(UserEntity userEntity){
+    public void setUserEntity(UserEntity userEntity) {
         login.setUserEntity(userEntity);
     }
 }

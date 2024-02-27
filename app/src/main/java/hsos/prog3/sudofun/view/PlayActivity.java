@@ -153,7 +153,9 @@ public class PlayActivity extends AppCompatActivity {
     }
 
     /**
-     * @author: C.Paul
+     * Implementiert das ClickEvent des Hinweis-Buttons
+     *
+     * @author C.Paul
      */
     private void buttonHintClickEvent(View view) {
         int id = playViewModel.getHelper().getRandomFreeCell(playViewModel.getField(), playViewModel.getSolvedField());
@@ -177,34 +179,43 @@ public class PlayActivity extends AppCompatActivity {
     private void toggleModeButton(boolean isChecked) {
         List<GridLayout> noteGrids = graphic.getNoteGrids();
         List<EditText> editTexts = graphic.getEditTexts();
+        // wenn der Button gedrückt ist / im Notizmodus ist
         if (isChecked) {
+            // setzt die Hintergrundfarbe des Buttons und der lastFocusedCell wenn es eine gab
             binding.buttonMode.setBackgroundResource(R.drawable.btn_primary_toggled);
             if (playViewModel.getLastFocusedCell() != null) {
                 playViewModel.getLastFocusedCell().setBackgroundResource(R.drawable.edit_text_field_border_black);
             }
+            //Wenn der Timer läuft
             if (playViewModel.getTimer().isRunning()) {
-
+                // Das NoteGrid ist sichtbar und aktiv
                 for (GridLayout grid : noteGrids) {
                     grid.setEnabled(true);
                     grid.setVisibility(View.VISIBLE);
                 }
+                // die EditTexts des Spielmodus sind inaktiv
                 for (EditText editText : editTexts) {
                     editText.setEnabled(false);
                 }
             }
+            // im Spiel wird gespeichert, dass der Notizmodus aktiviert ist
             playViewModel.setNoteMode(true);
-        } else {
+        } else { // Wenn der Button nicht gedrückt ist / der Spielmodus aktiv ist
+            // setzt die Hintergrundfarbe des Buttons und des lastFocusedGrid wenn es eines gab
             binding.buttonMode.setBackgroundResource(R.drawable.btn_primary);
             if (playViewModel.getLastFocusedGrid() != null) {
                 playViewModel.getLastFocusedGrid().setBackgroundResource(R.drawable.edit_text_field_border_black);
             }
+            // Das NoteGrid ist unsichtbar und inaktiv
             for (GridLayout grid : noteGrids) {
                 grid.setEnabled(false);
                 grid.setVisibility(View.INVISIBLE);
             }
+            // Die EditTexts des Spielmodus sind aktiv
             for (EditText editText : editTexts) {
                 editText.setEnabled(true);
             }
+            // im Spiel wird gespeichert, dass der Notizmodus deaktiviert ist
             playViewModel.setNoteMode(false);
         }
     }
@@ -217,25 +228,32 @@ public class PlayActivity extends AppCompatActivity {
     private void togglePauseButton(boolean isChecked, CompoundButton buttonView) {
         List<EditText> editTexts = graphic.getEditTexts();
         List<GridLayout> noteGrids = graphic.getNoteGrids();
+        // wenn der Timer pausiert wird
         if (isChecked) {
             buttonView.setBackgroundResource(R.drawable.ic_play);
+            // Timer wird pausiert
             playViewModel.getTimer().pause();
+            //EditTexts werden deaktiviert und die Maske (Leeres Feld) sichtbar
             for (EditText editText : editTexts) {
                 editText.setEnabled(false);
                 binding.gridLayoutMask.setVisibility(View.VISIBLE);
             }
+            // NoteGrid wird deaktiviert und unsichtbar
             for (GridLayout grid : noteGrids) {
                 grid.setEnabled(false);
                 grid.setVisibility(View.INVISIBLE);
             }
-
+        // wenn das Spiel und der Timer wieder gestartet werden
         } else {
             buttonView.setBackgroundResource(R.drawable.ic_pause);
+            // Methode startAfterPause des Timers wird aufgerufen
             playViewModel.getTimer().startAfterPause();
+            // EditTexts werden aktiviert und die Maske unsichtbar
             for (EditText editText : editTexts) {
                 editText.setEnabled(true);
                 binding.gridLayoutMask.setVisibility(View.INVISIBLE);
             }
+            // das NoteGrid wird aktiviert und sichtbar
             for (GridLayout grid : noteGrids) {
                 grid.setEnabled(true);
                 grid.setVisibility(View.VISIBLE);

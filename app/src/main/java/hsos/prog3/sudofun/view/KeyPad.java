@@ -121,7 +121,12 @@ public class KeyPad {
                 if (focusedEditText == null) {
                     return;
                 }
+                // der Clear-Button ist gedrückt
                 if (button.getId() == R.id.buttonClear) {
+                    /*
+                     * wenn die gewählte Zelle nicht leer ist, wird die Funktion reactToClear-Methode des PlayViewModels aufegerufen
+                     * und der Text des EditText zu "" geändert und das freeCellsArray an dieser Position auf true gesetzt
+                     */
                     if (!focusedEditText.getText().toString().equals("")) {
                         playViewModel.getHelper().numberToCoordinate(focusedEditText.getId(), playViewModel);
                         playViewModel.reactToClear();
@@ -129,17 +134,19 @@ public class KeyPad {
                         playViewModel.getHelper().numberToCoordinate(focusedEditText.getId(), playViewModel);
                         playViewModel.getFreeCellsArray()[playViewModel.getCoordinateRow()][playViewModel.getCoordinateColumn()] = true;
                     }
-                } else {
+                } else { // einer der Zahlen-Buttons wurde gedrückt
                     playViewModel.getHelper().numberToCoordinate(focusedEditText.getId(), playViewModel);
-
                     focusedEditText.setText(buttonText);
+                    // wenn reactToNewNumber true zurückgibt ist die Zahl korrekt und wird in Schwarz eingetragen
                     if (playViewModel.reactToNewNumber(playViewModel.getCoordinateRow(), playViewModel.getCoordinateColumn(), Integer.parseInt(buttonText.toString()))) {
                         focusedEditText.setTextColor(Color.BLACK);
                         playViewModel.getFreeCellsArray()[playViewModel.getCoordinateRow()][playViewModel.getCoordinateColumn()] = false;
                     } else {
+                        // wenn sie false zurückgibt ist die Zahl an der stelle falsch und wird mit Rot eingetragen
                         focusedEditText.setTextColor(Color.RED);
                     }
                 }
+                // wenn keine freien Zellen mehr übrig sind, wird das Spiel beendet
                 if (playViewModel.getFreeCells() == 0) {
                     playActivity.endGame();
                 }
